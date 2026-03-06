@@ -1591,3 +1591,13 @@ Entries:
       message: Added a placeholder system for Patreon supporter custom entities.
   id: 172
   time: '2026-03-05T22:29:36.0000000+00:00'
+- author: Sully669
+  changes:
+    - type: Add
+      message: Added Interdyne defibrillator
+    - type: Tweak
+      message: reduced Interdyne hypospray volume from 60 to 45
+    - type: Fix
+      message: fixed contraband level on Interdyne hypospray to be C2
+  id: 173
+  time: '2026-03-06T06:27:26.0000000+00:00'

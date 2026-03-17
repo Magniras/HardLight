@@ -1775,3 +1775,15 @@ Entries:
       message: Adjusted radio music volume
   id: 193
   time: '2026-03-17T07:19:03.0000000+00:00'
+- author: TrylobyteWasTaken
+  changes:
+    - type: Tweak
+      message: >-
+        The Nuclear Fabricator Machine Board can now be made in the circuit
+        imprinter with proper research.
+    - type: Add
+      message: >-
+        The Small Nuclear Reactor, Small Turbine, and TEG can now be bought at
+        Cargo.
+  id: 194
+  time: '2026-03-17T07:19:38.0000000+00:00'

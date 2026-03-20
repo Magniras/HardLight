@@ -1852,3 +1852,11 @@ Entries:
       message: The plant analyzer UI window can now scroll up and down
   id: 201
   time: '2026-03-20T22:31:35.0000000+00:00'
+- author: leonon42
+  changes:
+    - type: Add
+      message: >-
+        Plant analyzers can now show the maximum quantity of a reagent they can
+        produce per fruit when using advanced scanning mode
+  id: 202
+  time: '2026-03-20T22:38:01.0000000+00:00'

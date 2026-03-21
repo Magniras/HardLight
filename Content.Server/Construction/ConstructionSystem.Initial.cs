@@ -271,7 +271,8 @@ namespace Content.Server.Construction
                 BlockDuplicate = false,
             };
 
-            if (await _doAfterSystem.WaitDoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
+            if (doAfterTime > 0
+                && await _doAfterSystem.WaitDoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
             {
                 FailCleanup();
                 return null;

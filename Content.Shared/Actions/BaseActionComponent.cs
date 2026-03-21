@@ -230,9 +230,13 @@ public abstract class BaseActionComponentState : ComponentState
 
     protected BaseActionComponentState(BaseActionComponent component, IEntityManager entManager)
     {
-        Container = entManager.GetNetEntity(component.Container);
-        EntityIcon = entManager.GetNetEntity(component.EntIcon);
-        AttachedEntity = entManager.GetNetEntity(component.AttachedEntity);
+        entManager.TryGetNetEntity(component.Container, out NetEntity? container);
+        entManager.TryGetNetEntity(component.EntIcon, out NetEntity? entityIcon);
+        entManager.TryGetNetEntity(component.AttachedEntity, out NetEntity? attachedEntity);
+
+        Container = container;
+        EntityIcon = entityIcon;
+        AttachedEntity = attachedEntity;
         RaiseOnUser = component.RaiseOnUser;
         RaiseOnAction = component.RaiseOnAction;
         Icon = component.Icon;

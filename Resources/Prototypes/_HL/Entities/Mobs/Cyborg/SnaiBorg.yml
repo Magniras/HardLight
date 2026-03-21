@@ -14,7 +14,7 @@
       state: XenoQuadfeathered
   - type: BorgChassis
     maxModules: 10
-    hasMindState: XenoQuad_e
+    hasMindState: XenoQuadfeatheredglow
     noMindState: XenoQuad_e_r
     moduleWhitelist:
       tags:

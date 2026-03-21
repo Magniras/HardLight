@@ -8,6 +8,8 @@
     - type: Supermatter
     - type: RadiationSource
       slope: 3
+    - type: RadCritterSpawnLocation
+      spawnRange: 1.25
     - type: AmbientSound
       range: 5
       volume: 0

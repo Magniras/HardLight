@@ -58,6 +58,8 @@
   - type: RadiationSource
     slope: 0.2 # its emit really far away
     intensity: 2
+  - type: RadCritterSpawnLocation
+    spawnRange: 1.25
   - type: PointLight
     enabled: true
     radius: 10

@@ -62,23 +62,23 @@
     #- id: BluespaceDungeonCave
     #- id: BluespaceSalvage
     - id: NFSmugglingFaxBig
-    - id: UnknownShuttleCargoLost
-    - id: UnknownShuttleTravelingCuisine
-    - id: UnknownShuttleDisasterEvacPod
-    - id: UnknownShuttleHonki
-    - id: UnknownShuttleNTQuark
-    - id: UnknownShuttleCruiser
-    - id: UnknownShuttleCryptid
-    - id: UnknownShuttleEternal
-    - id: UnknownShuttleFlatline
-    - id: UnknownShuttleGym
-    - id: UnknownShuttleNTIncorporation
-    - id: UnknownShuttleJoe
-    - id: UnknownShuttleLambordeere
-    - id: UnknownShuttleMeatZone
-    - id: UnknownShuttleMicroshuttle
-    - id: UnknownShuttleSpacebus
-    - id: UnknownShuttleSyndieEvacPod
+    # - id: UnknownShuttleCargoLost
+    # - id: UnknownShuttleTravelingCuisine
+    # - id: UnknownShuttleDisasterEvacPod
+    # - id: UnknownShuttleHonki
+    # - id: UnknownShuttleNTQuark
+    # - id: UnknownShuttleCruiser
+    # - id: UnknownShuttleCryptid
+    # - id: UnknownShuttleEternal
+    # - id: UnknownShuttleFlatline
+    # - id: UnknownShuttleGym
+    # - id: UnknownShuttleNTIncorporation
+    # - id: UnknownShuttleJoe
+    # - id: UnknownShuttleLambordeere
+    # - id: UnknownShuttleMeatZone
+    # - id: UnknownShuttleMicroshuttle
+    # - id: UnknownShuttleSpacebus
+    # - id: UnknownShuttleSyndieEvacPod
     - id: ArgocyteVents
     - id: XenoVents
     - id: reagentslimeVents
@@ -88,16 +88,16 @@
     - id: AiVents
     - id: LizardVents
     - id: WawaVents
-    - id: GiftsEngineering
-    - id: GiftsFireProtection
-    - id: GiftsJanitor
-    - id: GiftsMedical
-    - id: GiftsPizzaPartyLarge
-    - id: GiftsPizzaPartySmall
-    - id: GiftsSecurityGuns
-    - id: GiftsSecurityRiot
-    - id: GiftsSpacingSupplies
-    - id: GiftsVendingRestock
+    # - id: GiftsEngineering
+    # - id: GiftsFireProtection
+    # - id: GiftsJanitor
+    # - id: GiftsMedical
+    # - id: GiftsPizzaPartyLarge
+    # - id: GiftsPizzaPartySmall
+    # - id: GiftsSecurityGuns
+    # - id: GiftsSecurityRiot
+    # - id: GiftsSpacingSupplies
+    # - id: GiftsVendingRestock
 
 - type: entityTable
   id: BasicAntagEventsTable
@@ -118,8 +118,8 @@
     - id: LoneOpsSpawn
     #- id: WizardSpawn
     - id: LoneOpsSpawn
-    - id: UnknownShuttleManOWar
-    - id: UnknownShuttleInstigator
+    # - id: UnknownShuttleManOWar
+    # - id: UnknownShuttleInstigator
 
 - type: entity
   id: BaseStationEvent

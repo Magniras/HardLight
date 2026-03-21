@@ -319,6 +319,7 @@
     state: rtg
   - type: RadiationSource # ideally only when opened.
     intensity: 1
+  - type: RadCritterSpawnLocation
     
 # TODO: need radioactive fallout when destroyed
 
@@ -341,6 +342,7 @@
     state: rtg_damaged
   - type: RadiationSource # ideally only when opened.
     intensity: 2
+  - type: RadCritterSpawnLocation
   - type: Destructible
     thresholds:
     - trigger:

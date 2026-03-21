@@ -160,3 +160,190 @@
         Base: crit
       Dead:
         Base: dead
+        
+- type: entity
+  name: QuantumDreadTalon
+  id: BlueTalon
+  parent: dreadtalonbase
+  description: It looks friendly. Why don't you give it a hug?
+#  categories: [ HideSpawnMenu ] # Frontier
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _HL/Mobs/Aliens/dreadtalon.rsi
+    scale: 0.7, 0.7
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: Bluetalon
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: bluetalonglow
+      shader: unshaded
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      300: Critical
+      450: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: Bluetalon
+        BaseUnshaded: bluetalonglow
+      Critical:
+        Base: crit
+      Dead:
+        Base: dead
+        
+- type: entity
+  name: LavalandDreadTalon
+  id: LavaTalon
+  parent: dreadtalonbase
+  description: It looks friendly. Why don't you give it a hug?
+#  categories: [ HideSpawnMenu ] # Frontier
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _HL/Mobs/Aliens/dreadtalon.rsi
+    scale: 0.7, 0.7
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: lavatalon
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: lavatalonglow
+      shader: unshaded
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: lavatalon
+        BaseUnshaded: lavatalonglow
+      Critical:
+        Base: crit
+      Dead:
+        Base: dead
+        
+- type: entity
+  name: PlasmaDreadTalon
+  id: PlasmaTalon
+  parent: dreadtalonbase
+  description: It looks friendly. Why don't you give it a hug?
+#  categories: [ HideSpawnMenu ] # Frontier
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _HL/Mobs/Aliens/dreadtalon.rsi
+    scale: 0.7, 0.7
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: plastalon
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: plastalonglow
+      shader: unshaded
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: plastalon
+        BaseUnshaded: plastalonglow
+      Critical:
+        Base: crit
+      Dead:
+        Base: dead
+        
+- type: entity
+  name: Grav DreadTalon
+  id: GravTalon
+  parent: dreadtalonbase
+  description: It looks friendly. Why don't you give it a hug?
+#  categories: [ HideSpawnMenu ] # Frontier
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _HL/Mobs/Aliens/dreadtalon.rsi
+    scale: 0.7, 0.7
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: singutalon
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: singutalonglow
+      shader: unshaded
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 25
+        Radiation: 25
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      300: Critical
+      500: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: singutalon
+        BaseUnshaded: singutalonglow
+      Critical:
+        Base: crit
+      Dead:
+        Base: dead
+        
+- type: entity
+  name: SM DreadTalon
+  id: SuperTalon
+  parent: dreadtalonbase
+  description: It looks friendly. Why don't you give it a hug?
+#  categories: [ HideSpawnMenu ] # Frontier
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _HL/Mobs/Aliens/dreadtalon.rsi
+    scale: 0.7, 0.7
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: supertalon
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: supertalonglow
+      shader: unshaded
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 35
+        Radiation: 15
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      350: Critical
+      600: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: supertalon
+        BaseUnshaded: supertalonglow
+      Critical:
+        Base: crit
+      Dead:
+        Base: dead
+        
+- type: entity
+  name: radioactive DreadTalon
+  id: TriTalon
+  parent: dreadtalonbase
+  description: It looks friendly. Why don't you give it a hug?
+#  categories: [ HideSpawnMenu ] # Frontier
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _HL/Mobs/Aliens/dreadtalon.rsi
+    scale: 0.7, 0.7
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: tritalon
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: tritalonglow
+      shader: unshaded
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: tritalon
+        BaseUnshaded: tritalonglow
+      Critical:
+        Base: crit
+      Dead:
+        Base: dead

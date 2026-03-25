@@ -1960,3 +1960,11 @@ Entries:
         and 20 stamina
   id: 214
   time: '2026-03-25T23:19:52.0000000+00:00'
+- author: NotLivyathan
+  changes:
+    - type: Fix
+      message: >-
+        Space docks should no longer have the potential to vibrate into
+        nullspace and crash the server.
+  id: 215
+  time: '2026-03-25T23:21:19.0000000+00:00'

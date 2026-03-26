@@ -74,6 +74,7 @@
             # frontier (13)
             #Contractor: [ -1, -1 ]
             #Pilot: [ 5, 5 ]
+            Passenger: [ -1, -1 ] #infinite, not counted
             Mercenary: [ 0, 40 ]
             Prisoner: [ 1, 2 ]
             StationTrafficController: [ 1, 1 ]

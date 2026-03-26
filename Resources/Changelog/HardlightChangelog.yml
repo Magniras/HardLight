@@ -1976,3 +1976,9 @@ Entries:
         for some reason is a thing ColComm supports.
   id: 216
   time: '2026-03-26T21:18:22.0000000+00:00'
+- author: NotLivyathan
+  changes:
+    - type: Add
+      message: Chat text can now be highlighted for ease of readability.
+  id: 217
+  time: '2026-03-26T21:19:09.0000000+00:00'

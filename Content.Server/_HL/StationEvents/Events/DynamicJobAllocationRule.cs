@@ -1,17 +1,19 @@
 using System;
 using Content.Server._NF.Roles.Systems;
 using Content.Server.GameTicking;
+using Content.Server.Station.Systems; // HardLight
 using Content.Server.Station.Components;
-using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared._NF.Roles.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mind.Components;
+using Content.Shared.Roles; // HardLight
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes; // HardLight
 
 namespace Content.Server.StationEvents.Events;
 
@@ -19,7 +21,11 @@ namespace Content.Server.StationEvents.Events;
 public sealed class DynamicJobAllocationRule : StationEventSystem<DynamicJobAllocationRuleComponent>
 {
     [Dependency] private readonly StationJobsSystem _stationJobs = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!; // HardLight
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+
+    // HardLight: Legacy job id used before Mercenary/Freelancer naming cleanup.
+    private const string LegacyFreelancerJobId = "Freelancer";
 
     private bool _recalculationQueued;
 
@@ -140,20 +146,25 @@ public sealed class DynamicJobAllocationRule : StationEventSystem<DynamicJobAllo
             staffedEntities.Add(attached);
         }
 
-        var jobsQuery = EntityQueryEnumerator<JobTrackingComponent>();
-        while (jobsQuery.MoveNext(out var jobTrackedEntity, out var jobTracking))
+        var jobsQuery = EntityQueryEnumerator<JobTrackingComponent, TransformComponent>(); // HardLight: Added TransformComponent
+        while (jobsQuery.MoveNext(out var jobTrackedEntity, out var jobTracking, out var xform)) // HardLight: Added out var xform
         {
             if (!staffedEntities.Contains(jobTrackedEntity)
-                || jobTracking.Job is not { } job
-                || !stations.TryGetValue(jobTracking.SpawnStation, out var counts))
+                || !jobTracking.Active // HardLight
+                || jobTracking.Job is not { } job) // HardLight
                 continue;
 
-            if (job == component.MercenaryJob)
+            var stationUid = ResolveTrackedEntityStation(jobTrackedEntity, jobTracking, xform, stations); // HardLight
+            if (stationUid is not { } resolvedStation // HardLight
+                || !stations.TryGetValue(resolvedStation, out var counts))
+                continue;
+
+            if (IsMercenaryJob(job, component)) // HardLight
                 counts.filledMercenary++;
             else
                 counts.staffedNonMercenary++;
 
-            stations[jobTracking.SpawnStation] = counts;
+            stations[resolvedStation] = counts; // HardLight: jobTracking.SpawnStation<resolvedStation
         }
 
         foreach (var (stationUid, counts) in stations)
@@ -165,5 +176,32 @@ public sealed class DynamicJobAllocationRule : StationEventSystem<DynamicJobAllo
 
             _stationJobs.TrySetJobSlot(stationUid, component.MercenaryJob, availableSlots);
         }
+    }
+
+    // HardLight: Handle stale SpawnStation references after round transitions by resolving current station ownership.
+    private EntityUid? ResolveTrackedEntityStation(
+        EntityUid trackedEntity,
+        JobTrackingComponent jobTracking,
+        TransformComponent xform,
+        Dictionary<EntityUid, (int staffedNonMercenary, int filledMercenary)> stations)
+    {
+        // Fast path: if spawn station is still valid for this round, keep using it.
+        if (stations.ContainsKey(jobTracking.SpawnStation))
+            return jobTracking.SpawnStation;
+
+        // Round transitions can invalidate stored spawn station UIDs; resolve the current owner.
+        var owningStation = _stationSystem.GetOwningStation(trackedEntity, xform);
+        if (owningStation is not { } stationUid || !stations.ContainsKey(stationUid))
+            return null;
+
+        // Use resolved station for this calculation pass without mutating shared tracking state.
+        return stationUid;
+    }
+
+    // HardLight: Count both current and legacy freelancer ids as mercenary-equivalent for slot accounting.
+    private static bool IsMercenaryJob(ProtoId<JobPrototype> jobId, DynamicJobAllocationRuleComponent component)
+    {
+        return string.Equals(jobId, component.MercenaryJob, StringComparison.Ordinal)
+               || string.Equals(jobId, LegacyFreelancerJobId, StringComparison.Ordinal);
     }
 }

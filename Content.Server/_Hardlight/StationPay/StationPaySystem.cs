@@ -12,6 +12,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
+using Robust.Shared.Enums; // HardLight
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -34,6 +35,7 @@ public sealed class StationPaySystem : EntitySystem
     private readonly Dictionary<ProtoId<JobPrototype>, int> _jobPayoutRates = new();
     private OrderedDictionary<EntityUid, int> _scheduledPayouts = new();
     private bool _roundEndProcessed; // ensure payouts run once per round
+    private bool _pendingRoundStartResync; // HardLight
 
     public override void Initialize()
     {
@@ -74,6 +76,7 @@ public sealed class StationPaySystem : EntitySystem
         if (ev.New == GameRunLevel.InRound)
         {
             _roundEndProcessed = false;
+            _pendingRoundStartResync = true; // HardLight
             return;
         }
 
@@ -123,33 +126,53 @@ public sealed class StationPaySystem : EntitySystem
 
         if (uid == null
             || !TryComp<BankAccountComponent>(uid, out _)
-            || !GetJobForEntity(uid, out var job)
+            || !GetJobForEntity(uid, out _) // HardLight: out var job<out _
            )
         {
             //Log.Debug($"[stationpay] Character {args.Mind.CharacterName} joined but was not valid for station pay");
             return;
-        } 
-
-        var now = (int)_gameTicker.RoundDuration().TotalSeconds;
-        //Log.Debug($"[stationpay] Character {args.Mind.CharacterName}/{uid} joined with job ${job.Value.Id}. Round time: {now}, payout: {now + PayoutDelay}");
-
-        if (uid.HasValue)
-        {
-            // if they already have a scheduled payout, we don't need to do anything
-            if (_scheduledPayouts.ContainsKey(uid.Value))
-            {
-                //Log.Debug($"[stationpay] Character {args.Mind.CharacterName} already has a scheduled payout");
-                return;
-            }
-
-            // schedule their first payout for 1 hour after the round start
-            // this is so that they get paid for the time they worked before they joined
-                _scheduledPayouts.Insert(
-                    _scheduledPayouts.Count,
-                    uid.Value,
-                    (int)_gameTicker.RoundDuration().TotalSeconds + PayoutDelay
-                );
         }
+
+        TrySchedulePayout(uid.Value); // HardLight
+    }
+
+    // HardLight: Rebuild payout schedules at round start for valid in-game entities that may have persisted across transitions.
+    private void ResyncScheduledPayoutsForCurrentRound()
+    {
+        var query = EntityQueryEnumerator<JobTrackingComponent, BankAccountComponent, MindContainerComponent>();
+        while (query.MoveNext(out var uid, out _, out _, out var mindContainer))
+        {
+            if (!mindContainer.HasMind)
+                continue;
+
+            if (!TryComp<MindComponent>(mindContainer.Mind.Value, out var mind))
+                continue;
+
+            if (!_player.TryGetSessionById(mind.UserId, out var session)
+                || session.Status != SessionStatus.InGame
+                || session.AttachedEntity != uid)
+                continue;
+
+            if (!GetJobForEntity(uid, out _))
+                continue;
+
+            TrySchedulePayout(uid);
+        }
+    }
+
+    // HardLight: Idempotent scheduling helper shared by role-added flow and round-start resync.
+    private void TrySchedulePayout(EntityUid uid)
+    {
+        // if they already have a scheduled payout, we don't need to do anything
+        if (_scheduledPayouts.ContainsKey(uid))
+            return;
+
+        // schedule their first payout from now.
+        _scheduledPayouts.Insert(
+            _scheduledPayouts.Count,
+            uid,
+            (int)_gameTicker.RoundDuration().TotalSeconds + PayoutDelay
+        );
     }
 
     private void OnRoleRemovedEvent(RoleRemovedEvent args)
@@ -227,6 +250,13 @@ public sealed class StationPaySystem : EntitySystem
 
     public override void Update(float frameTime)
     {
+        // HardLight: Run round-start resync once after entering InRound to restore missed schedules.
+        if (_pendingRoundStartResync)
+        {
+            _pendingRoundStartResync = false;
+            ResyncScheduledPayoutsForCurrentRound();
+        }
+
         var now = (int)_gameTicker.RoundDuration().TotalSeconds;
         var updated = new Lazy<OrderedDictionary<EntityUid, int>>(() => new OrderedDictionary<EntityUid, int>(_scheduledPayouts));
 

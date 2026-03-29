@@ -5,10 +5,12 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
+using Content.Shared._NF.Roles.Components; // HardLight
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.CrewManifest;
 using Content.Shared.GameTicking;
+using Content.Shared.Mind.Components; // HardLight
 using Content.Shared.Roles;
 using Content.Shared.StationRecords;
 using Robust.Shared.Configuration;
@@ -16,12 +18,6 @@ using Robust.Shared.Console;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-// HardLight start
-using Content.Shared.Mind.Components;
-using Content.Shared.Roles.Jobs;
-using Robust.Server.Player;
-using Robust.Shared.Enums;
-// HardLight end
 
 namespace Content.Server.CrewManifest;
 
@@ -32,8 +28,6 @@ public sealed class CrewManifestSystem : EntitySystem
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!; // HardLight
-    [Dependency] private readonly SharedJobSystem _jobs = default!; // HardLight
 
     /// <summary>
     ///     Cached crew manifest entries. The alternative is to outright
@@ -49,7 +43,8 @@ public sealed class CrewManifestSystem : EntitySystem
         SubscribeLocalEvent<AfterGeneralRecordCreatedEvent>(AfterGeneralRecordCreated);
         SubscribeLocalEvent<RecordModifiedEvent>(OnRecordModified);
         SubscribeLocalEvent<RecordRemovedEvent>(OnRecordRemoved);
-        /* SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart); */
+        SubscribeLocalEvent<MindAddedMessage>(OnMindAddedGlobal); // HardLight
+        SubscribeLocalEvent<MindRemovedMessage>(OnMindRemovedGlobal); // HardLight
         SubscribeNetworkEvent<RequestCrewManifestMessage>(OnRequestCrewManifest);
 
         SubscribeLocalEvent<CrewManifestViewerComponent, BoundUIClosedEvent>(OnBoundUiClose);
@@ -100,6 +95,33 @@ public sealed class CrewManifestSystem : EntitySystem
     {
         BuildCrewManifest(ev.Key.OriginStation);
         UpdateEuis(ev.Key.OriginStation);
+    }
+
+    // HardLight: Refresh manifest rows when an entity regains a mind.
+    private void OnMindAddedGlobal(MindAddedMessage args)
+    {
+        RefreshStationManifestForTrackedEntity(args.Container.Owner);
+    }
+
+    // HardLight: Refresh manifest rows when an entity loses a mind so stale entries are removed immediately.
+    private void OnMindRemovedGlobal(MindRemovedMessage args)
+    {
+        RefreshStationManifestForTrackedEntity(args.Container.Owner);
+    }
+
+    // HardLight: Rebuild/update only the owning station manifest for job-tracked entities affected by mind changes.
+    private void RefreshStationManifestForTrackedEntity(EntityUid entity)
+    {
+        if (!TryComp<JobTrackingComponent>(entity, out var jobTracking))
+            return;
+
+        var station = _stationSystem.GetOwningStation(entity) ?? jobTracking.SpawnStation;
+
+        if (!HasComp<StationRecordsComponent>(station))
+            return;
+
+        BuildCrewManifest(station);
+        UpdateEuis(station);
     }
 
     private void OnBoundUiClose(EntityUid uid, CrewManifestViewerComponent component, BoundUIClosedEvent ev)
@@ -231,55 +253,53 @@ public sealed class CrewManifestSystem : EntitySystem
     /// <param name="station"></param>
     private void BuildCrewManifest(EntityUid station)
     {
-        var iter = _recordsSystem.GetRecordsOfType<GeneralStationRecord>(station);
-
         var entries = new CrewManifestEntries();
 
-        var entriesSort = new List<(JobPrototype? job, CrewManifestEntry entry)>();
-        var dedupe = new HashSet<(string Name, string JobTitle, string JobPrototype)>(); // HardLight
-        foreach (var recordObject in iter)
+        // HardLight: Build authoritative live crew rows from actively-minded, in-round job-tracked entities.
+        // Station records are used later only to decorate these rows (e.g. custom job titles).
+        var liveCrew = new Dictionary<(string Name, string JobPrototype), (JobPrototype? Job, string JobTitle, string JobIcon)>();
+        var query = EntityQueryEnumerator<JobTrackingComponent, TransformComponent, MetaDataComponent, MindContainerComponent>();
+        while (query.MoveNext(out var uid, out var jobTracking, out var xform, out var metaData, out var mindContainer))
         {
-            var record = recordObject.Item2;
-            var entry = new CrewManifestEntry(record.Name, record.JobTitle, record.JobIcon, record.JobPrototype);
-
-            _prototypeManager.TryIndex(record.JobPrototype, out JobPrototype? job);
-            entriesSort.Add((job, entry));
-            dedupe.Add((entry.Name, entry.JobTitle, entry.JobPrototype)); // HardLight
-        }
-
-        // HardLight start: Supplement station records with live in-game crew entries.
-        // This keeps the manifest complete across station transitions while dedupe avoids duplicate rows.
-        foreach (var session in _playerManager.NetworkedSessions)
-        {
-            if (session.Status != SessionStatus.InGame || session.AttachedEntity is not { } attached)
+            if (!jobTracking.Active
+                || !mindContainer.HasMind
+                || jobTracking.Job is not { } jobId)
                 continue;
 
-            if (_stationSystem.GetOwningStation(attached) != station)
+            if (_stationSystem.GetOwningStation(uid, xform) != station)
                 continue;
-
-            var name = MetaData(attached).EntityName;
 
             JobPrototype? jobPrototype = null;
             var jobTitle = Loc.GetString("generic-unknown-title");
             var jobIcon = string.Empty;
-            var jobId = string.Empty;
+            var jobIdString = jobId.ToString();
 
-            if (TryComp<MindContainerComponent>(attached, out var mindContainer)
-                && _jobs.MindTryGetJob(mindContainer.Mind, out var proto))
+            if (_prototypeManager.TryIndex(jobId, out var indexedJob))
             {
-                jobPrototype = proto;
-                jobTitle = proto.LocalizedName;
-                jobIcon = proto.Icon;
-                jobId = proto.ID;
+                jobPrototype = indexedJob;
+                jobTitle = indexedJob.LocalizedName;
+                jobIcon = indexedJob.Icon;
             }
 
-            if (!dedupe.Add((name, jobTitle, jobId)))
+            liveCrew[(metaData.EntityName, jobIdString)] = (jobPrototype, jobTitle, jobIcon);
+        }
+
+        // HardLight: If a station record exists for an active crew member, prefer record-provided title/icon.
+        // This preserves custom job title edits while preventing stale record-only entries.
+        foreach (var (_, record) in _recordsSystem.GetRecordsOfType<GeneralStationRecord>(station))
+        {
+            var key = (record.Name, record.JobPrototype);
+            if (!liveCrew.TryGetValue(key, out var live))
                 continue;
 
-            var liveEntry = new CrewManifestEntry(name, jobTitle, jobIcon, jobId);
-            entriesSort.Add((jobPrototype, liveEntry));
+            liveCrew[key] = (live.Job, record.JobTitle, record.JobIcon);
         }
-        // HardLight end
+
+        var entriesSort = new List<(JobPrototype? job, CrewManifestEntry entry)>(); // HardLight
+        foreach (var ((name, jobPrototypeId), (job, jobTitle, jobIcon)) in liveCrew) // HardLight
+        {
+            entriesSort.Add((job, new CrewManifestEntry(name, jobTitle, jobIcon, jobPrototypeId)));
+        }
 
         entriesSort.Sort((a, b) =>
         {

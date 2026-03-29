@@ -222,7 +222,7 @@
   name: big-name
   description: big-text
   category: Physical
-  cost: 6
+  cost: 2
   replaceComponents: true
   mutuallyExclusiveTraits:
   - Small
@@ -261,7 +261,7 @@
   name: small-name
   description: small-text
   category: Physical
-  cost: 6
+  cost: 0
   mutuallyExclusiveTraits:
   - Big
   - Tiny
@@ -296,7 +296,7 @@
   name: tiny-name
   description: tiny-text
   category: Physical
-  cost: 6
+  cost: -2
   mutuallyExclusiveTraits:
   - Big
   - Small

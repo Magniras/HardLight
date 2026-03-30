@@ -2098,3 +2098,9 @@ Entries:
         players join and leave.
   id: 227
   time: '2026-03-29T19:41:34.0000000+00:00'
+- author: Iisazel
+  changes:
+    - type: Add
+      message: Added 4 gauge and 12 gauge brass ammunition
+  id: 228
+  time: '2026-03-29T22:59:12.0000000+00:00'

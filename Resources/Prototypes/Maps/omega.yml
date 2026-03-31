@@ -13,8 +13,8 @@
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: 'TG'
-        - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_omega.yml
+        #- type: StationEmergencyShuttle
+        #  emergencyShuttlePath: /Maps/Shuttles/emergency_omega.yml
         - type: StationJobs
           availableJobs: # 48 jobs total w/o latejoins & interns, 57 jobs total w/ latejoins & interns
             #command (7)

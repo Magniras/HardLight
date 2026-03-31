@@ -22,6 +22,10 @@ public sealed partial class DungeonJob
         {
             var node = tileRef.Value.GridIndices;
 
+            // HardLight: Skip empty tiles
+            if (tileRef.Value.Tile.IsEmpty)
+                continue;
+
             if (reservedTiles.Contains(node))
                 continue;
 

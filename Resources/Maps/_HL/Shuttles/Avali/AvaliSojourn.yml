@@ -8546,10 +8546,6 @@ entities:
           occludes: True
           ents:
           - 91
-    - type: PowerNetworkBattery
-      loadingNetworkDemand: 24475.922
-      currentReceiving: 24476.273
-      currentSupply: 24475.922
 - proto: TableBrass
   entities:
   - uid: 508

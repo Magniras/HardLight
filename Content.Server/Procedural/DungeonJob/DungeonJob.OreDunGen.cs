@@ -31,6 +31,10 @@ public sealed partial class DungeonJob
         {
             var tile = tileRef.Value.GridIndices;
 
+            // HardLight: Skip empty tiles since they won't be visible and may be used for other purposes.
+            if (tileRef.Value.Tile.IsEmpty)
+                continue;
+
             //Tile mask filtering
             if (gen.TileMask is not null)
             {
@@ -42,7 +46,9 @@ public sealed partial class DungeonJob
             if (gen.EntityMask is not null)
             {
                 var found = false;
+                var blocked = false; // HardLight
                 var enumerator2 = _maps.GetAnchoredEntitiesEnumerator(_gridUid, _grid, tile);
+
                 while (enumerator2.MoveNext(out var uid))
                 {
                     var prototype = _entManager.GetComponent<MetaDataComponent>(uid.Value).EntityPrototype;
@@ -50,20 +56,35 @@ public sealed partial class DungeonJob
                     if (prototype?.ID is null)
                         continue;
 
-                    if (!gen.EntityMask.Contains(prototype.ID))
-                        continue;
+                    // HardLight: If the tile contains an entity matching the mask,
+                    // we can replace it but not add ores to the same tile as other anchored content.
+                    if (gen.EntityMask.Contains(prototype.ID))
+                    {
+                        // Keep the first matching entity for replacement.
+                        if (!found)
+                            replaceEntities[tile] = uid.Value;
 
-                    replaceEntities[tile] = uid.Value;
-                    found = true;
+                        found = true;
+                        continue;
+                    }
+
+                    // HardLight: If mixed with any other anchored entity, do not touch this tile.
+                    blocked = true;
+                    break;
                 }
 
-                if (!found)
+                if (!found || blocked) // HardLight: Added blocked
                     continue;
             }
             else
             {
-                //If entity mask null - we ignore the tiles that have anything on them.
+                // If entity mask null - we ignore the tiles that have anything on them.
                 if (!_anchorable.TileFree(_grid, tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
+                    continue;
+
+                var anchored = _maps.GetAnchoredEntitiesEnumerator(_gridUid, _grid, tile); // HardLight
+                // HardLight: Do not place ores on tiles that already contain anchored map content.
+                if (anchored.MoveNext(out _))
                     continue;
             }
 

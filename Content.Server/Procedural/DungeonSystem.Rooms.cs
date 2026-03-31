@@ -153,7 +153,9 @@ public sealed partial class DungeonSystem
 
         var finalRoomRotation = roomTransform.Rotation();
 
-        var roomCenter = (room.Offset + room.Size / 2f) * grid.TileSize;
+        // HardLight: CachedRoomTile.LocalIndices are room-local, so tile transform must use
+        // room-local center. Using atlas offset here shifts floors/walls away from room entities.
+        var roomCenter = (Vector2) roomDimensions / 2f * grid.TileSize; // HardLight
         var tileOffset = -roomCenter + grid.TileSizeHalfVector;
         _tiles.Clear();
 
@@ -346,6 +348,16 @@ public sealed partial class DungeonSystem
                 continue;
 
             var xform = _xformQuery.GetComponent(entity);
+            var tile = xform.LocalPosition.Floored(); // HardLight
+
+            // HardLight: Intersections can include neighboring-room entities whose bounds cross edges.
+            // Cache only entities whose origin tile is strictly inside this room rectangle.
+            if (tile.X < room.Offset.X || tile.Y < room.Offset.Y ||
+                tile.X >= room.Offset.X + room.Size.X || tile.Y >= room.Offset.Y + room.Size.Y)
+            {
+                continue;
+            }
+
             cachedEntities.Add(new CachedRoomEntity(
                 prototypeId,
                 xform.LocalPosition - roomCenter,
@@ -358,6 +370,15 @@ public sealed partial class DungeonSystem
         {
             foreach (var (_, decal) in _decals.GetDecalsIntersecting(templateGridUid, tileBounds, loadedDecals))
             {
+                var tile = decal.Coordinates.Floored(); // HardLight
+
+                // HardLight: Intersections can include neighboring-room decals whose bounds cross edges.
+                if (tile.X < room.Offset.X || tile.Y < room.Offset.Y ||
+                    tile.X >= room.Offset.X + room.Size.X || tile.Y >= room.Offset.Y + room.Size.Y)
+                {
+                    continue;
+                }
+
                 cachedDecals.Add(new CachedRoomDecal(
                     decal.Id,
                     decal.Coordinates + templateGrid.TileSizeHalfVector - roomCenter,

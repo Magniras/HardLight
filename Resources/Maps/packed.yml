@@ -81002,8 +81002,6 @@ entities:
     - type: Transform
       pos: 14.5,35.5
       parent: 2
-    - type: PowerNetworkBattery
-      supplyRampPosition: 2.3437593
   - uid: 2039
     components:
     - type: MetaData
@@ -81032,8 +81030,6 @@ entities:
     - type: Transform
       pos: 10.5,-25.5
       parent: 2
-    - type: PowerNetworkBattery
-      supplyRampPosition: 2.3437593
   - uid: 4431
     components:
     - type: MetaData
@@ -81041,8 +81037,6 @@ entities:
     - type: Transform
       pos: 4.5,-36.5
       parent: 2
-    - type: PowerNetworkBattery
-      supplyRampPosition: 2.3437593
   - uid: 4613
     components:
     - type: Transform
@@ -81055,10 +81049,6 @@ entities:
     - type: Transform
       pos: 70.5,44.5
       parent: 2
-    - type: PowerNetworkBattery
-      loadingNetworkDemand: 10.019571
-      currentSupply: 10.019571
-      supplyRampPosition: 10.019571
   - uid: 6199
     components:
     - type: MetaData
@@ -81073,8 +81063,6 @@ entities:
     - type: Transform
       pos: 50.5,27.5
       parent: 2
-    - type: PowerNetworkBattery
-      supplyRampPosition: 2.3437593
   - uid: 7576
     components:
     - type: MetaData
@@ -81094,10 +81082,6 @@ entities:
     - type: Transform
       pos: 112.5,-15.5
       parent: 2
-    - type: PowerNetworkBattery
-      loadingNetworkDemand: 60.000237
-      currentReceiving: 60.000237
-      currentSupply: 60.000237
   - uid: 9041
     components:
     - type: MetaData

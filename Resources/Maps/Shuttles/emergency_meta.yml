@@ -6196,11 +6196,6 @@ entities:
     - type: Transform
       pos: 18.5,0.5
       parent: 1
-    - type: PowerNetworkBattery
-      loadingNetworkDemand: 18076.947
-      currentReceiving: 18075.072
-      currentSupply: 18076.947
-      supplyRampPosition: 1.875
     - type: ContainerContainer
       containers:
         machine_board: !type:Container

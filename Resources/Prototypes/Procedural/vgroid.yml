@@ -14,15 +14,15 @@
       proto: VGRoidBlob
     - !type:PrototypeDunGen
       proto: VGRoidExterior
-    - !type:PrototypeDunGen
-      proto: VGRoidSmaller
-    - !type:PrototypeDunGen
-      proto: VGRoidSmallPaths
     - !type:EntityTableDunGen
       minCount: 7
       maxCount: 12
       table:
         id: VGRoidInteriorRoomMarker
+    - !type:PrototypeDunGen # HardLight: Relocated down
+      proto: VGRoidSmaller
+    - !type:PrototypeDunGen # HardLight: Relocated down
+      proto: VGRoidSmallPaths
     # Fill
     - !type:PrototypeDunGen
       proto: VGRoidFill

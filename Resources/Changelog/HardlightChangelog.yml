@@ -2172,3 +2172,13 @@ Entries:
       message: Affected substations should no longer start in dysfunctional states.
   id: 233
   time: '2026-03-31T19:26:38.0000000+00:00'
+- author: rtasva
+  changes:
+    - type: Add
+      message: New ColComm! (Not yet implemented into round logic)
+    - type: Add
+      message: New CC PSA posters
+    - type: Add
+      message: New barsign
+  id: 234
+  time: '2026-03-31T19:30:33.0000000+00:00'

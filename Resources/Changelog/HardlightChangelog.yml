@@ -2188,3 +2188,9 @@ Entries:
       message: rules 2.5 and 11.5
   id: 235
   time: '2026-03-31T22:24:30.0000000+00:00'
+- author: Illumos
+  changes:
+    - type: Tweak
+      message: Bluespace lockers no longer silently delete materials on deconstruction.
+  id: 236
+  time: '2026-04-02T03:50:57.0000000+00:00'

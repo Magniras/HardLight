@@ -11,6 +11,9 @@
     tags:
     - BorgModuleGeneric
     - BorgModuleScience #until sciborgs are added
+    - BorgModuleSyndicate # Hardlight
+    - BorgModuleSyndicateAssault # Hardlight
+    - XenoborgModuleGeneric # Hardlight
 
   defaultModules:
   - BorgModuleTool
@@ -41,6 +44,9 @@
     tags:
     - BorgModuleGeneric
     - BorgModuleEngineering
+    - BorgModuleSyndicate # Hardlight
+    - BorgModuleSyndicateAssault # Hardlight
+    - XenoborgModuleGeneric # Hardlight
 
   defaultModules:
   - BorgModuleTool
@@ -75,6 +81,9 @@
     tags:
     - BorgModuleGeneric
     - BorgModuleCargo
+    - BorgModuleSyndicate # Hardlight
+    - BorgModuleSyndicateAssault # Hardlight
+    - XenoborgModuleGeneric # Hardlight
 
   defaultModules:
   - BorgModuleTool
@@ -110,6 +119,9 @@
     tags:
     - BorgModuleGeneric
     - BorgModuleJanitor
+    - BorgModuleSyndicate # Hardlight
+    - BorgModuleSyndicateAssault # Hardlight
+    - XenoborgModuleGeneric # Hardlight
 
   defaultModules:
   - BorgModuleTool # Starlight
@@ -144,6 +156,9 @@
     tags:
     - BorgModuleGeneric
     - BorgModuleMedical
+    - BorgModuleSyndicate # Hardlight
+    - BorgModuleSyndicateAssault # Hardlight
+    - XenoborgModuleGeneric # Hardlight
 
   defaultModules:
   - BorgModuleTool # Starlight
@@ -193,6 +208,9 @@
     tags:
     - BorgModuleGeneric
     - BorgModuleService
+    - BorgModuleSyndicate # Hardlight
+    - BorgModuleSyndicateAssault # Hardlight
+    - XenoborgModuleGeneric # Hardlight
 
   defaultModules:
   - BorgModuleTool # Starlight

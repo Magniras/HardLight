@@ -54,6 +54,9 @@ public sealed class AphrodesiacBiteSystem : EntitySystem
 
         var solution = new Solution(bite.Reagent, bite.Amount);
         if (_bloodstream.TryAddToChemicals(target, solution, bloodstream))
+        {
             _audio.PlayPvs(bite.Sound, user);
+            _actions.StartUseDelay(bite.ActionEntity);
+        }
     }
 }

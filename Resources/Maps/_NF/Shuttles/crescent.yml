@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 10/02/2025 23:34:53
-  entityCount: 3717
+  entityCount: 3709
 maps: []
 grids:
 - 1
@@ -19042,48 +19042,6 @@ entities:
     components:
     - type: Transform
       pos: -5.5,5.5
-      parent: 1
-- proto: SpawnPointLatejoin
-  entities:
-  - uid: 2651
-    components:
-    - type: Transform
-      pos: -9.5,10.5
-      parent: 1
-  - uid: 2652
-    components:
-    - type: Transform
-      pos: -6.5,10.5
-      parent: 1
-  - uid: 2653
-    components:
-    - type: Transform
-      pos: -3.5,10.5
-      parent: 1
-  - uid: 2654
-    components:
-    - type: Transform
-      pos: -3.5,18.5
-      parent: 1
-  - uid: 2655
-    components:
-    - type: Transform
-      pos: -6.5,18.5
-      parent: 1
-  - uid: 2656
-    components:
-    - type: Transform
-      pos: -9.5,18.5
-      parent: 1
-  - uid: 2657
-    components:
-    - type: Transform
-      pos: 7.5,10.5
-      parent: 1
-  - uid: 2658
-    components:
-    - type: Transform
-      pos: 10.5,10.5
       parent: 1
 - proto: SprayBottleWater
   entities:

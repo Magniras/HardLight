@@ -1411,14 +1411,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 7.5,3.5
       parent: 1
-- proto: SpawnPointLatejoin
-  entities:
-  - uid: 90
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 2.5,0.5
-      parent: 1
 - proto: SubstationWallBasic
   entities:
   - uid: 141

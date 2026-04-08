@@ -1352,13 +1352,6 @@ entities:
     - type: Transform
       pos: -0.5,3.5
       parent: 2
-- proto: SpawnPointLatejoin
-  entities:
-  - uid: 165
-    components:
-    - type: Transform
-      pos: 0.5,1.5
-      parent: 2
 - proto: SubstationWallBasic
   entities:
   - uid: 112

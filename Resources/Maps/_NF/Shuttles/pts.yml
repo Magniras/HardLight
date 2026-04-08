@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 10/04/2025 20:22:41
-  entityCount: 196
+  entityCount: 195
 maps: []
 grids:
 - 1
@@ -1337,13 +1337,6 @@ entities:
     components:
     - type: Transform
       pos: -0.5,3.5
-      parent: 1
-- proto: SpawnPointLatejoin
-  entities:
-  - uid: 156
-    components:
-    - type: Transform
-      pos: 0.5,1.5
       parent: 1
 - proto: SubstationWallBasic
   entities:

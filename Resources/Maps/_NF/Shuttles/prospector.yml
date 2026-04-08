@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 10/04/2025 20:21:50
-  entityCount: 258
+  entityCount: 257
 maps: []
 grids:
 - 1
@@ -1882,14 +1882,6 @@ entities:
     components:
     - type: Transform
       pos: -1.4040418,3.4808154
-      parent: 1
-- proto: SpawnPointLatejoin
-  entities:
-  - uid: 210
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -2.5,-0.5
       parent: 1
 - proto: StructureMeleeWeaponRackWallmountedSalvageFilled
   entities:

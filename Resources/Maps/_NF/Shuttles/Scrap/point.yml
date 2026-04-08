@@ -1978,13 +1978,6 @@ entities:
     - type: Transform
       pos: 1.5,10.5
       parent: 1
-- proto: SpawnPointLatejoin
-  entities:
-  - uid: 263
-    components:
-    - type: Transform
-      pos: 3.5,1.5
-      parent: 1
 - proto: SubstationBasic
   entities:
   - uid: 55

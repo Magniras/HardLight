@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 10/04/2025 20:46:26
-  entityCount: 727
+  entityCount: 724
 maps: []
 grids:
 - 1
@@ -4445,25 +4445,6 @@ entities:
     components:
     - type: Transform
       pos: 5.5,4.5
-      parent: 1
-- proto: SpawnPointLatejoin
-  entities:
-  - uid: 549
-    components:
-    - type: Transform
-      pos: 4.5,3.5
-      parent: 1
-  - uid: 550
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 2.5,3.5
-      parent: 1
-  - uid: 551
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 3.5,3.5
       parent: 1
 - proto: SpawnVehicleATV
   entities:

@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 10/04/2025 20:44:38
-  entityCount: 2553
+  entityCount: 2552
 maps: []
 grids:
 - 1
@@ -14478,13 +14478,6 @@ entities:
       name: SMES 1
     - type: Transform
       pos: 1.5,-10.5
-      parent: 1
-- proto: SpawnPointLatejoin
-  entities:
-  - uid: 2079
-    components:
-    - type: Transform
-      pos: -2.5,-10.5
       parent: 1
 - proto: Spear
   entities:

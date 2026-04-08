@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 11/08/2025 20:02:03
-  entityCount: 431
+  entityCount: 430
 maps: []
 grids:
 - 1
@@ -3286,14 +3286,6 @@ entities:
     components:
     - type: Transform
       pos: 5.5,-2.5
-      parent: 1
-- proto: SpawnPointLatejoin
-  entities:
-  - uid: 388
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 0.5,5.5
       parent: 1
 - proto: SpawnRandomDrinkMug
   entities:

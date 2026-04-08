@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 10/04/2025 20:02:36
-  entityCount: 231
+  entityCount: 230
 maps: []
 grids:
 - 1
@@ -1326,13 +1326,6 @@ entities:
     components:
     - type: Transform
       pos: -0.5,12.5
-      parent: 1
-- proto: SpawnPointLatejoin
-  entities:
-  - uid: 169
-    components:
-    - type: Transform
-      pos: 2.5,10.5
       parent: 1
 - proto: StatueBananiumClown
   entities:

@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 10/02/2025 20:23:25
-  entityCount: 1037
+  entityCount: 1036
 maps: []
 grids:
 - 1
@@ -5883,13 +5883,6 @@ entities:
     components:
     - type: Transform
       pos: -4.5,7.5
-      parent: 1
-- proto: SpawnPointLatejoin
-  entities:
-  - uid: 917
-    components:
-    - type: Transform
-      pos: 0.5,6.5
       parent: 1
 - proto: SteelBench
   entities:

@@ -22,7 +22,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 07/06/2025 06:46:35
-  entityCount: 550
+  entityCount: 549
 maps: []
 grids:
 - 1
@@ -2926,13 +2926,6 @@ entities:
     components:
     - type: Transform
       pos: -4.5,0.5
-      parent: 1
-- proto: SpawnPointLatejoin
-  entities:
-  - uid: 361
-    components:
-    - type: Transform
-      pos: -4.5,7.5
       parent: 1
 - proto: StructureGunRackNfsd
   entities:

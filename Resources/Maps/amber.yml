@@ -119301,18 +119301,6 @@ entities:
     - type: Transform
       pos: -27.217897,6.6993713
       parent: 2
-- proto: NFMagazineSubMachineGunTopMounted35
-  entities:
-  - uid: 16633
-    components:
-    - type: Transform
-      pos: -20.910439,10.684546
-      parent: 2
-  - uid: 16634
-    components:
-    - type: Transform
-      pos: -20.798544,10.503175
-      parent: 2
 - proto: NFMagnetBoxOre
   entities:
   - uid: 16635
@@ -119352,13 +119340,6 @@ entities:
     components:
     - type: Transform
       pos: -22.494625,-3.1906652
-      parent: 2
-- proto: NFWeaponSubMachineGunWt550
-  entities:
-  - uid: 16639
-    components:
-    - type: Transform
-      pos: -21.319635,10.6595335
       parent: 2
 - proto: NitrogenCanister
   entities:

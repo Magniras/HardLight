@@ -26,13 +26,22 @@
     - Back
     - suitStorage
   - type: ProjectileBatteryAmmoProvider
-    proto: HLBulletEsar550
+    proto: HLBulletEsar550Low
     fireCost: 100
+  - type: BatteryWeaponFireModes
+    fireModes:
+     - proto: HLBulletEsar550Low
+       fireCost: 100
+     - proto: HLBulletEsar550Medium
+       fireCost: 138.8
+     - proto: HLBulletEsar550High
+       fireCost: 166.6
   - type: Gun
     fireRate: 5.5
     selectedMode: FullAuto
     availableModes:
     - FullAuto
+    - SemiAuto
     soundGunshot:
       path: /Audio/_DV/Weapons/Guns/Gunshots/laser.ogg
   - type: ItemSlots
@@ -57,7 +66,6 @@
   id: WeaponCaseLongESAR550
   description: A case containing the Head of Security's ESAR-550 and 3 additional magazines.
   suffix: DO NOT MAP
-#  categories: [ HideSpawnMenu ]
   components:
   - type: StorageFill
     contents:

@@ -123005,23 +123005,6 @@ entities:
     - type: Transform
       pos: 5.6419134,33.421196
       parent: 2
-- proto: Magazine46x30mmSubMachineGunTopMountedFMJ
-  entities:
-  - uid: 16737
-    components:
-    - type: Transform
-      pos: -11.303345,32.805614
-      parent: 2
-  - uid: 16738
-    components:
-    - type: Transform
-      pos: -11.242191,32.585464
-      parent: 2
-  - uid: 16739
-    components:
-    - type: Transform
-      pos: -11.401188,32.414234
-      parent: 2
 - proto: MailingUnit
   entities:
   - uid: 16740
@@ -172093,13 +172076,6 @@ entities:
     components:
     - type: Transform
       pos: 2.479784,33.47997
-      parent: 2
-- proto: WeaponSubMachineGunWt550
-  entities:
-  - uid: 24181
-    components:
-    - type: Transform
-      pos: -11.817028,32.73223
       parent: 2
 - proto: WeaponTurretASM501
   entities:

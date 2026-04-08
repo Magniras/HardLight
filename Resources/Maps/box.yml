@@ -136784,22 +136784,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: MagazinePistolSubMachineGunTopMounted
-  entities:
-  - uid: 19694
-    components:
-    - type: Transform
-      pos: 14.262794,39.806297
-      parent: 2
-    - type: BallisticAmmoProvider
-      unspawnedCount: 30
-  - uid: 19695
-    components:
-    - type: Transform
-      pos: 14.247169,39.821922
-      parent: 2
-    - type: BallisticAmmoProvider
-      unspawnedCount: 30
 - proto: MagazineRifle
   entities:
   - uid: 19329
@@ -187192,13 +187176,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: WeaponSubMachineGunWt550
-  entities:
-  - uid: 27999
-    components:
-    - type: Transform
-      pos: 14.512794,39.540672
-      parent: 2
 - proto: WeedSpray
   entities:
   - uid: 28000

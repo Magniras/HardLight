@@ -117426,23 +117426,6 @@ entities:
       parent: 14828
     - type: Physics
       canCollide: False
-- proto: Magazine46x30mmSubMachineGunTopMountedFMJ
-  entities:
-  - uid: 16076
-    components:
-    - type: Transform
-      pos: -37.28008,41.839783
-      parent: 2
-  - uid: 16078
-    components:
-    - type: Transform
-      pos: -37.28008,42.089783
-      parent: 2
-  - uid: 16254
-    components:
-    - type: Transform
-      pos: -37.28008,41.949158
-      parent: 2
 - proto: Magazine556x45mmFMJ
   entities:
   - uid: 14844
@@ -152671,13 +152654,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: WeaponSubMachineGunWt550
-  entities:
-  - uid: 20482
-    components:
-    - type: Transform
-      pos: -37.296604,41.55438
-      parent: 2
 - proto: WeaponTurretM220
   entities:
   - uid: 20483

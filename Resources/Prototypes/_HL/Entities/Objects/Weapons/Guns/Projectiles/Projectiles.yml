@@ -33,8 +33,8 @@
       muzzleFlash: null
 
 - type: entity
-  id: HLBulletEsar550
-  name: ESAR Bolt
+  id: HLBulletEsar550Low
+  name: ESAR Low Bolt
   parent: BulletLaser
   categories: [ HideSpawnMenu ]
   components:
@@ -42,6 +42,44 @@
       damage:
         types:
           Heat: 14
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+      layers:
+      - state: omnilaser_greyscale
+        shader: unshaded
+        color: yellow
+    - type: Ammo
+      muzzleFlash: null
+
+- type: entity
+  id: HLBulletEsar550Medium
+  name: ESAR Medium Bolt
+  parent: BulletLaser
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Projectile
+      damage:
+        types:
+          Heat: 16
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+      layers:
+      - state: omnilaser_greyscale
+        shader: unshaded
+        color: orange
+    - type: Ammo
+      muzzleFlash: null
+
+- type: entity
+  id: HLBulletEsar550High
+  name: ESAR High Bolt
+  parent: BulletLaser
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Projectile
+      damage:
+        types:
+          Heat: 18
     - type: Sprite
       sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
       layers:

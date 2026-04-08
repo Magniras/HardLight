@@ -25,6 +25,16 @@
           - "reagent-effect-aphrodisiac-mild3"
           - "reagent-effect-aphrodisiac-mild4"
           - "reagent-effect-aphrodisiac-mild5"
+          - "reagent-effect-aphrodisiac-mild6"
+          - "reagent-effect-aphrodisiac-mild7"
+          - "reagent-effect-aphrodisiac-mild8"
+          - "reagent-effect-aphrodisiac-mild9"
+          - "reagent-effect-aphrodisiac-mild10"
+          - "reagent-effect-aphrodisiac-mild11"
+          - "reagent-effect-aphrodisiac-mild12"
+          - "reagent-effect-aphrodisiac-mild13"
+          - "reagent-effect-aphrodisiac-mild14"
+          - "reagent-effect-aphrodisiac-mild15"
         probability: 0.02
         conditions:
           - !type:ReagentThreshold

@@ -19,6 +19,16 @@
           - "reagent-effect-aphrodisiac-mild3"
           - "reagent-effect-aphrodisiac-mild4"
           - "reagent-effect-aphrodisiac-mild5"
+          - "reagent-effect-aphrodisiac-mild6"
+          - "reagent-effect-aphrodisiac-mild7"
+          - "reagent-effect-aphrodisiac-mild8"
+          - "reagent-effect-aphrodisiac-mild9"
+          - "reagent-effect-aphrodisiac-mild10"
+          - "reagent-effect-aphrodisiac-mild11"
+          - "reagent-effect-aphrodisiac-mild12"
+          - "reagent-effect-aphrodisiac-mild13"
+          - "reagent-effect-aphrodisiac-mild14"
+          - "reagent-effect-aphrodisiac-mild15"
         probability: 0.035
         conditions:
           - !type:ConsentCondition
@@ -29,7 +39,11 @@
         type: Local
         visualType: Medium
         messages:
-          - "reagent-effect-aphrodisiac-mildoverdose"
+          - "reagent-effect-aphrodisiac-mildoverdose1"
+          - "reagent-effect-aphrodisiac-mildoverdose2"
+          - "reagent-effect-aphrodisiac-mildoverdose3"
+          - "reagent-effect-aphrodisiac-mildoverdose4"
+          - "reagent-effect-aphrodisiac-mildoverdose5"
         probability: 0.06
         conditions:
           - !type:ConsentCondition
@@ -80,6 +94,16 @@
           - "reagent-effect-aphrodisiac-normal3"
           - "reagent-effect-aphrodisiac-normal4"
           - "reagent-effect-aphrodisiac-normal5"
+          - "reagent-effect-aphrodisiac-normal6"
+          - "reagent-effect-aphrodisiac-normal7"
+          - "reagent-effect-aphrodisiac-normal8"
+          - "reagent-effect-aphrodisiac-normal9"
+          - "reagent-effect-aphrodisiac-normal10"
+          - "reagent-effect-aphrodisiac-normal11"
+          - "reagent-effect-aphrodisiac-normal12"
+          - "reagent-effect-aphrodisiac-normal13"
+          - "reagent-effect-aphrodisiac-normal14"
+          - "reagent-effect-aphrodisiac-normal15"
         probability: 0.04
         conditions:
         - !type:ConsentCondition
@@ -96,6 +120,10 @@
           - "reagent-effect-aphrodisiac-normaloverdose4"
           - "reagent-effect-aphrodisiac-normaloverdose5"
           - "reagent-effect-aphrodisiac-normaloverdose6"
+          - "reagent-effect-aphrodisiac-normaloverdose7"
+          - "reagent-effect-aphrodisiac-normaloverdose8"
+          - "reagent-effect-aphrodisiac-normaloverdose9"
+          - "reagent-effect-aphrodisiac-normaloverdose10"
         probability: 0.06
         conditions:
         - !type:ConsentCondition

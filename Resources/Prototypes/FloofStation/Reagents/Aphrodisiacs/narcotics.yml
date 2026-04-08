@@ -18,6 +18,18 @@
         - reagent-effect-aphrodisiac-strong1
         - reagent-effect-aphrodisiac-strong2
         - reagent-effect-aphrodisiac-strong3
+        - reagent-effect-aphrodisiac-strong4
+        - reagent-effect-aphrodisiac-strong5
+        - reagent-effect-aphrodisiac-strong6
+        - reagent-effect-aphrodisiac-strong7
+        - reagent-effect-aphrodisiac-strong8
+        - reagent-effect-aphrodisiac-strong9
+        - reagent-effect-aphrodisiac-strong10
+        - reagent-effect-aphrodisiac-strong11
+        - reagent-effect-aphrodisiac-strong12
+        - reagent-effect-aphrodisiac-strong13
+        - reagent-effect-aphrodisiac-strong14
+        - reagent-effect-aphrodisiac-strong15
         conditions:
         - !type:ConsentCondition
           consent: Aphrodisiacs
@@ -39,6 +51,12 @@
         - reagent-effect-aphrodisiac-strongoverdose2
         - reagent-effect-aphrodisiac-strongoverdose3
         - reagent-effect-aphrodisiac-strongoverdose4
+        - reagent-effect-aphrodisiac-strongoverdose5
+        - reagent-effect-aphrodisiac-strongoverdose6
+        - reagent-effect-aphrodisiac-strongoverdose7
+        - reagent-effect-aphrodisiac-strongoverdose8
+        - reagent-effect-aphrodisiac-strongoverdose9
+        - reagent-effect-aphrodisiac-strongoverdose10
         conditions:
         - !type:ConsentCondition
           consent: Aphrodisiacs

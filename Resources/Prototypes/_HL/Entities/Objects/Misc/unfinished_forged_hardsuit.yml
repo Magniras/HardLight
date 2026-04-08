@@ -1,22 +1,21 @@
 
 - type: entity
   parent: BaseItem
-  id: UnfinishedRamblerForged
-  name: forged rambler parts
+  id: UnfinishedForgedHardsuit
+  name: forged hardsuit parts
   description: Some assembly may be required. Needs welding.
   components:
   - type: Item
     size: Large
   - type: Sprite
-    sprite: _HL/Objects/Weapons/Guns/Shotguns/forgedrambler.rsi
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/forgedhardsuit.rsi
     state: unfinished
-    scale: 0.7, 0.7
   - type: ToolRefinable
     refineResult:
-    - id: WeaponRamblerShotgun
+    - id: ClothingForgedHardsuit
   - type: Tag
     tags:
     - Metal
   - type: Construction
-    graph: ForgedRamblerGraph
-    node: shotgun
+    graph: ForgedHardsuitGraph
+    node: vest

@@ -1,0 +1,21 @@
+- type: constructionGraph
+  id: ForgedHardsuitGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: vest
+      steps:
+      - tag: SuitEVA
+        icon:
+          sprite: Clothing/OuterClothing/Suits/eva_emergency.rsi
+          state: icon
+        name: crafting-menu-name-EVA
+      - material: Steel
+        amount: 40
+        doAfter: 20
+      - material: Plasteel
+        amount: 30
+        doAfter: 15
+  - node: vest
+    entity: UnfinishedForgedHardsuit

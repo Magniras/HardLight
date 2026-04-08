@@ -1,0 +1,1 @@
+crafting-menu-name-EVA = emergency EVA suit

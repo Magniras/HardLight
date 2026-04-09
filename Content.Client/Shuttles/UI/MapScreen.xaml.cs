@@ -466,6 +466,9 @@ public sealed partial class MapScreen : BoxContainer
 
         var coordinates = _shuttles.GetMapCoordinates(mapObject);
 
+        if (coordinates.MapId == MapId.Nullspace) // HardLight
+            return;
+
         // If it's our map then scroll, otherwise just set position there.
         MapRadar.SetMap(coordinates.MapId, coordinates.Position, recentering: true);
     }

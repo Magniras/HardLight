@@ -80,7 +80,7 @@ public sealed partial class CCVars
     ///     How long the warmup time before FTL start should be.
     /// </summary>
     public static readonly CVarDef<float> FTLStartupTime =
-        CVarDef.Create("shuttle.startup_time", 1f, CVar.SERVERONLY);
+        CVarDef.Create("shuttle.startup_time", 5.5f, CVar.SERVERONLY);
 
     /// <summary>
     ///     How long a shuttle spends in FTL.

@@ -226,13 +226,7 @@ public sealed partial class SalvageSystem
 
         // Announce early finish with 20-second countdown
         const int departTime = 20;
-        if (xform.GridUid != null)
-        {
-            var filter = Filter.Empty().AddInGrid(xform.GridUid.Value);
-            var announcement = Loc.GetString("salvage-expedition-announcement-early-finish", ("departTime", departTime));
-            _chatSystem.DispatchFilteredAnnouncement(filter, announcement, entity,
-                sender: "Expedition Console", colorOverride: Color.Orange);
-        }
+        AnnounceEarlyFinishCountdown(entity, xform.GridUid, departTime); // HardLight
 
         Log.Info($"Early expedition finish initiated on console {ToPrettyString(entity)}, FTL in {departTime} seconds");
 
@@ -270,11 +264,16 @@ public sealed partial class SalvageSystem
         if (!TryComp(expeditionMapUid, out SalvageExpeditionComponent? expedition))
             return false;
 
+        // HardLight: Return has already been queued; treat this as handled to avoid duplicate countdown timers.
+        if (expedition.ReturnTriggered)
+            return true;
+
         if (expedition.Stage < ExpeditionStage.Running)
             return false;
 
         // HardLight start
         const int departTime = 20;
+        AnnounceEarlyFinishCountdown(consoleUid, xform.GridUid, departTime); // HardLight
         Log.Info($"Console-triggered early expedition finish on {expeditionMapUid}; FTL in {departTime} seconds");
         RobustTimer.Spawn(TimeSpan.FromSeconds(departTime), () =>
         {
@@ -305,63 +304,45 @@ public sealed partial class SalvageSystem
         const float ftlTime = 20f; // 20 seconds FTL time for early finish
         var shuttleQuery = AllEntityQuery<ShuttleComponent, TransformComponent>();
 
+        // HardLight start
+        if (!TryGetExpeditionReturnMap(out var returnMapUid, out var targetSource))
+        {
+            Log.Error($"Could not resolve expedition return map (DefaultMap or ColComm) for early finish on expedition {expeditionMapUid}.");
+            return;
+        }
+
+        var mapId = Comp<MapComponent>(returnMapUid).MapId;
+        var existingPositions = GetExistingGridPositions(mapId);
+        // HardLight end
+
         // Find shuttles on the expedition map and FTL them home
         while (shuttleQuery.MoveNext(out var shuttleUid, out var shuttle, out var shuttleXform))
         {
             if (shuttleXform.MapUid != expeditionMapUid || TryComp(shuttleUid, out FTLComponent? _))
                 continue;
 
-            // Find a destination on the default map
-            var mapId = _gameTicker.DefaultMap;
-            if (!_mapSystem.TryGetMap(mapId, out var mapUid))
-            {
-                Log.Error($"Could not get DefaultMap EntityUID, shuttle {shuttleUid} may be stuck on expedition.");
-                continue;
-            }
-
-            // Destination generator parameters (same as normal timeout)
-            int numRetries = 20;
-            float minDistance = 200f;
-            float minRange = 750f;
-            float maxRange = 3500f;
-
-            // Get positions of existing grids to avoid collisions
-            List<Vector2> gridCoords = new();
-            var gridQuery = EntityManager.AllEntityQueryEnumerator<MapGridComponent, TransformComponent>();
-            while (gridQuery.MoveNext(out var _, out _, out var xform))
-            {
-                if (xform.MapID == mapId)
-                    gridCoords.Add(_transform.GetWorldPosition(xform));
-            }
-
-            // Find a safe drop location
-            Vector2 dropLocation = _random.NextVector2(minRange, maxRange);
-            for (int i = 0; i < numRetries; i++)
-            {
-                bool positionIsValid = true;
-                foreach (var station in gridCoords)
-                {
-                    if (Vector2.Distance(station, dropLocation) < minDistance)
-                    {
-                        positionIsValid = false;
-                        break;
-                    }
-                }
-
-                if (positionIsValid)
-                    break;
-
-                dropLocation = _random.NextVector2(minRange, maxRange);
-            }
+            var dropLocation = PickExpeditionReturnDropLocation(existingPositions); // HardLight
 
             // FTL the shuttle home
-            _shuttle.FTLToCoordinates(shuttleUid, shuttle, new EntityCoordinates(mapUid.Value, dropLocation), 0f, 0f, ftlTime); // Added 0f; removed TravelTime
-            Log.Info($"Early finish: FTLing shuttle {shuttleUid} home from expedition {expeditionMapUid}");
+            _shuttle.FTLToCoordinates(shuttleUid, shuttle, new EntityCoordinates(returnMapUid, dropLocation), 0f, startupTime: _shuttle.DefaultStartupTime, hyperspaceTime: ftlTime); // HardLight
+            Log.Info($"Early finish: FTLing shuttle {shuttleUid} home from expedition {expeditionMapUid} via {targetSource}"); // HardLight: Removed via {targetSource}
         }
 
         // Clean up console state and schedule expedition deletion
         CleanupExpeditionConsoleState(expeditionMapUid);
         QueueExpeditionDeletionWhenEmpty(expeditionMapUid);
+    }
+
+    // HardLight: Helper to announce early finish with grid-local filter
+    private void AnnounceEarlyFinishCountdown(EntityUid source, EntityUid? gridUid, int departTime)
+    {
+        if (gridUid == null)
+            return;
+
+        var filter = Filter.Empty().AddInGrid(gridUid.Value);
+        var announcement = Loc.GetString("salvage-expedition-announcement-early-finish", ("departTime", departTime));
+        _chatSystem.DispatchFilteredAnnouncement(filter, announcement, source,
+            sender: "Expedition Console", colorOverride: Color.Orange);
     }
 
     private void OnSalvageConsoleInit(Entity<SalvageExpeditionConsoleComponent> console, ref ComponentInit args)

@@ -230,6 +230,9 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
             var mapCoords = _shuttles.GetMapCoordinates(mapObj);
 
+            if (mapCoords.MapId == MapId.Nullspace || mapCoords.MapId != ViewingMap) // HardLight
+                continue;
+
             var relativePos = Vector2.Transform(mapCoords.Position, matty);
             relativePos = relativePos with { Y = -relativePos.Y };
             var uiPosition = ScalePosition(relativePos);
@@ -787,17 +790,17 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     {
         const float SafeZoneRadius = 5000f;
         var safeZoneColor = Color.LimeGreen.WithAlpha(0.8f);
-        
+
         // Assume station is at origin (0,0) in map coordinates
         var stationPos = Vector2.Zero;
-        
+
         // Transform station position to local view coordinates
         var adjustedPos = Vector2.Transform(stationPos, matty);
         var localPos = ScalePosition(adjustedPos with { Y = -adjustedPos.Y });
-        
+
         // Scale the radius according to the minimap scale
         var scaledRadius = SafeZoneRadius * MinimapScale;
-        
+
         // Draw the ring
         handle.DrawCircle(localPos, scaledRadius, safeZoneColor, filled: false);
     }

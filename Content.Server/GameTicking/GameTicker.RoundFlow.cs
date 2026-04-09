@@ -503,53 +503,53 @@ namespace Content.Server.GameTicking
 
             RunLevel = GameRunLevel.PostRound;
 
-            // FTL all shuttles with ShuttleDeedComponent on any map to Colcomm docks
-            // --- Begin Corrected Colcomm logic ---
-            EntityUid? colcommGrid = null;
-            // Try to find Colcomm grid entity (not map entity!)
+            // HardLight start: Made edits to end-round FTL logic to better handle non-evac shuttles.
+            // FTL all non-evac shuttles to Colcomm without attempting docking.
+            // The emergency shuttle handles its own docked arrival separately.
+            EntityUid? colcommMap = null;
             var colcommQuery = AllEntityQuery<StationColcommComponent>();
             if (colcommQuery.MoveNext(out var colcommComp))
             {
-                colcommGrid = colcommComp.Entity;
+                // Prefer explicit map entity, but fall back to the Colcomm grid's map if needed.
+                if (colcommComp.MapEntity != null && !Deleted(colcommComp.MapEntity.Value))
+                    colcommMap = colcommComp.MapEntity.Value;
+                else if (colcommComp.Entity != null)
+                {
+                    var colcommXform = Transform(colcommComp.Entity.Value);
+                    if (colcommXform.MapUid != null)
+                        colcommMap = colcommXform.MapUid.Value;
+                }
             }
 
-            if (colcommGrid != null)
+            if (colcommMap != null)
             {
-                // Find all dock entities on the Colcomm grid
-                var dockQuery = EntityQueryEnumerator<DockingComponent, TransformComponent>();
-                var colcommDocks = new List<(EntityUid dockUid, TransformComponent xform)>();
-                while (dockQuery.MoveNext(out var dockUid, out var dock, out var dockXform))
-                {
-                    if (dockXform.GridUid == colcommGrid)
-                        colcommDocks.Add((dockUid, dockXform));
-                }
+                int arrivalIndex = 0;
+                const float colcommArrivalBaseRadius = 200f;
+                const float colcommArrivalSpreadStep = 8f;
+                const int colcommArrivalSpreadCount = 12;
 
-                int dockIndex = 0;
-
-                // FTL each ShuttleDeed shuttle to a dock (cycling if more shuttles than docks)
+                // FTL each ShuttleDeed shuttle to an isolated point on the Colcomm map.
                 var shuttleQuery = EntityQueryEnumerator<ShuttleComponent, ShuttleDeedComponent, TransformComponent>();
                 while (shuttleQuery.MoveNext(out var shuttleUid, out var shuttle, out var deed, out var xform))
                 {
-                    if (colcommDocks.Count > 0)
-                    {
-                        var (dockUid, dockXform) = colcommDocks[dockIndex % colcommDocks.Count];
-                        dockIndex++;
+                    // Only evacuate shuttles that are currently on the round's station map.
+                    if (xform.MapID != DefaultMap)
+                        continue;
 
-                        var dockGridUid = dockXform.GridUid!.Value;
-                        var dockPosition = dockXform.LocalPosition;
-                        var targetCoordinates = new EntityCoordinates(dockGridUid, dockPosition);
-                        var targetAngle = dockXform.LocalRotation;
+                    var angle = Angle.FromDegrees(arrivalIndex * 137.5f);
+                    var radius = colcommArrivalBaseRadius + (arrivalIndex % colcommArrivalSpreadCount) * colcommArrivalSpreadStep;
+                    var targetCoordinates = new EntityCoordinates(colcommMap.Value, angle.ToWorldVec() * radius);
+                    arrivalIndex++;
 
-                        // HardLight: End-round cleanup should always evacuate owned/transit shuttles,
-                        // even if they are currently in FTL cooldown.
-                        if (HasComp<FTLComponent>(shuttleUid))
-                            RemComp<FTLComponent>(shuttleUid);
+                    // HardLight: End-round cleanup should always evacuate owned/transit shuttles,
+                    // even if they are currently in FTL cooldown.
+                    if (HasComp<FTLComponent>(shuttleUid))
+                        RemComp<FTLComponent>(shuttleUid);
 
-                        _shuttleSystem.FTLToCoordinates(shuttleUid, shuttle, targetCoordinates, targetAngle);
-                    }
+                    _shuttleSystem.FTLToCoordinates(shuttleUid, shuttle, targetCoordinates, angle);
                 }
 
-                // FTL each TransitShuttle (but not ShuttleDeed) to a dock (cycling if more shuttles than docks)
+                // FTL each TransitShuttle (but not ShuttleDeed) to an isolated point on the Colcomm map.
                 var transitShuttleQuery = EntityQueryEnumerator<ShuttleComponent, TransitShuttleComponent, TransformComponent>();
                 while (transitShuttleQuery.MoveNext(out var shuttleUid, out var shuttle, out var transit, out var xform))
                 {
@@ -557,25 +557,24 @@ namespace Content.Server.GameTicking
                     if (HasComp<ShuttleDeedComponent>(shuttleUid))
                         continue;
 
-                    if (colcommDocks.Count > 0)
-                    {
-                        var (dockUid, dockXform) = colcommDocks[dockIndex % colcommDocks.Count];
-                        dockIndex++;
+                    // Only evacuate shuttles that are currently on the round's station map.
+                    if (xform.MapID != DefaultMap)
+                        continue;
 
-                        var dockGridUid = dockXform.GridUid!.Value;
-                        var dockPosition = dockXform.LocalPosition;
-                        var targetCoordinates = new EntityCoordinates(dockGridUid, dockPosition);
-                        var targetAngle = dockXform.LocalRotation;
+                    var angle = Angle.FromDegrees(arrivalIndex * 137.5f);
+                    var radius = colcommArrivalBaseRadius + (arrivalIndex % colcommArrivalSpreadCount) * colcommArrivalSpreadStep;
+                    var targetCoordinates = new EntityCoordinates(colcommMap.Value, angle.ToWorldVec() * radius);
+                    arrivalIndex++;
 
-                        // HardLight: End-round cleanup should always evacuate owned/transit shuttles,
-                        // even if they are currently in FTL cooldown.
-                        if (HasComp<FTLComponent>(shuttleUid))
-                            RemComp<FTLComponent>(shuttleUid);
+                    // HardLight: End-round cleanup should always evacuate owned/transit shuttles,
+                    // even if they are currently in FTL cooldown.
+                    if (HasComp<FTLComponent>(shuttleUid))
+                        RemComp<FTLComponent>(shuttleUid);
 
-                        _shuttleSystem.FTLToCoordinates(shuttleUid, shuttle, targetCoordinates, targetAngle);
-                    }
+                    _shuttleSystem.FTLToCoordinates(shuttleUid, shuttle, targetCoordinates, angle);
                 }
             }
+            // HardLight end
             // --- End Corrected Colcomm logic ---
 
             // Aggressively delete the default map after a 30 second delay

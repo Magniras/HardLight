@@ -6,6 +6,7 @@ using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Roles.Jobs;
+using Content.Shared.Whitelist; // Starlight
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -19,13 +20,14 @@ namespace Content.Shared.Roles;
 
 public abstract class SharedRoleSystem : EntitySystem
 {
-    [Dependency] private   readonly IConfigurationManager _cfg = default!;
-    [Dependency] private   readonly IEntityManager _entityManager = default!;
-    [Dependency] private   readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private   readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!; // Starlight
+    [Dependency] private readonly SharedAudioSystem _audio = default!; // Starlight
+    [Dependency] private readonly IConfigurationManager _cfg = default!; // Starlight
     [Dependency] protected readonly ISharedPlayerManager Player = default!;
-    [Dependency] private   readonly SharedAudioSystem _audio = default!;
-    [Dependency] private   readonly SharedMindSystem _minds = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!; // Starlight
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!; // Starlight
+    [Dependency] private readonly SharedMindSystem _minds = default!; // Starlight
+    [Dependency] private readonly IPrototypeManager _prototypes = default!; // Starlight
 
     private JobRequirementOverridePrototype? _requirementOverride;
 
@@ -357,6 +359,20 @@ public abstract class SharedRoleSystem : EntitySystem
             return true;
 
         Log.Warning($"Failed to remove role {typeof(T)} from {ToPrettyString(mindId)} : mind does not have role ");
+        return false;
+    }
+
+    /// <summary>
+    /// Starlight: Returns true if a mind has a role that matches a whitelist.
+    /// </summary>
+    public bool MindHasRole(Entity<MindComponent> mind, EntityWhitelist whitelist)
+    {
+        foreach (var roleEnt in mind.Comp.MindRoles)
+        {
+            if (_whitelist.IsWhitelistPass(whitelist, roleEnt))
+                return true;
+        }
+
         return false;
     }
 

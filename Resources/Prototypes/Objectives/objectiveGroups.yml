@@ -4,8 +4,8 @@
   weights:
     TraitorObjectiveGroupSteal: 1
     TraitorObjectiveGroupKill: 1
-    TraitorObjectiveGroupState: 1 #As in, something about your character. Alive, dead, arrested, gained an ability...
-    TraitorObjectiveGroupSocial: 1 #Involves helping/harming others without killing them or stealing their stuff
+    TraitorObjectiveGroupState: 1 # As in, something about your character. Alive, dead, arrested, gained an ability...
+    TraitorObjectiveGroupSocial: 1 # Involves helping/harming others without killing them or stealing their stuff
 
 - type: weightedRandom
   id: TraitorObjectiveGroupSteal
@@ -27,15 +27,17 @@
 - type: weightedRandom
   id: TraitorObjectiveGroupKill
   weights:
-    KillRandomPersonObjective: 1
-    KillRandomHeadObjective: 0.25
+    KillRandomPersonObjective: 0.2
+    KillRandomHeadObjective: 0.1
+    TeachRandomPersonObjective: 1 # Starlight Teach them a lesson
+    TeachRandomHeadObjective: 0.3 # Starlight Teach them a lesson
 
 - type: weightedRandom
   id: TraitorObjectiveGroupState
   weights:
     EscapeShuttleObjective: 1
     DieObjective: 0.05
-    #HijackShuttleObjective: 0.02
+    # HijackShuttleObjective: 0.02
 
 - type: weightedRandom
   id: TraitorObjectiveGroupSocial
@@ -43,7 +45,7 @@
     RandomTraitorAliveObjective: 1
     RandomTraitorProgressObjective: 1
 
-#Thief groups
+# Thief groups
 - type: weightedRandom
   id: ThiefObjectiveGroups
   weights:
@@ -118,4 +120,4 @@
   id: ThiefObjectiveGroupEscape
   weights:
     EscapeThiefShuttleObjective: 1
-#Changeling, crew, wizard, when you code it...
+# Changeling, crew, wizard, when you code it...

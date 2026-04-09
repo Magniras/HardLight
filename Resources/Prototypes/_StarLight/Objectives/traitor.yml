@@ -1,0 +1,41 @@
+﻿# Teach a Lesson
+- type: entity
+  parent: [BaseTraitorObjective, BaseTeachALessonObjective]
+  id: TeachRandomPersonObjective
+  description: Ensure they die at least once this shift. They know what they did.
+  components:
+    - type: Objective
+      difficulty: 1
+      unique: false
+    - type: TargetObjective
+      title: objective-condition-teach-lesson-title
+    - type: PickRandomPerson
+      filters:
+      # Can't have multiple objectives to teach the same person.
+      - !type:TargetObjectiveMindFilter
+        blacklist:
+          components:
+          - TeachALessonTarget
+
+- type: entity
+  parent: [BaseTraitorObjective, BaseTeachALessonObjective]
+  id: TeachRandomHeadObjective
+  description: Ensure this head dies at least once this shift. They know what they did.
+  components:
+    - type: Objective
+      # technically it's still possible for TeachRandomPersonObjective to roll a head but this is guaranteed, so higher difficulty
+      difficulty: 2 #Starlight edit
+      # killing 1 head is enough
+      unique: true
+    - type: TargetObjective
+      title: objective-condition-teach-lesson-title
+    - type: PickRandomPerson
+      filters:
+      - !type:BodyMindFilter
+        whitelist:
+          components:
+          - CommandStaff
+      - !type:TargetObjectiveMindFilter
+        blacklist:
+          components:
+          - TeachALessonTarget # dont let mutiple teach someone.

@@ -79,13 +79,13 @@ public sealed class HLCCVars
 
     // Ship load performance controls
     public static readonly CVarDef<bool> ShipLoadAsync =
-        CVarDef.Create("hardlight.shipload.async", false, CVar.SERVERONLY, desc: "Load ships asynchronously over multiple ticks.");
+        CVarDef.Create("hardlight.shipload.async", true, CVar.SERVERONLY, desc: "Load ships asynchronously over multiple ticks.");
 
     public static readonly CVarDef<int> ShipLoadBatchNonContained =
-        CVarDef.Create("hardlight.shipload.batch_noncontained", 64, CVar.SERVERONLY, desc: "Max non-contained entities to spawn per tick during ship load.");
+        CVarDef.Create("hardlight.shipload.batch_noncontained", 128, CVar.SERVERONLY, desc: "Max non-contained entities to spawn per tick during ship load.");
 
     public static readonly CVarDef<int> ShipLoadBatchContained =
-        CVarDef.Create("hardlight.shipload.batch_contained", 96, CVar.SERVERONLY, desc: "Max contained entities to spawn/insert per tick during ship load.");
+        CVarDef.Create("hardlight.shipload.batch_contained", 128, CVar.SERVERONLY, desc: "Max contained entities to spawn/insert per tick during ship load.");
 
     public static readonly CVarDef<int> ShipLoadTimeBudgetMs =
         CVarDef.Create("hardlight.shipload.time_budget_ms", 8, CVar.SERVERONLY, desc: "Soft time budget per tick for ship load processing (ms).");

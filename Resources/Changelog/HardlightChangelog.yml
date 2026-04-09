@@ -2372,3 +2372,9 @@ Entries:
       message: Newly bought ships do not include a latejoin spot anymore.
   id: 260
   time: '2026-04-08T23:11:01.0000000+00:00'
+- author: IngvarJackal
+  changes:
+    - type: Add
+      message: More aphro descriptions
+  id: 261
+  time: '2026-04-08T23:35:11.0000000+00:00'

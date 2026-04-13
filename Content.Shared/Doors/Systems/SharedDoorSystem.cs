@@ -1,12 +1,15 @@
 using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared._Floof.Lock; // HardLight
 using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Hands.EntitySystems; // HardLight
 using Content.Shared.Interaction;
+using Content.Shared.Lock; // HardLight
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Power.EntitySystems;
@@ -42,10 +45,12 @@ public abstract partial class SharedDoorSystem : EntitySystem
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] private readonly OccluderSystem _occluder = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly SharedIdCardSystem _idCardSystem = default!; // HardLight
     [Dependency] private readonly PryingSystem _pryingSystem = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!; // HardLight
 
 
     public static readonly ProtoId<TagPrototype> DoorBumpTag = "DoorBumpOpener";
@@ -74,6 +79,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, PreventCollideEvent>(PreventCollision);
         SubscribeLocalEvent<DoorComponent, BeforePryEvent>(OnBeforePry);
         SubscribeLocalEvent<DoorComponent, PriedEvent>(OnAfterPry);
+        SubscribeLocalEvent<DoorComponent, LockToggleAttemptEvent>(OnLockToggleAttempt); // HardLight
         SubscribeLocalEvent<DoorComponent, WeldableAttemptEvent>(OnWeldAttempt);
         SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<DoorComponent, GetPryTimeModifierEvent>(OnPryTimeModifier);
@@ -233,10 +239,28 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (args.Handled || !args.Complex || !door.ClickOpen)
             return;
 
-        if (!TryToggleDoor(uid, door, args.User, predicted: true))
-            _pryingSystem.TryPry(uid, args.User, out _);
+        if (!TryToggleDoor(uid, door, args.User, predicted: true)
+            && CanAttemptPryFallback(door.State)) // HardLight
+        // HardLight start
+        {
+            if (_handsSystem.TryGetActiveItem(args.User, out var activeItem)
+                && TryComp<PryingComponent>(activeItem, out var activePry))
+            {
+                _pryingSystem.TryPry(uid, args.User, out _, activeItem.Value, activePry!);
+            }
+            else
+            {
+                _pryingSystem.TryPry(uid, args.User, out _);
+            }
+        }
+        // HardLight end
 
         args.Handled = true;
+    }
+
+    private static bool CanAttemptPryFallback(DoorState state) // HardLight
+    {
+        return state is DoorState.Closed;
     }
 
     private void OnPryTimeModifier(EntityUid uid, DoorComponent door, ref GetPryTimeModifierEvent args)
@@ -287,6 +311,18 @@ public abstract partial class SharedDoorSystem : EntitySystem
         else if (component.State == DoorState.Welded)
             SetState(uid, DoorState.Closed, component);
     }
+
+    // HardLight start: Added lock toggle event to prevent toggling locks while the door is open.
+    private void OnLockToggleAttempt(EntityUid uid, DoorComponent component, ref LockToggleAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        // Doors should only be lock-toggled while closed.
+        if (component.State != DoorState.Closed)
+            args.Cancelled = true;
+    }
+    // HardLight end
 
     /// <summary>
     ///     Update the door state/visuals and play an access denied sound when a user without access interacts with the
@@ -671,6 +707,32 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (Resolve(uid, ref door) && door.State == DoorState.Closed &&
             TryComp<FirelockComponent>(uid, out var firelock))
             return true;
+
+        // HardLight start
+        // Normal lock components are a hard gate: locked means this door cannot be opened.
+        if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked)
+            return false;
+
+        // ID-lock behaves like a normal access restriction gate: if engaged, the opener must match owner info
+        // or have one of the configured master access tags.
+        if (TryComp<IdLockComponent>(uid, out var idLock)
+            && idLock.Enabled
+            && idLock.State == IdLockComponent.LockState.Engaged)
+        {
+            if (!_idCardSystem.TryFindIdCard(user.Value, out var idCard))
+                return false;
+
+            if (idLock.Info.OwnerName == idCard.Comp.FullName
+                && idLock.Info.OwnerJobTitle == idCard.Comp.LocalizedJobTitle)
+                return true;
+
+            if (TryComp<AccessComponent>(idCard, out var idAccess)
+                && idLock.MasterAccesses.Any(tag => idAccess.Tags.Contains(tag)))
+                return true;
+
+            return false;
+        }
+        // HardLight end
 
         if (!Resolve(uid, ref access, false))
             return true;

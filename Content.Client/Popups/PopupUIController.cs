@@ -92,6 +92,7 @@ public sealed class PopupUIController : UIController, IOnStateEntered<GameplaySt
     {
         private readonly PopupSystem? _popup;
         private readonly PopupUIController _controller;
+        private readonly Dictionary<(int x, int y), int> _stackCounts = new(); // HardLight: Tracks how many popups are stacked at each position.
 
         public PopupRootControl(PopupSystem? system, PopupUIController controller)
         {
@@ -108,13 +109,29 @@ public sealed class PopupUIController : UIController, IOnStateEntered<GameplaySt
 
             // Different window
             var windowId = UserInterfaceManager.RootControl.Window.Id;
+            var stackSpacing = 14f * UIScale;
+
+            _stackCounts.Clear();
 
             foreach (var popup in _popup.CursorLabels)
             {
                 if (popup.InitialPos.Window != windowId)
                     continue;
 
-                _controller.DrawPopup(popup, handle, popup.InitialPos.Position, UIScale);
+                // HardLight start: Calculate stacked position for cursor popups; prevents overlap when multiple popups spawn at the same position.
+                var stackX = (int) MathF.Round(popup.InitialPos.Position.X);
+                var stackY = (int) MathF.Round(popup.InitialPos.Position.Y);
+                var stackKey = (stackX, stackY);
+
+                var stackLevel = 0;
+                if (_stackCounts.TryGetValue(stackKey, out var count))
+                    stackLevel = count;
+
+                _stackCounts[stackKey] = stackLevel + 1;
+
+                var stackedPos = popup.InitialPos.Position - new Vector2(0f, stackLevel * stackSpacing);
+                _controller.DrawPopup(popup, handle, stackedPos, UIScale); // popup.InitialPos.Position<stackedPos
+                // HardLight end
             }
         }
     }

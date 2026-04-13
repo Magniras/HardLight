@@ -1,0 +1,19 @@
+- type: construction
+  name: construction-id-lockable-secure-crate # HardLight: secure crate (id-lock)<construction-id-lockable-secure-crate
+  id: CrateSecureIdLockable
+  graph: CrateSecure
+  startNode: start
+  targetNode: idLockable
+  category: construction-category-storage
+  description: construction-id-lockable-secure-crate-desc # HardLight: Added localization
+  objectType: Structure
+
+- type: construction
+  id: ClosetSteelSecureIdLockable
+  name: construction-id-lockable-secure-closet # HardLight: secure closet (id-lock)<construction-id-lockable-secure-closet
+  graph: ClosetSteelSecure
+  startNode: start
+  targetNode: idLockable
+  category: construction-category-storage
+  description: construction-id-lockable-secure-closet-desc # HardLight: Added localization
+  objectType: Structure

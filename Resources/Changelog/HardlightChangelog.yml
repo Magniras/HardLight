@@ -2464,3 +2464,15 @@ Entries:
       message: Adds the ability for ties to restrain humanoids
   id: 272
   time: '2026-04-13T01:03:08.0000000+00:00'
+- author: SquishyEmmaaaa
+  changes:
+    - type: Fix
+      message: >-
+        Items inside Freezer Pouches no longer rot if the pouch is stored inside
+        another container.
+    - type: Fix
+      message: >-
+        Freezers and Medical Pods can now be carried and stored in mechs without
+        rotting.
+  id: 273
+  time: '2026-04-13T01:04:51.0000000+00:00'

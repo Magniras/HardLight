@@ -330,3 +330,19 @@
     sprintMultiplier: 0.55
   - type: TraitCyborgPowerDrawModifier
     multiplier: 0.5
+
+
+- type: trait
+  id: Pettable
+  name: pettable-name
+  description: pettable-text
+  category: Physical
+  cost: 0
+  components:
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/fox_squeak.ogg

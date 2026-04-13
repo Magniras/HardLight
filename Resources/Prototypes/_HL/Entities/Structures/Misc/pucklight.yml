@@ -89,8 +89,8 @@
       - Off
       - Toggle
   - type: Construction
-    graph: LightFixture
-    node: puckLight
+    graph: PuckLightFixture
+    node: PuckLight
   - type: Appearance
   - type: PoweredLightVisuals
     blinkingSound:

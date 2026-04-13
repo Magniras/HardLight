@@ -150,3 +150,15 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
+
+# HL - Add Suit Storage Crafting
+- type: construction
+  id: SuitStorage
+  graph: SuitLocker
+  startNode: start
+  targetNode: SuitStorage
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

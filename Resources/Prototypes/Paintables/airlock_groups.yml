@@ -18,6 +18,11 @@
     science: AirlockScience
     security: AirlockSecurity
     virology: AirlockVirology
+    # HL - Add more spray paintable airlocks (AC:SE)
+    syndicate: AirlockSyndicate
+    mercenary: AirlockMercenary
+    drobotics: DominosRoboticsAirlock
+    # HL End
 
 - type: paintableGroup
   id: AirlockGlass
@@ -38,3 +43,7 @@
     science: AirlockScienceGlass
     security: AirlockSecurityGlass
     virology: AirlockVirologyGlass
+    # HL - Add more spray paintable airlocks (AC:SE)
+    syndicate: AirlockSyndicateGlass
+    mercenary: AirlockMercenaryGlass
+    drobotics: DominosRoboticsAirlockGlass

@@ -50,6 +50,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction # HL: Make craftable (Applies to all bench entities here and below)
+    graph: SLBenches
+    node: comfyCorner
 
 - type: entity
   name: comfortable bench
@@ -71,6 +74,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLBenches
+    node: comfyLeft
 
 - type: entity
   name: comfortable bench
@@ -92,6 +98,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLBenches
+    node: comfyRight
 
 - type: entity
   name: comfortable bench
@@ -113,6 +122,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLBenches
+    node: comfyMiddle
 
 #Bench Red
 - type: entity
@@ -127,8 +139,8 @@
     - state: bench_solo_cover
       color: "#8c4141"
   - type: Construction
-    graph: Seat
-    node: redComfBench
+    graph: SLBenches
+    node: redSolo
 
 - type: entity
   id: BenchRedComfyCorner
@@ -142,6 +154,9 @@
       color: "#767e82"
     - state: cover
       color: "#8c4141"
+  - type: Construction
+    graph: SLBenches
+    node: redCorner
 
 - type: entity
   id: BenchRedComfyEndLeft
@@ -155,6 +170,9 @@
       color: "#767e82"
     - state: cover
       color: "#8c4141"
+  - type: Construction
+    graph: SLBenches
+    node: redLeft
 
 - type: entity
   id: BenchRedComfyEndRight
@@ -168,6 +186,9 @@
       color: "#767e82"
     - state: cover
       color: "#8c4141"
+  - type: Construction
+    graph: SLBenches
+    node: redRight
 
 - type: entity
   id: BenchRedComfyMiddle
@@ -181,6 +202,9 @@
       color: "#767e82"
     - state: cover
       color: "#8c4141"
+  - type: Construction
+    graph: SLBenches
+    node: redMiddle
 
 #Bench Blue
 - type: entity
@@ -195,8 +219,8 @@
     - state: bench_solo_cover
       color: "#334e6d"
   - type: Construction
-    graph: Seat
-    node: blueComfBench
+    graph: SLBenches
+    node: blueSolo
 
 - type: entity
   id: BenchBlueComfyCorner
@@ -210,6 +234,9 @@
       color: "#767e82"
     - state: cover
       color: "#334e6d"
+  - type: Construction
+    graph: SLBenches
+    node: blueCorner
 
 - type: entity
   id: BenchBlueComfyEndLeft
@@ -223,6 +250,9 @@
       color: "#767e82"
     - state: cover
       color: "#334e6d"
+  - type: Construction
+    graph: SLBenches
+    node: blueLeft
 
 - type: entity
   id: BenchBlueComfyEndRight
@@ -236,6 +266,9 @@
       color: "#767e82"
     - state: cover
       color: "#334e6d"
+  - type: Construction
+    graph: SLBenches
+    node: blueRight
 
 - type: entity
   id: BenchBlueComfyMiddle
@@ -249,6 +282,9 @@
       color: "#767e82"
     - state: cover
       color: "#334e6d"
+  - type: Construction
+    graph: SLBenches
+    node: blueMiddle
 
 #Bench Gray
 - type: entity
@@ -262,6 +298,9 @@
       color: "#767e82"
     - state: bench_solo_cover
       color: "#767e82"
+  - type: Construction
+    graph: SLBenches
+    node: graySolo
 
 - type: entity
   id: BenchGrayComfyCorner
@@ -275,6 +314,9 @@
       color: "#767e82"
     - state: cover
       color: "#767e82"
+  - type: Construction
+    graph: SLBenches
+    node: grayCorner
 
 - type: entity
   id: BenchGrayComfyEndLeft
@@ -288,6 +330,9 @@
       color: "#767e82"
     - state: cover
       color: "#767e82"
+  - type: Construction
+    graph: SLBenches
+    node: grayLeft
 
 - type: entity
   id: BenchGrayComfyEndRight
@@ -301,6 +346,9 @@
       color: "#767e82"
     - state: cover
       color: "#767e82"
+  - type: Construction
+    graph: SLBenches
+    node: grayRight
 
 - type: entity
   id: BenchGrayComfyMiddle
@@ -314,6 +362,9 @@
       color: "#767e82"
     - state: cover
       color: "#767e82"
+  - type: Construction
+    graph: SLBenches
+    node: grayMiddle
 
 #Bench Green
 - type: entity
@@ -327,6 +378,9 @@
       color: "#767e82"
     - state: bench_solo_cover
       color: "#3c9950"
+  - type: Construction
+    graph: SLBenches
+    node: greenSolo
 
 - type: entity
   id: BenchGreenComfyCorner
@@ -340,6 +394,9 @@
       color: "#767e82"
     - state: cover
       color: "#3c9950"
+  - type: Construction
+    graph: SLBenches
+    node: greenCorner
 
 - type: entity
   id: BenchGreenComfyEndLeft
@@ -353,6 +410,9 @@
       color: "#767e82"
     - state: cover
       color: "#3c9950"
+  - type: Construction
+    graph: SLBenches
+    node: greenLeft
 
 - type: entity
   id: BenchGreenComfyEndRight
@@ -366,6 +426,9 @@
       color: "#767e82"
     - state: cover
       color: "#3c9950"
+  - type: Construction
+    graph: SLBenches
+    node: greenRight
 
 - type: entity
   id: BenchGreenComfyMiddle
@@ -379,3 +442,6 @@
       color: "#767e82"
     - state: cover
       color: "#3c9950"
+  - type: Construction
+    graph: SLBenches
+    node: greenMiddle

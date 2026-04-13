@@ -324,3 +324,9 @@
     stateDoorOpen: base
     stateDoorClosed: door
   - type: LockVisuals
+  # HL - Make this Constructable
+  - type: Construction
+    graph: SuitLocker
+    node: SuitStorage
+    containers:
+    - entity_storage

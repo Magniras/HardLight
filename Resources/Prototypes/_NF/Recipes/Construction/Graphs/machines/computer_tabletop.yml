@@ -121,6 +121,7 @@
     - node: tabletop computer
       entity: !type:BoardNodeEntity
         container: board
+        computer: Tabletop
       edges:
         - to: monitorUnsecured
           completed:

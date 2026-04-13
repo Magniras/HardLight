@@ -61,6 +61,10 @@
   - type: Sprite
     sprite: _Starlight/Structures/Furniture/Chairs/sleek_office_chair.rsi
     state: base
+# HL - add construction recipe
+  - type: Construction
+    graph: Seats
+    node: sleekOfficeChair
 
 #Comfy Chair Gray (Basic/Default)
 - type: entity
@@ -80,7 +84,7 @@
     sprite: _Starlight/Structures/Furniture/Chairs/comfy_chair.rsi
     state: base
   - type: Construction
-    graph: Seat
+    graph: Seats
     node: chairComfy
 
 #Comfy Chair White
@@ -100,6 +104,9 @@
   - type: Icon
     sprite: _Starlight/Structures/Furniture/Chairs/comfy_chair.rsi
     state: base
+  - type: Construction
+    graph: Seats
+    node: chairWhite
 
 #Comfy Chair Blue
 - type: entity
@@ -118,6 +125,9 @@
   - type: Icon
     sprite: _Starlight/Structures/Furniture/Chairs/comfy_chair.rsi
     state: base
+  - type: Construction
+    graph: Seats
+    node: chairBlue
 
 #Comfy Chair Red
 - type: entity
@@ -136,6 +146,9 @@
   - type: Icon
     sprite: _Starlight/Structures/Furniture/Chairs/comfy_chair.rsi
     state: base
+  - type: Construction
+    graph: Seats
+    node: chairRed
 
 #Comfy Chair Green
 - type: entity
@@ -154,6 +167,9 @@
   - type: Icon
     sprite: _Starlight/Structures/Furniture/Chairs/comfy_chair.rsi
     state: base
+  - type: Construction
+    graph: Seats
+    node: chairGreen
 
 #Comfy Chair Brown
 - type: entity
@@ -172,3 +188,6 @@
   - type: Icon
     sprite: _Starlight/Structures/Furniture/Chairs/comfy_chair.rsi
     state: base
+  - type: Construction
+    graph: Seats
+    node: chairBrown

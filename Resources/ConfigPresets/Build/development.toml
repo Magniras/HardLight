@@ -1,6 +1,6 @@
 [game]
 # Straight in-game baby
-lobbyenabled = true
+lobbyenabled = false
 # Frontier: special map
 map = "NFDev"
 role_timers = false

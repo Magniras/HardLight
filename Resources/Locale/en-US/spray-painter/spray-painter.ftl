@@ -76,6 +76,9 @@ spray-painter-style-airlockstandard-salvage = Salvage
 spray-painter-style-airlockstandard-science = Science
 spray-painter-style-airlockstandard-security = Security
 spray-painter-style-airlockstandard-virology = Virology
+spray-painter-style-airlockstandard-syndicate = Syndicate
+spray-painter-style-airlockstandard-mercenary = Mercenary
+spray-painter-style-airlockstandard-drobotics = Dominos Robotics
 
 spray-painter-style-airlockglass-atmospherics = Atmospherics
 spray-painter-style-airlockglass-basic = Basic
@@ -90,6 +93,9 @@ spray-painter-style-airlockglass-salvage = Salvage
 spray-painter-style-airlockglass-science = Science
 spray-painter-style-airlockglass-security = Security
 spray-painter-style-airlockglass-virology = Virology
+spray-painter-style-airlockglass-syndicate = Syndicate
+spray-painter-style-airlockglass-mercenary = Mercenary
+spray-painter-style-airlockglass-drobotics = Dominos Robotics
 
 # Lockers
 spray-painter-style-locker-atmospherics = Atmospherics

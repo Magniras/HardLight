@@ -1,0 +1,11 @@
+- type: construction
+  id: PuckLightFixture
+  graph: PuckLightFixture
+  startNode: start
+  targetNode: PuckLight
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+

@@ -119,6 +119,7 @@
     - node: wallmount computer
       entity: !type:BoardNodeEntity
         container: board
+        computer: Wallmount
       edges:
         - to: monitorUnsecured
           completed:

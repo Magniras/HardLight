@@ -1,0 +1,27 @@
+- type: constructionGraph
+  id: PuckLightFixture
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: PuckLight
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1.0
+
+  - node: PuckLight
+    entity: PoweredPuckLightEmpty
+    edges:
+    - to: start
+      conditions:
+        - !type:ContainerEmpty
+          container: "light_bulb"
+      steps:
+        - tool: Screwing
+          doAfter: 2.0
+      completed:
+        - !type:SpawnPrototype
+          prototype: SheetSteel1
+          amount: 2
+        - !type:DeleteEntity {}

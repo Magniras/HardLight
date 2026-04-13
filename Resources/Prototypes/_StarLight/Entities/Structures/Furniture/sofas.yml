@@ -16,6 +16,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: dinerLeft
 
 - type: entity
   name: diner booth
@@ -34,6 +37,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: dinerRight
 
 - type: entity
   name: diner booth
@@ -52,6 +58,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: dinerMiddle
 
 #Sofa Fancy
 - type: entity
@@ -71,6 +80,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: fancyLeft
 
 - type: entity
   name: fancy sofa
@@ -89,6 +101,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: fancyRight
 
 - type: entity
   name: fancy sofa
@@ -107,6 +122,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: fancyMiddle
 
 #Sofa Gray
 - type: entity
@@ -128,6 +146,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: grayCorner
 
 - type: entity
   name: sofa
@@ -148,6 +169,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: grayLeft
 
 - type: entity
   name: sofa
@@ -168,6 +192,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: grayRight
 
 - type: entity
   name: sofa
@@ -188,6 +215,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: grayMiddle
 
 #Sofa White
 - type: entity
@@ -209,6 +239,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: whiteCorner
 
 - type: entity
   name: sofa
@@ -229,6 +262,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: whiteLeft
 
 - type: entity
   name: sofa
@@ -249,6 +285,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: whiteRight
 
 - type: entity
   name: sofa
@@ -269,6 +308,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: whiteMiddle
 
 #Sofa Blue
 - type: entity
@@ -290,6 +332,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: blueCorner
 
 - type: entity
   name: sofa
@@ -310,6 +355,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: blueLeft
 
 - type: entity
   name: sofa
@@ -330,6 +378,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: blueRight
 
 - type: entity
   name: sofa
@@ -350,6 +401,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: blueMiddle
 
 #Sofa Red
 - type: entity
@@ -371,6 +425,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: redCorner
 
 - type: entity
   name: sofa
@@ -391,6 +448,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: redLeft
 
 - type: entity
   name: sofa
@@ -411,6 +471,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: redRight
 
 - type: entity
   name: sofa
@@ -431,6 +494,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: redMiddle
 
 #Sofa Green
 - type: entity
@@ -452,6 +518,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: greenCorner
 
 - type: entity
   name: sofa
@@ -472,6 +541,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: greenLeft
 
 - type: entity
   name: sofa
@@ -492,6 +564,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: greenRight
 
 - type: entity
   name: sofa
@@ -512,6 +587,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: greenMiddle
 
 #Sofa Brown
 - type: entity
@@ -533,6 +611,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: brownCorner
 
 - type: entity
   name: sofa
@@ -553,6 +634,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: brownLeft
 
 - type: entity
   name: sofa
@@ -573,6 +657,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: brownRight
 
 - type: entity
   name: sofa
@@ -593,3 +680,6 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Construction
+    graph: SLSofas
+    node: brownMiddle

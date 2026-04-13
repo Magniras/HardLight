@@ -17,6 +17,9 @@
     bodyType: Static
   - type: StaticPrice
     price: 20 # Frontier: 35<20
+  - type: Construction # HL: Make Craftable
+    graph: SLBenches
+    node: comfySolo
 
 - type: entity
   id: BenchColorfulComfy

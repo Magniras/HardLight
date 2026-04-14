@@ -2667,3 +2667,31 @@ Entries:
       message: More marrkings for shadekin
   id: 281
   time: '2026-04-13T18:27:20.0000000+00:00'
+- author: R3v3l4t1on
+  changes:
+    - type: Remove
+      message: >-
+        Removed duplicated files meaning the content should be quicker to
+        download.
+  id: 282
+  time: '2026-04-14T18:51:56.0000000+00:00'
+- author: Magniras
+  changes:
+    - type: Add
+      message: Added name and description to the syndicate uplink for chameleon gloves.
+  id: 283
+  time: '2026-04-14T18:52:18.0000000+00:00'
+- author: Magniras
+  changes:
+    - type: Tweak
+      message: changed shadekin damagemodifierset coefficients
+  id: 284
+  time: '2026-04-14T18:52:51.0000000+00:00'
+- author: R3v3l4t1on
+  changes:
+    - type: Add
+      message: >-
+        Moths get their own displacements cause I am tired of the linter
+        bricking on them sometimes.
+  id: 285
+  time: '2026-04-14T18:56:14.0000000+00:00'

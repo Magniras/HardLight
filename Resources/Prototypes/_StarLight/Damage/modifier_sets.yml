@@ -8,12 +8,10 @@
 - type: damageModifierSet
   id: Shadekin
   coefficients:
-    Blunt: 1
-    Slash: 1
-    Piercing: 1
-    Heat: 1
-    Cold: 1
-    Shock: 1
-    Radiation: 1
-    Poison: 1
-
+    Asphyxiation: 0
+    Cold: 0.75
+    Heat: 1.2
+    Cellular: 0.15
+    Bloodloss: 1.25
+    Shock: 0.75
+    Radiation: 1.3

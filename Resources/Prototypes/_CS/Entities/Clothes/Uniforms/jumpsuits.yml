@@ -170,7 +170,7 @@
   name: noble suit
   description: A blue noble suit that exudes elegance and refinement.
   components:
-  - type: Sprite
-    sprite: _CS/Clothes/Uniforms/Jumpsuit/belpero.rsi
-  - type: Clothing
-    sprite: _CS/Clothes/Uniforms/Jumpsuit/belpero.rsi
+    - type: Sprite
+      sprite: _CS/Clothes/Uniforms/Jumpsuit/belpero.rsi
+    - type: Clothing
+      sprite: _CS/Clothes/Uniforms/Jumpsuit/belpero.rsi

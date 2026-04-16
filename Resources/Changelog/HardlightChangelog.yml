@@ -2711,3 +2711,9 @@ Entries:
       message: Slimepeople can now also eat trash.  Bon appetit or something.
   id: 287
   time: '2026-04-14T19:05:23.0000000+00:00'
+- author: Illumos
+  changes:
+    - type: Tweak
+      message: The AME now generates 180kW per core, instead of 8MW.
+  id: 288
+  time: '2026-04-16T09:21:19.0000000+00:00'

@@ -2717,3 +2717,24 @@ Entries:
       message: The AME now generates 180kW per core, instead of 8MW.
   id: 288
   time: '2026-04-16T09:21:19.0000000+00:00'
+- author: IngvarJackal
+  changes:
+    - type: Tweak
+      message: Reduce ship gun HP 5 times
+  id: 289
+  time: '2026-04-16T09:21:57.0000000+00:00'
+- author: NotLivyathan
+  changes:
+    - type: Tweak
+      message: Refactored job slot allocation logic.
+    - type: Fix
+      message: >-
+        Station jobs should now dynamically allocate additional slots when no
+        longer filled.
+    - type: Fix
+      message: >-
+        Freelancer slot allocation should no longer exceed the number of filled
+        crew positions, nor should it exceed the cap of 40 that was originally
+        placed on it.
+  id: 290
+  time: '2026-04-16T09:23:51.0000000+00:00'

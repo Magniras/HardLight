@@ -78,7 +78,13 @@ public sealed partial class SalvageSystem
     /// </summary>
     private void Announce(EntityUid mapUid, string text)
     {
-        var mapId = Comp<MapComponent>(mapUid).MapId;
+        if (!TryComp<MapComponent>(mapUid, out var map))
+        {
+            Log.Warning($"Skipping salvage announcement for {ToPrettyString(mapUid)} because the map component is no longer available.");
+            return;
+        }
+
+        var mapId = map.MapId;
         var sender = _mapSystem.GetMap(mapId); // HardLight
 
         // I love TComms and chat!!!

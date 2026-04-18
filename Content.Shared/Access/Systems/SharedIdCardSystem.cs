@@ -47,6 +47,7 @@ public abstract class SharedIdCardSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, IdCardComponent id, MapInitEvent args)
     {
+        id.LocalizedJobTitle ??= id.JobTitleText;
         UpdateEntityName(uid, id);
     }
 
@@ -244,7 +245,8 @@ public abstract class SharedIdCardSystem : EntitySystem
         if (!Resolve(uid, ref id))
             return;
 
-        var jobSuffix = string.IsNullOrWhiteSpace(id.LocalizedJobTitle) ? string.Empty : $" ({id.LocalizedJobTitle})";
+        var jobTitle = id.JobTitleText;
+        var jobSuffix = string.IsNullOrWhiteSpace(jobTitle) ? string.Empty : $" ({jobTitle})";
 
         var val = string.IsNullOrWhiteSpace(id.FullName)
             ? Loc.GetString(id.NameLocId,
@@ -257,7 +259,7 @@ public abstract class SharedIdCardSystem : EntitySystem
 
     private static string ExtractFullTitle(IdCardComponent idCardComponent)
     {
-        return $"{idCardComponent.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(idCardComponent.LocalizedJobTitle ?? string.Empty)})"
+        return $"{idCardComponent.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(idCardComponent.JobTitleText ?? string.Empty)})"
             .Trim();
     }
 

@@ -34,6 +34,24 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         _gridQuery = GetEntityQuery<MapGridComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
+
+        SubscribeLocalEvent<FTLDestinationComponent, EntityTerminatingEvent>(OnDestinationTerminating);
+    }
+
+    private void OnDestinationTerminating(Entity<FTLDestinationComponent> ent, ref EntityTerminatingEvent args)
+    {
+        if (!TryGetNetEntity(ent.Owner, out var destination) || destination == null)
+            return;
+
+        var query = EntityQueryEnumerator<ShuttleDestinationCoordinatesComponent>();
+        while (query.MoveNext(out var uid, out var coordinates))
+        {
+            if (coordinates.Destination != destination)
+                continue;
+
+            coordinates.Destination = null;
+            Dirty(uid, coordinates);
+        }
     }
 
     /// <summary>
@@ -41,7 +59,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     /// </summary>
     public bool CanFTLTo(EntityUid shuttleUid, MapId targetMap, EntityUid consoleUid)
     {
-        var mapUid = _mapManager.GetMapEntityId(targetMap);
+        var mapUid = Maps.GetMap(targetMap);
         var shuttleMap = _xformQuery.GetComponent(shuttleUid).MapID;
 
         if (shuttleMap == targetMap)
@@ -77,8 +95,14 @@ public abstract partial class SharedShuttleSystem : EntitySystem
 
                 var diskDestinationUid = GetEntity(diskCoords.Value);
 
-                if (diskDestinationUid == EntityUid.Invalid
-                    || !TryComp<FTLDestinationComponent>(diskDestinationUid, out var diskDestination)
+                if (diskDestinationUid == EntityUid.Invalid)
+                {
+                    diskCoordinates.Destination = null;
+                    Dirty(disk, diskCoordinates);
+                    return false;
+                }
+
+                if (!TryComp<FTLDestinationComponent>(diskDestinationUid, out var diskDestination)
                     || diskDestination != destination)
                 {
                     return false;

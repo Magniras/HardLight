@@ -42,6 +42,66 @@
     - id: PlushieMoth
     - id: PlushieArachind
     - id: PlushiePenguin
+    - id: NFPlushieSharkMinnow
+    - id: PlushieCuddlyIPC
+    - id: PlushieFluffyVulpkanin
+    - id: PlushieMoff
+    - id: PlushieMoffsician
+    - id: PlushieMoffbar
+    - id: PlushieMoffRandom
+    - id: PlushieVulp
+    - id: PlushieGnome
+    - id: PlushieLoveable
+    - id: PlushieDeer
+    - id: PlushieIpc
+    - id: PlushieGrey
+    - id: PlushieHuman
+    - !type:GroupSelector
+      children:
+      - id: PlushieRedFox
+      - id: PlushiePurpleFox
+      - id: PlushiePinkFox
+      - id: PlushieOrangeFox
+      - id: PlushieMarbleFox
+      - id: PlushieCrimsonFox
+      - id: PlushieCoffeeFox
+      - id: PlushieBlueFox
+      - id: PlushieBlackFox
+    - !type:GroupSelector
+      children:
+      - id: PlushieCorgi
+      - id: PlushieGirlyCorgi
+      - id: PlushieRobotCorgi
+    - !type:GroupSelector
+      children:
+      - id: PlushieCatBlack
+      - id: PlushieCatGrey
+      - id: PlushieCatOrange
+      - id: PlushieCatSiames
+      - id: PlushieCatTabby
+      - id: PlushieCatTuxedo
+      - id: PlushieCatWhite
+      - id: PlushieCatAndroid
+    - id: PlushieAnomalous
+    - id: PlushieAvali
+    - id: PlushieBountyHunter
+    - id: PlushieFDrone
+    - id: PlushieFPraetorian
+    - id: PlushieFRavager
+    - id: PlushieFRouny
+    - id: PlushieGalio
+    - id: PlushieGhost
+    - id: PlushieLizardCultist
+    - id: PlushieLizardDetective
+    - id: PlushieLizardHoS
+    - id: PlushieLizardLotl
+    - id: PlushieLizardMaid
+    - id: PlushieMercenary
+    - id: PlushieNemesis
+    - id: PlushieNightmare
+    - id: PlushieSharkCaptain
+    - id: PlushieSlimeVulp
+    - id: PlushieThrongler
 
 - type: entity
   id: CrateFunPlushie

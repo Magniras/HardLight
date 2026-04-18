@@ -257,6 +257,87 @@
       - id: PlushieCatWhite
         orGroup: Prize
         prob: 0.80
+      - id: PlushieCatGrey
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieArachind
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieAnomalous
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieAvali
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieBountyHunter
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieCatAndroid
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieExperiment
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieFDrone
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieFPraetorian
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieFRavager
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieFRouny
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieGalio
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieGhost
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieHuman
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieLizardCultist
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieLizardDetective
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieLizardHoS
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieLizardLotl
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieLizardMaid
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieMercenary
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieMoffRandom
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieNemesis
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieNightmare
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushiePenguin
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieSharkCaptain
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieSlimeVulp
+        orGroup: Prize
+        prob: 0.80
+      - id: PlushieThrongler
+        orGroup: Prize
+        prob: 0.80
       - id: PrizeTicket
         prob: 0.20
         orGroup: Prize

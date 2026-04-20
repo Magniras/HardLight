@@ -102,6 +102,7 @@
     - id: PlushieSharkCaptain
     - id: PlushieSlimeVulp
     - id: PlushieThrongler
+    - id: PlushieShadekin
 
 - type: entity
   id: CrateFunPlushie

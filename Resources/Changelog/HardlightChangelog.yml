@@ -2886,3 +2886,9 @@ Entries:
       message: Futuristic gasmasks now actually work as voice masks.
   id: 311
   time: '2026-04-20T22:37:00.0000000+00:00'
+- author: re-silvered
+  changes:
+    - type: Fix
+      message: Gamemaster lawset
+  id: 312
+  time: '2026-04-20T22:37:28.0000000+00:00'

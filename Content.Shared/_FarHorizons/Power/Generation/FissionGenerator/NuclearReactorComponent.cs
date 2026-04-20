@@ -14,6 +14,7 @@ using Content.Shared.Materials;
 using Content.Shared.DeviceLinking;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using System.Numerics;
 
 namespace Content.Shared._FarHorizons.Power.Generation.FissionGenerator;
@@ -21,6 +22,8 @@ namespace Content.Shared._FarHorizons.Power.Generation.FissionGenerator;
 // Ported and modified from goonstation by Jhrushbe.
 // CC-BY-NC-SA-3.0
 // https://github.com/goonstation/goonstation/blob/ff86b044/code/obj/nuclearreactor/nuclearreactor.dm
+// Performance optimizations adapted from Far-Horizons-SS14/Far-Horizons-SS14#1000
+// and ss14Starlight/space-station-14#3967.
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class NuclearReactorComponent : Component
@@ -63,6 +66,11 @@ public sealed partial class NuclearReactorComponent : Component
     /// 2D grid of lists of neutrons in each grid slot of the component grid
     /// </summary>
     public List<ReactorNeutron>[,] FluxGrid;
+
+    /// <summary>
+    /// Scratch buffer for neutron movement. Avoids List.Remove and flux snapshot allocations.
+    /// </summary>
+    public List<ReactorNeutron>[,] FluxGridScratch;
 
     /// <summary>
     /// Number of neutrons that hit the edge of the reactor grid last tick
@@ -323,6 +331,12 @@ public sealed partial class NuclearReactorComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public SignalState InsertPortState = SignalState.Low;
     #endregion
+
+    /// <summary>
+    /// Stopwatch that keeps track of how long the reactor is taking to process.
+    /// </summary>
+    [ViewVariables]
+    public readonly Stopwatch SimTime = new();
 
     #region Debug
     [ViewVariables(VVAccess.ReadOnly)]

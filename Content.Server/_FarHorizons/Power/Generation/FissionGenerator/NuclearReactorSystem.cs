@@ -50,6 +50,8 @@ namespace Content.Server._FarHorizons.Power.Generation.FissionGenerator;
 // Ported and modified from goonstation by Jhrushbe.
 // CC-BY-NC-SA-3.0
 // https://github.com/goonstation/goonstation/blob/ff86b044/code/obj/nuclearreactor/nuclearreactor.dm
+// Performance optimizations adapted from Far-Horizons-SS14/Far-Horizons-SS14#1000
+// and ss14Starlight/space-station-14#3967.
 
 public sealed class NuclearReactorSystem : SharedNuclearReactorSystem
 {
@@ -86,6 +88,7 @@ public sealed class NuclearReactorSystem : SharedNuclearReactorSystem
     }
 
     private readonly Dictionary<KeyValuePair<EntityUid, EntityUid>, LogData> _logQueue = [];
+    private static readonly ReactorPartComponent?[] _neighborBuffer = new ReactorPartComponent?[4];
 
     public override void Initialize()
     {
@@ -128,6 +131,7 @@ public sealed class NuclearReactorSystem : SharedNuclearReactorSystem
 
         comp.ComponentGrid = new ReactorPartComponent[gridWidth, gridHeight];
         comp.FluxGrid = new List<ReactorNeutron>[gridWidth, gridHeight];
+          comp.FluxGridScratch = new List<ReactorNeutron>[gridWidth, gridHeight];
         comp.TemperatureGrid = new double[gridWidth, gridHeight];
         comp.NeutronGrid = new int[gridWidth, gridHeight];
 
@@ -150,6 +154,7 @@ public sealed class NuclearReactorSystem : SharedNuclearReactorSystem
             {
                 comp.ComponentGrid[x, y] = prefab.TryGetValue(new Vector2i(x, y), out var part) ? new ReactorPartComponent(part) : null;
                 comp.FluxGrid[x, y] = [];
+                comp.FluxGridScratch[x, y] = [];
             }
 
         UpdateGasVolume(comp);
@@ -290,10 +295,8 @@ public sealed class NuclearReactorSystem : SharedNuclearReactorSystem
         if (comp.RetractPortState == SignalState.Momentary)
             comp.RetractPortState = SignalState.Low;
 
-        // Even though it's probably bad for performace, we have to do the for x, for y loops 3 times
-        // to ensure the processes do not interfere with each other
-
-        // Rod interactions
+        comp.SimTime.Restart();
+        var scratch = comp.FluxGridScratch;
         for (var x = 0; x < gridWidth; x++)
         {
             for (var y = 0; y < gridHeight; y++)
@@ -303,62 +306,40 @@ public sealed class NuclearReactorSystem : SharedNuclearReactorSystem
                 if (ReactorComp == null)
                 {
                     comp.TemperatureGrid[x, y] = 0;
-                    continue;
                 }
-
-                var gas = _partSystem.ProcessGas(ReactorComp, ent, GasInput);
-                GasInput.Volume -= ReactorComp.GasVolume;
-
-                if (gas != null)
-                    _atmosphereSystem.Merge(outlet.Air, gas);
-
-                _partSystem.ProcessHeat(ReactorComp, ent, GetGridNeighbors(comp, x, y), this);
-                comp.TemperatureGrid[x, y] = ReactorComp.Temperature;
-
-                if (ReactorComp.HasRodType(ReactorPartComponent.RodTypes.ControlRod) && ReactorComp.IsControlRod)
+                else
                 {
-                    ReactorComp.ConfiguredInsertionLevel = comp.ControlRodInsertion;
-                    ControlRods++;
+                    var gas = _partSystem.ProcessGas(ReactorComp, ent, GasInput);
+                    GasInput.Volume -= ReactorComp.GasVolume;
+
+                    if (gas != null)
+                        _atmosphereSystem.Merge(outlet.Air, gas);
+
+                    _partSystem.ProcessHeat(ReactorComp, ent, GetGridNeighbors(comp, x, y, _neighborBuffer), this);
+                    comp.TemperatureGrid[x, y] = ReactorComp.Temperature;
+
+                    if (ReactorComp.HasRodType(ReactorPartComponent.RodTypes.ControlRod) && ReactorComp.IsControlRod)
+                    {
+                        ReactorComp.ConfiguredInsertionLevel = comp.ControlRodInsertion;
+                        ControlRods++;
+                    }
+
+                    if (ReactorComp.Melted)
+                        MeltedComps++;
+
+                    comp.FluxGrid[x, y] = _partSystem.ProcessNeutrons(ReactorComp, comp.FluxGrid[x, y], out var deltaT);
+                    TempChange += deltaT;
+
+                    // Second check so that AvgControlRodInsertion represents the present instead of 1 tick in the past
+                    if (ReactorComp.HasRodType(ReactorPartComponent.RodTypes.ControlRod) && ReactorComp.IsControlRod)
+                        AvgControlRodInsertion += ReactorComp.NeutronCrossSection;
+
+                    TotalNRads += ReactorComp.Properties.NeutronRadioactivity;
+                    TotalRads += ReactorComp.Properties.Radioactivity;
+                    TotalSpent += ReactorComp.Properties.FissileIsotopes;
                 }
 
-                if (ReactorComp.Melted)
-                    MeltedComps++;
-
-                comp.FluxGrid[x, y] = _partSystem.ProcessNeutrons(ReactorComp, comp.FluxGrid[x, y], out var deltaT);
-                TempChange += deltaT;
-
-                // Second check so that AvgControlRodInsertion represents the present instead of 1 tick in the past
-                if (ReactorComp.HasRodType(ReactorPartComponent.RodTypes.ControlRod) && ReactorComp.IsControlRod)
-                    AvgControlRodInsertion += ReactorComp.NeutronCrossSection;
-
-                TotalNRads += ReactorComp.Properties.NeutronRadioactivity;
-                TotalRads += ReactorComp.Properties.Radioactivity;
-                TotalSpent += ReactorComp.Properties.FissileIsotopes;
-            }
-        }
-        AvgControlRodInsertion /= ControlRods;
-
-        // Sound for the control rods moving, basically an audio cue that the reactor's doing something important
-        if (ControlRods > 0 && !MathHelper.CloseTo(comp.AvgInsertion, AvgControlRodInsertion))
-            _audio.PlayPvs(new SoundPathSpecifier("/Audio/_FarHorizons/Machines/relay_click.ogg"), uid);
-
-        // Snapshot of the flux grid that won't get messed up by the neutron calculations
-        var flux = new List<ReactorNeutron>[gridWidth, gridHeight];
-        for (var x = 0; x < gridWidth; x++)
-        {
-            for (var y = 0; y < gridHeight; y++)
-            {
-                flux[x, y] = new List<ReactorNeutron>(comp.FluxGrid[x, y]);
-                comp.NeutronGrid[x, y] = comp.FluxGrid[x, y].Count;
-            }
-        }
-
-        // Move neutrons
-        for (var x = 0; x < gridWidth; x++)
-        {
-            for (var y = 0; y < gridHeight; y++)
-            {
-                foreach (var neutron in flux[x, y])
+                foreach (var neutron in comp.FluxGrid[x, y])
                 {
                     NeutronCount++;
 
@@ -370,17 +351,39 @@ public sealed class NuclearReactorSystem : SharedNuclearReactorSystem
                     if (x + xmod >= 0 && y + ymod >= 0 && x + xmod <= gridWidth - 1
                         && y + ymod <= gridHeight - 1)
                     {
-                        comp.FluxGrid[x + xmod, y + ymod].Add(neutron);
-                        comp.FluxGrid[x, y].Remove(neutron);
+                        scratch[x + xmod, y + ymod].Add(neutron);
                     }
                     else
                     {
-                        comp.FluxGrid[x, y].Remove(neutron);
-                        TempRads++; // neutrons hitting the casing get blasted in to the room - have fun with that engineers!
+                        TempRads++;
                     }
+                }
+
+                comp.NeutronGrid[x, y] = comp.FluxGrid[x, y].Count;
+
+                if (comp.SimTime.Elapsed.TotalMilliseconds > 500)
+                {
+                    QueueDel(uid);
+                    _adminLog.Add(LogType.EntityDelete, LogImpact.Extreme, $"{ToPrettyString(uid):reactor} simulation took too long ({comp.SimTime.Elapsed.TotalMilliseconds} ms).");
+                    return;
                 }
             }
         }
+
+        (comp.FluxGrid, comp.FluxGridScratch) = (comp.FluxGridScratch, comp.FluxGrid);
+        for (var x = 0; x < gridWidth; x++)
+        {
+            for (var y = 0; y < gridHeight; y++)
+            {
+                comp.FluxGridScratch[x, y].Clear();
+            }
+        }
+
+        AvgControlRodInsertion /= ControlRods;
+
+        // Sound for the control rods moving, basically an audio cue that the reactor's doing something important
+        if (ControlRods > 0 && !MathHelper.CloseTo(comp.AvgInsertion, AvgControlRodInsertion))
+            _audio.PlayPvs(new SoundPathSpecifier("/Audio/_FarHorizons/Machines/relay_click.ogg"), uid);
 
         var CasingGas = ProcessCasingGas(comp, GasInput);
         if (CasingGas != null)
@@ -426,26 +429,13 @@ public sealed class NuclearReactorSystem : SharedNuclearReactorSystem
         reactor.RadiationLevel /= Math.Max(reactor.RadiationStability, 1);
     }
 
-    private static List<ReactorPartComponent?> GetGridNeighbors(NuclearReactorComponent reactor, int x, int y)
+    private static ReactorPartComponent?[] GetGridNeighbors(NuclearReactorComponent reactor, int x, int y, ReactorPartComponent?[] buffer)
     {
-        var neighbors = new List<ReactorPartComponent?>();
-        if (x - 1 < 0)
-            neighbors.Add(null);
-        else
-            neighbors.Add(reactor.ComponentGrid[x - 1, y]);
-        if (x + 1 >= reactor.ReactorGridWidth)
-            neighbors.Add(null);
-        else
-            neighbors.Add(reactor.ComponentGrid[x + 1, y]);
-        if (y - 1 < 0)
-            neighbors.Add(null);
-        else
-            neighbors.Add(reactor.ComponentGrid[x, y - 1]);
-        if (y + 1 >= reactor.ReactorGridHeight)
-            neighbors.Add(null);
-        else
-            neighbors.Add(reactor.ComponentGrid[x, y + 1]);
-        return neighbors;
+        buffer[0] = x - 1 < 0 ? null : reactor.ComponentGrid[x - 1, y];
+        buffer[1] = x + 1 >= reactor.ReactorGridWidth ? null : reactor.ComponentGrid[x + 1, y];
+        buffer[2] = y - 1 < 0 ? null : reactor.ComponentGrid[x, y - 1];
+        buffer[3] = y + 1 >= reactor.ReactorGridHeight ? null : reactor.ComponentGrid[x, y + 1];
+        return buffer;
     }
 
     private void UpdateGasVolume(NuclearReactorComponent reactor)
@@ -567,7 +557,11 @@ public sealed class NuclearReactorSystem : SharedNuclearReactorSystem
                     comp.ComponentGrid[x, y] = null;
                     comp.NeutronGrid[x, y] = 0;
                     comp.FluxGrid[x, y] = [];
-                    QueueDel(comp.GridEntities[new(x, y)]);
+                    if (comp.GridEntities.TryGetValue(new(x, y), out var partEntity))
+                    {
+                        QueueDel(partEntity);
+                        comp.GridEntities.Remove(new(x, y));
+                    }
                 }
             }
         }
@@ -579,7 +573,7 @@ public sealed class NuclearReactorSystem : SharedNuclearReactorSystem
         if (T != null)
             _atmosphereSystem.Merge(T, comp.AirContents);
 
-        _adminLog.Add(LogType.Explosion, LogImpact.High, $"{ToPrettyString(ent):reactor} catastrophically overloads, meltdown badness: {MeltdownBadness}");
+        _adminLog.Add(LogType.Explosion, LogImpact.Extreme, $"{ToPrettyString(ent):reactor} catastrophically overloads, meltdown badness: {MeltdownBadness}");
 
         // You did not see graphite on the roof. You're in shock. Report to medical.
         for (var i = 0; i < _random.Next(10, 30); i++)
@@ -599,6 +593,7 @@ public sealed class NuclearReactorSystem : SharedNuclearReactorSystem
         Array.Clear(comp.NeutronGrid);
         Array.Clear(comp.TemperatureGrid);
         Array.Clear(comp.FluxGrid);
+        Array.Clear(comp.FluxGridScratch);
 
         // This will Dirty() the reactor, so no need to declare it explicitly
         UpdateGridVisual(ent);

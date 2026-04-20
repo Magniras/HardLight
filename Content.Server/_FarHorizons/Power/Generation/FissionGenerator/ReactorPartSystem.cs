@@ -21,6 +21,8 @@ namespace Content.Server._FarHorizons.Power.Generation.FissionGenerator;
 // Ported and modified from goonstation by Jhrushbe.
 // CC-BY-NC-SA-3.0
 // https://github.com/goonstation/goonstation/blob/master/code/obj/nuclearreactor/reactorcomponents.dm
+// Performance optimizations adapted from Far-Horizons-SS14/Far-Horizons-SS14#1000
+// and ss14Starlight/space-station-14#3967.
 
 public sealed partial class ReactorPartSystem : SharedReactorPartSystem
 {
@@ -315,7 +317,7 @@ public sealed partial class ReactorPartSystem : SharedReactorPartSystem
     /// <param name="AdjacentComponents">List of reactor parts next to the reactorPart.</param>
     /// <param name="reactorSystem">The SharedNuclearReactorSystem.</param>
     /// <exception cref="Exception">Calculations resulted in a sub-zero value.</exception>
-    public void ProcessHeat(ReactorPartComponent reactorPart, Entity<NuclearReactorComponent> reactorEnt, List<ReactorPartComponent?> AdjacentComponents, SharedNuclearReactorSystem reactorSystem)
+    public void ProcessHeat(ReactorPartComponent reactorPart, Entity<NuclearReactorComponent> reactorEnt, ReactorPartComponent?[] AdjacentComponents, SharedNuclearReactorSystem reactorSystem)
     {
         var reactor = reactorEnt.Comp;
 
@@ -426,9 +428,9 @@ public sealed partial class ReactorPartSystem : SharedReactorPartSystem
     public List<ReactorNeutron> ProcessNeutrons(ReactorPartComponent reactorPart, List<ReactorNeutron> neutrons, out float thermalEnergy)
     {
         var preCalcTemp = reactorPart.Temperature;
-        var flux = new List<ReactorNeutron>(neutrons);
+        var result = new List<ReactorNeutron>(neutrons.Count);
 
-        foreach (var neutron in flux)
+        foreach (var neutron in neutrons)
         {
             if (Prob(reactorPart.Properties.Density * _rate * reactorPart.NeutronCrossSection * _bias))
             {
@@ -438,9 +440,8 @@ public sealed partial class ReactorPartSystem : SharedReactorPartSystem
                     reactorPart.Properties.Radioactivity += _product;
                     for (var i = 0; i < _random.Next(3, 5 + 1); i++) // was 1, 5+1
                     {
-                        neutrons.Add(new() { dir = _random.NextAngle().GetDir(), velocity = _random.Next(2, 3 + 1) });
+                        result.Add(new() { dir = _random.NextAngle().GetDir(), velocity = _random.Next(2, 3 + 1) });
                     }
-                    neutrons.Remove(neutron);
                     reactorPart.Temperature += 75f; // Was 50, increased to make neutron reactions stronger
                 }
                 else if (neutron.velocity <= 5 && Prob(_rate * reactorPart.Properties.Radioactivity * _bias)) // stimulated emission
@@ -449,9 +450,8 @@ public sealed partial class ReactorPartSystem : SharedReactorPartSystem
                     reactorPart.Properties.FissileIsotopes += _product;
                     for (var i = 0; i < _random.Next(3, 5 + 1); i++)// was 1, 5+1
                     {
-                        neutrons.Add(new() { dir = _random.NextAngle().GetDir(), velocity = _random.Next(1, 3 + 1) });
+                        result.Add(new() { dir = _random.NextAngle().GetDir(), velocity = _random.Next(1, 3 + 1) });
                     }
-                    neutrons.Remove(neutron);
                     reactorPart.Temperature += 50f; // Was 25, increased to make neutron reactions stronger
                 }
                 else
@@ -464,11 +464,15 @@ public sealed partial class ReactorPartSystem : SharedReactorPartSystem
                     else
                         neutron.velocity--;
 
-                    if (neutron.velocity <= 0)
-                        neutrons.Remove(neutron);
+                    if (neutron.velocity > 0)
+                        result.Add(neutron);
 
                     reactorPart.Temperature += 1; // ... not worth the adjustment
                 }
+            }
+            else
+            {
+                result.Add(neutron);
             }
         }
         if (Prob(reactorPart.Properties.NeutronRadioactivity * _rate * reactorPart.NeutronCrossSection))
@@ -476,7 +480,7 @@ public sealed partial class ReactorPartSystem : SharedReactorPartSystem
             var count = _random.Next(1, 5 + 1); // Was 3+1
             for (var i = 0; i < count; i++)
             {
-                neutrons.Add(new() { dir = _random.NextAngle().GetDir(), velocity = 3 });
+                result.Add(new() { dir = _random.NextAngle().GetDir(), velocity = 3 });
             }
             reactorPart.Properties.NeutronRadioactivity -= _reactant / 2;
             reactorPart.Properties.Radioactivity += _product / 2;
@@ -488,7 +492,7 @@ public sealed partial class ReactorPartSystem : SharedReactorPartSystem
             var count = _random.Next(1, 5 + 1); // Was 3+1
             for (var i = 0; i < count; i++)
             {
-                neutrons.Add(new() { dir = _random.NextAngle().GetDir(), velocity = _random.Next(1, 3 + 1) });
+                result.Add(new() { dir = _random.NextAngle().GetDir(), velocity = _random.Next(1, 3 + 1) });
             }
             reactorPart.Properties.Radioactivity -= _reactant / 2;
             reactorPart.Properties.FissileIsotopes += _product / 2;
@@ -508,11 +512,10 @@ public sealed partial class ReactorPartSystem : SharedReactorPartSystem
         }
 
         if (reactorPart.HasRodType(ReactorPartComponent.RodTypes.GasChannel))
-            neutrons = ProcessNeutronsGas(reactorPart, neutrons);
+            result = ProcessNeutronsGas(reactorPart, result);
 
-        neutrons ??= [];
         thermalEnergy = (reactorPart.Temperature - preCalcTemp) * reactorPart.ThermalMass;
-        return neutrons;
+        return result;
     }
 
     /// <summary>
@@ -525,21 +528,25 @@ public sealed partial class ReactorPartSystem : SharedReactorPartSystem
     {
         if (reactorPart.AirContents == null) return neutrons;
 
-        var flux = new List<ReactorNeutron>(neutrons);
-        foreach (var neutron in flux)
+        var result = new List<ReactorNeutron>(neutrons.Count + 8);
+        foreach (var neutron in neutrons)
         {
-            if (neutron.velocity > 0)
+            if (neutron.velocity <= 0)
+                continue;
+
+            var neutronCount = GasNeutronInteract(reactorPart);
+            if (neutronCount > 1)
             {
-                var neutronCount = GasNeutronInteract(reactorPart);
-                if (neutronCount > 1)
-                    for (var i = 0; i < neutronCount; i++)
-                        neutrons.Add(new() { dir = _random.NextAngle().GetDir(), velocity = _random.Next(1, 3 + 1) });
-                else if (neutronCount < 1)
-                    neutrons.Remove(neutron);
+                for (var i = 0; i < neutronCount; i++)
+                    result.Add(new() { dir = _random.NextAngle().GetDir(), velocity = _random.Next(1, 3 + 1) });
+            }
+            else if (neutronCount >= 1)
+            {
+                result.Add(neutron);
             }
         }
 
-        return neutrons;
+        return result;
     }
 
     /// <summary>

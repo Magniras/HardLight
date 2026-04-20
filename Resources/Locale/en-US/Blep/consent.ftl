@@ -30,3 +30,6 @@ consent-Cum = Interact with cum
 
 consent-NaturalLubricant = Interact with natural lubricant
     .desc = Turn this on for natural lubricant to have any meaningful interaction with you.
+
+consent-NonconIcon = Show non-consent icon
+    .desc = Turn this on to show a non-consent border on your HUD icon and to see it on other opted-in players.

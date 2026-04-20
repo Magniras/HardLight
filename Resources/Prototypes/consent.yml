@@ -55,4 +55,9 @@
   description: Allow yourself to be mind-controlled/hypnotised/brainwashed.
 
 - type: consentToggle
+  id: NonconIcon
+  name: Non-Con
+  description: Opt in to see players who have Non-Con enabled
+
+- type: consentToggle
   id: NoClone

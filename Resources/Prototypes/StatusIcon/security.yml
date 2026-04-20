@@ -50,3 +50,15 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: MindShield
+
+- type: securityIcon
+  id: NonconIcon
+  priority: 2
+  locationPreference: Right
+  layer: Mod
+  offset: -3
+  xOffset: 2
+  isShaded: true
+  icon:
+    sprite: /Textures/Interface/Misc/noncon.rsi
+    state: noncon

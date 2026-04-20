@@ -1,6 +1,6 @@
 - type: construction
   id: WallPlastitanium
-  graph: Plastitanium
+  graph: Girder
   startNode: start
   targetNode: plastitaniumWall
   category: construction-category-structures
@@ -13,7 +13,7 @@
 
 - type: construction
   id: WallPlastitaniumDiagonal
-  graph: Plastitanium
+  graph: Girder
   startNode: start
   targetNode: plastitaniumWallDiagonal
   category: construction-category-structures

@@ -104,3 +104,5 @@
               doAfter: 2
             - tool: Anchoring
               doAfter: 3
+
+    # plastitanium walls use the canonical Girder graph (routes exist in Girder.yml)

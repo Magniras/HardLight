@@ -603,7 +603,7 @@
     tags:
     - Wall
   - type: Construction
-    graph: Plastitanium
+    graph: Girder
     node: plastitaniumWall
   - type: Destructible
     thresholds:
@@ -732,7 +732,7 @@
     sprite: Structures/Walls/plastitanium_diagonal.rsi
     state: state0
   - type: Construction
-    graph: Plastitanium
+    graph: Girder
     node: plastitaniumWallDiagonal
   - type: Destructible
     thresholds:

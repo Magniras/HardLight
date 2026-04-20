@@ -258,6 +258,31 @@
             - tool: Prying
               doAfter: 5
 
+    - node: plastitaniumWall
+      entity: WallPlastitanium
+      edges:
+        - to: reinforcedGirder
+          completed:
+            - !type:GivePrototype
+              prototype: SheetPlastitanium1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 10
+
+    - node: plastitaniumWallDiagonal
+      entity: WallPlastitaniumDiagonal
+      edges:
+        - to: reinforcedGirder
+          completed:
+            - !type:GivePrototype
+              prototype: SheetPlastitanium1
+              amount: 2
+
+          steps:
+            - tool: Welding
+              doAfter: 10
+
     - node: reinforcedGirder
       entity: ReinforcedGirder
       edges:
@@ -342,6 +367,34 @@
             - material: Plasteel
               amount: 1
               doAfter: 1
+
+        - to: plastitaniumWall
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - material: Plastitanium
+              amount: 2
+              doAfter: 2
+            - tool: Welding
+              doAfter: 10
+
+        - to: plastitaniumWallDiagonal
+          completed:
+            - !type:SnapToGrid
+              southRotation: false
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - material: Plastitanium
+              amount: 2
+              doAfter: 2
+            - tool: Welding
+              doAfter: 10
 
         - to: girder
           completed:

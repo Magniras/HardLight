@@ -2832,3 +2832,13 @@ Entries:
         chat updates.
   id: 304
   time: '2026-04-20T20:41:43.0000000+00:00'
+- author: Kronyxxx
+  changes:
+    - type: Fix
+      message: Reduced shipyard load overhead for saved ships, especially larger ones.
+    - type: Fix
+      message: >-
+        Made shipyard appraisal safer by avoiding stateful pricing hooks while
+        still counting normal ship contents.
+  id: 305
+  time: '2026-04-20T20:42:27.0000000+00:00'

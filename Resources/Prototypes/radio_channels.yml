@@ -68,7 +68,7 @@
   keycode: 't'
   frequency: 1213
   color: "#8f4a4b"
-#  longRange: true # Frontier - Move to Syndicate Base
+  longRange: true # Frontier - Move to Syndicate Base ## Hardlight: We do not have a this.
 
 - type: radioChannel
   id: Handheld

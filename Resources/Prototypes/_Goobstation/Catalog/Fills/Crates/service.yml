@@ -177,6 +177,14 @@
         weight: 0.6
       - id: VinylDiskYoungSpirit
         weight: 0.6
+      - id: VinylDiskBrazilianPhonk
+        weight: 0.6
+      - id: VinylDiskCyberpunkTechno
+        weight: 0.6
+      - id: VinylDiskIntoDarkness
+        weight: 0.6
+      - id: VinylDiskSkubStep
+        weight: 0.6
       - id: VinylDiskForgotten
         weight: 0.05 # 'funny song'
 

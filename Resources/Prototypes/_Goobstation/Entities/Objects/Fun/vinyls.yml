@@ -902,3 +902,49 @@
   - type: Vinyl
     song:
       path: /Audio/_HL/RadioStation/music/youngspirit.ogg
+
+
+- type: entity
+  name: "vinyl disk: Aggressive Brazilian Phonk"
+  id: VinylDiskBrazilianPhonk
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: green-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/absolutesound-aggressive-brazilian-phonk.ogg
+
+- type: entity
+  name: "vinyl disk: Cyberpunk Techno"
+  id: VinylDiskCyberpunkTechno
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: green-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/humanstudioedm-cyberpunk-techno.ogg
+
+
+- type: entity
+  name: "vinyl disk: SkubStep"
+  id: VinylDiskSkubStep
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: green-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/finket_ss14skubstep.ogg
+
+- type: entity
+  name: "vinyl disk: Into Darkness"
+  id: VinylDiskIntoDarkness
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: green-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/muzaproduction-into-darkness.ogg

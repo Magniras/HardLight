@@ -17,6 +17,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+#nullable enable
 namespace Content.IntegrationTests.Tests.Shuttle;
 
 /// <summary>
@@ -257,7 +258,7 @@ public sealed class ShipSerializationTest : ContentUnitTest
             Assert.That(entManager.TryGetComponent(beaker, out AppearanceComponent? beakerAppearance));
             Assert.That(solutionSystem.TryGetSolution(beaker, "beaker", out var solutionEnt, out var solution));
 
-            solution.AddSolution(new Solution("Water", FixedPoint2.New(10)), protoManager);
+            solution!.AddSolution(new Solution("Water", FixedPoint2.New(10)), protoManager);
             solutionSystem.UpdateChemicals(solutionEnt!.Value, false);
 
             Assert.That(appearanceSystem.TryGetData(beaker, SolutionContainerVisuals.FillFraction, out originalFill, beakerAppearance), Is.True);

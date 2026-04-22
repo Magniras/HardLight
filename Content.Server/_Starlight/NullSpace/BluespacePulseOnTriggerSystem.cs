@@ -50,7 +50,6 @@ public sealed class BluespacePulseOnTriggerSystem : EntitySystem
 
             // Fire effects (EmitSoundOnTrigger + SpawnOnTrigger)
             _trigger.Trigger(uid);
-        };
 
             // Remove NullSpace and stun all detected entities
             var stunTime = TimeSpan.FromSeconds(comp.StunSeconds);
@@ -63,3 +62,4 @@ public sealed class BluespacePulseOnTriggerSystem : EntitySystem
             }
         }
     }
+}

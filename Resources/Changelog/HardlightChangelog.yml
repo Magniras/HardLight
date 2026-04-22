@@ -2951,3 +2951,15 @@ Entries:
       message: 'Removed the salvage expedition computer from every single map. '
   id: 319
   time: '2026-04-22T20:54:06.0000000+00:00'
+- author: Kronyxxx
+  changes:
+    - type: Fix
+      message: >-
+        Stopped ghosted IPCs from entering battery-death limbo after their
+        battery is removed or drained.
+    - type: Fix
+      message: >-
+        Stopped tracked cryo entities from being force-deleted just to reopen
+        their job slot.
+  id: 320
+  time: '2026-04-22T21:06:55.0000000+00:00'

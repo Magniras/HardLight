@@ -283,6 +283,117 @@
   # Note: No toggle added here; no provided SyndQuad ballz states.
 
 - type: entity
+  id: assaultQuad
+  parent: [SyndiQuad]
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: assaultquad
+      map: ["movement"]
+    - state: assaultquadr
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: assaultquadl
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: assaultquad_moving
+    noMovementLayers:
+      movement:
+        state: assaultquad
+  - type: BorgTransponder
+    sprite:
+      sprite: _HL/Mobs/Player/borgs/quads.rsi
+      state: assaultquad
+    name: cyborg
+  - type: SpriteStateToggle
+    spriteLayer: movement
+    stateOff: assaultquad
+    stateOn: assaultquadballz
+    movementStateOff: assaultquad_moving
+    movementStateOn: assaultquad_movingballz
+    
+- type: entity
+  id: chewsborg
+  parent: [SyndiQuad]
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: chews
+      map: ["movement"]
+    - state: chewsr
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: chewsl
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: chews_moving
+    noMovementLayers:
+      movement:
+        state: chews
+  - type: BorgTransponder
+    sprite:
+      sprite: _HL/Mobs/Player/borgs/quads.rsi
+      state: chews
+    name: cyborg
+  - type: SpriteStateToggle
+    spriteLayer: movement
+    stateOff: chews
+    stateOn: chewsballz
+    movementStateOff: chews_moving
+    movementStateOn: chews_movingballz
+    
+- type: entity
+  id: wolfborg
+  parent: [BorgChassisApex]
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: wolfdog
+      map: ["movement"]
+    - state: wolfdogr
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: wolfdogl
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: wolfdog_moving
+    noMovementLayers:
+      movement:
+        state: wolfdog
+  - type: BorgTransponder
+    sprite:
+      sprite: _HL/Mobs/Player/borgs/quads.rsi
+      state: wolfdog
+    name: cyborg
+  - type: SpriteStateToggle
+    spriteLayer: movement
+    stateOff: wolfdog
+    stateOn: wolfdogballz
+    movementStateOff: wolfdog_moving
+    movementStateOn: wolfdog_movingballz
+
+- type: entity
   id: BorgChassisQuadCC
   parent: BorgChassisQuad
   components:

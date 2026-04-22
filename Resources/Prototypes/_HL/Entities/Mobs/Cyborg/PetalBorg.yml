@@ -29,18 +29,21 @@
     preserveExistingChannels: true
     intrinsicChannels:
     - Binary
+    - Trinary
     - Medical
     - Science
     - Common
   - type: IntrinsicRadioTransmitter
     intrinsicChannels:
     - Binary
+    - Trinary
     - Medical
     - Science
     - Common
   - type: ActiveRadio
     intrinsicChannels:
     - Binary
+    - Trinary
     - Medical
     - Science
     - Common

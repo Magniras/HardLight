@@ -67,16 +67,19 @@
     preserveExistingChannels: true
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Science
     - Common
   - type: IntrinsicRadioTransmitter
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Science
     - Common
   - type: ActiveRadio
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Science
     - Common
   # HardLight end
@@ -153,6 +156,7 @@
     preserveExistingChannels: true
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - ColSec
     - Security
     - Science
@@ -160,6 +164,7 @@
   - type: IntrinsicRadioTransmitter
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - ColSec
     - Security
     - Science
@@ -167,6 +172,7 @@
   - type: ActiveRadio
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - ColSec
     - Security
     - Science
@@ -226,16 +232,19 @@
     preserveExistingChannels: true
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Syndicate
     - Common
   - type: IntrinsicRadioTransmitter
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Syndicate
     - Common
   - type: ActiveRadio
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Syndicate
     - Common
   # HardLight end
@@ -297,6 +306,7 @@
     preserveExistingChannels: true
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - ColCom
     - Command
     - ColSec
@@ -310,6 +320,7 @@
   - type: IntrinsicRadioTransmitter
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - ColCom
     - Command
     - ColSec
@@ -323,6 +334,7 @@
   - type: ActiveRadio
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - ColCom
     - Command
     - ColSec
@@ -401,18 +413,21 @@
     preserveExistingChannels: true
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Science
     - Supply
     - Common
   - type: IntrinsicRadioTransmitter
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Science
     - Supply
     - Common
   - type: ActiveRadio
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Science
     - Supply
     - Common
@@ -470,18 +485,21 @@
     preserveExistingChannels: true
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Science
     - Service
     - Common
   - type: IntrinsicRadioTransmitter
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Science
     - Service
     - Common
   - type: ActiveRadio
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Science
     - Service
     - Common
@@ -540,18 +558,21 @@
     preserveExistingChannels: true
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Engineering
     - Science
     - Common
   - type: IntrinsicRadioTransmitter
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Engineering
     - Science
     - Common
   - type: ActiveRadio
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Engineering
     - Science
     - Common
@@ -614,18 +635,21 @@
     preserveExistingChannels: true
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Medical
     - Science
     - Common
   - type: IntrinsicRadioTransmitter
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Medical
     - Science
     - Common
   - type: ActiveRadio
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Medical
     - Science
     - Common

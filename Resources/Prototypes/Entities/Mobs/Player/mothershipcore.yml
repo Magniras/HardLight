@@ -157,11 +157,13 @@
     - Mothership
     - Xenoborg
     - Binary
+    - Trinary # Hardlight
   - type: ActiveRadio
     channels:
     - Mothership
     - Xenoborg
     - Binary
+    - Trinary # Hardlight
   - type: Xenoborg
     mindRole: MindRoleMothershipCore
     briefingText: mothership-welcome

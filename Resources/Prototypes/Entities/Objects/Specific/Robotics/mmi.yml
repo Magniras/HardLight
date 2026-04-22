@@ -22,9 +22,11 @@
   - type: IntrinsicRadioTransmitter
     channels:
     - Binary
+    - Trinary # Hardlight
   - type: ActiveRadio
     channels:
     - Binary
+    - Trinary # Hardlight
     - Common
   - type: NameIdentifier
     group: MMI

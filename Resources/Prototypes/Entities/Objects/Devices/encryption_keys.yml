@@ -241,6 +241,7 @@
   - type: EncryptionKey
     channels:
     - Binary
+    # - Trinary # Hardlight - uncomment when we figure out how to not duplicate this w/ Synthetic
     defaultChannel: Binary
   - type: Sprite
     layers:
@@ -256,6 +257,7 @@
   - type: EncryptionKey
     channels:
     - Binary
+    # - Trinary # Hardlight - uncomment when we figure out how to not duplicate this w/ Synthetic
     defaultChannel: Binary
   - type: Sprite
     layers:

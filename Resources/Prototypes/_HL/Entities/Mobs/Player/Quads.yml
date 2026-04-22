@@ -133,18 +133,21 @@
     preserveExistingChannels: true
     intrinsicChannels:
     - Binary
+    - Trinary
     - Science
     - Service
     - Common
   - type: IntrinsicRadioTransmitter
     intrinsicChannels:
     - Binary
+    - Trinary
     - Science
     - Service
     - Common
   - type: ActiveRadio
     intrinsicChannels:
     - Binary
+    - Trinary
     - Science
     - Service
     - Common

@@ -14,3 +14,16 @@
   # End DeltaV Additions - blacklist IPCs
   components:
     - type: Synth
+    - type: IntrinsicRadioReceiver # Hardlight start: Give you Trinary
+    - type: IntrinsicRadioTransmitter
+      intrinsicChannels:
+      - Trinary
+    - type: ActiveRadio
+      intrinsicChannels:
+      - Trinary
+    - type: EncryptionKeyHolder
+      keySlots: 1
+      examineWhileLocked: false
+      preserveExistingChannels: true
+      intrinsicChannels:
+      - Trinary

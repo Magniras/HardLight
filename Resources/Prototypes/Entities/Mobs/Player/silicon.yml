@@ -8,6 +8,7 @@
   - type: IntrinsicRadioTransmitter
     channels:
     - Binary
+    - Trinary # Hardlight
     - ColSec
     - Common
     - Command
@@ -24,6 +25,7 @@
   - type: ActiveRadio
     channels:
     - Binary
+    - Trinary # Hardlight
     - ColSec
     - Common
     - Command
@@ -95,9 +97,11 @@
   - type: IntrinsicRadioTransmitter
     channels:
     - Binary
+    - Trinary # Hardlight
   - type: ActiveRadio
     channels:
     - Binary
+    - Trinary # Hardlight
     - Common
   - type: ActionGrant
     actions:

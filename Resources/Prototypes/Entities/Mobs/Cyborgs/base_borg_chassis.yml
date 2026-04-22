@@ -125,17 +125,20 @@
     examineWhileLocked: false
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Science
     - Common
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Science
     - Common
   - type: ActiveRadio
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Science
     - Common
   # HardLight end
@@ -393,14 +396,17 @@
     examineWhileLocked: false
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Syndicate
   - type: IntrinsicRadioTransmitter
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Syndicate
   - type: ActiveRadio
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
     - Syndicate
   # HardLight end
   - type: ShowSyndicateIcons
@@ -438,12 +444,15 @@
     examineWhileLocked: false
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
   - type: IntrinsicRadioTransmitter
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
   - type: ActiveRadio
     intrinsicChannels:
     - Binary
+    - Trinary # Hardlight
   # HardLight end
   - type: IonStormTarget
     chance: 1
@@ -485,15 +494,18 @@
     intrinsicChannels:
     - Xenoborg
     - Binary
+    - Trinary # Hardlight
   - type: IntrinsicRadioTransmitter # can only use binary and xenoborg channel
     intrinsicChannels:
     - Xenoborg
     - Binary
+    - Trinary # Hardlight
   - type: ActiveRadio # but can hear the mothership channel
     intrinsicChannels:
     - Mothership
     - Xenoborg
     - Binary
+    - Trinary # Hardlight
   # HardLight end
   - type: BorgChassis
     maxModules: 10

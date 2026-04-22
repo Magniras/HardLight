@@ -30,6 +30,7 @@
     preserveExistingChannels: true
     intrinsicChannels:
     - Binary
+    - Trinary
     - ColSec
     - Security
     - Science
@@ -37,6 +38,7 @@
   - type: IntrinsicRadioTransmitter
     intrinsicChannels:
     - Binary
+    - Trinary
     - ColSec
     - Security
     - Science
@@ -44,6 +46,7 @@
   - type: ActiveRadio
     intrinsicChannels:
     - Binary
+    - Trinary
     - ColSec
     - Security
     - Science

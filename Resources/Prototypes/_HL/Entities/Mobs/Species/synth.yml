@@ -98,14 +98,14 @@
     examineWhileLocked: false
     preserveExistingChannels: true
     intrinsicChannels:
-    - Binary
+    - Trinary
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     intrinsicChannels:
-    - Binary
+    - Trinary
   - type: ActiveRadio
     intrinsicChannels:
-    - Binary
+    - Trinary
   - type: Bloodstream
     bloodReagent: InertNanites
     bloodRefreshAmount: 0.0

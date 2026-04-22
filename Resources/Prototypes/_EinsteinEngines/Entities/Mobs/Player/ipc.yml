@@ -155,15 +155,15 @@
     keysUnlocked: false
     preserveExistingChannels: true
     intrinsicChannels:
-    - Binary
+    - Trinary # Hardlight: No binary for you
   - type: OfferItem # HL
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     intrinsicChannels:
-    - Binary
+    - Trinary # Hardlight: No binary for you
   - type: ActiveRadio
     intrinsicChannels:
-    - Binary
+    - Trinary # Hardlight: No binary for you
   - type: DeadStartupButton
     sound:
       path: /Audio/_EE/Effects/Silicon/startup.ogg

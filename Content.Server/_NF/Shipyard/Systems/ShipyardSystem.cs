@@ -16,6 +16,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO; // HardLight
 using System.Linq;
 using System.Numerics;
+using System.Reflection;
 using System.Text; // HardLight
 using System.Text.RegularExpressions; // HardLight
 using Robust.Shared.Serialization; // HardLight
@@ -55,6 +56,9 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
     private static readonly Regex ShipSaveEntitiesSectionRegex = new(@"^(\s*)entities\s*:\s*$", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant); // HardLight
     private static readonly Regex ShipSaveLegacyUidLineRegex = new(@"^(\s*)-\s*uid\s*:\s*\d+\s*$", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant); // HardLight
     private static readonly Regex ShipSaveLegacyTypeLineRegex = new(@"^\s*type\s*:\s*(.+)$", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant); // HardLight
+    private static readonly FieldInfo? ContainerListField = typeof(Container).GetField("_containerList", BindingFlags.Instance | BindingFlags.NonPublic);
+    private static readonly FieldInfo? ContainerSlotEntityField = typeof(ContainerSlot).GetField("_containedEntity", BindingFlags.Instance | BindingFlags.NonPublic);
+    private static readonly FieldInfo? ContainerSlotArrayField = typeof(ContainerSlot).GetField("_containedEntityArray", BindingFlags.Instance | BindingFlags.NonPublic);
 
     // HardLight: Set of tokens that, if found as UIDs in the YAML, indicate a stale or invalid UID
     // that should be sanitized during load to prevent deserialization failures.
@@ -1178,9 +1182,14 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
     /// </summary>
     private void SanitizeLoadedShuttle(EntityUid gridUid)
     {
+        var prunedContainers = 0;
+
         VisitEntityAndDescendants(gridUid, uid =>
         {
             RemComp<JointComponent>(uid);
+
+            if (TryComp<ContainerManagerComponent>(uid, out var manager))
+                prunedContainers += PruneInvalidContainerContents(uid, manager);
 
             if (TryComp<DockingComponent>(uid, out var dock))
             {
@@ -1198,6 +1207,67 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             if (TryComp<UseDelayComponent>(uid, out var useDelay))
                 _useDelay.ResetAllDelays((uid, useDelay));
         });
+
+        if (prunedContainers > 0)
+            _sawmill.Warning($"[ShipLoad] Pruned {prunedContainers} stale contained UID reference(s) from loaded shuttle {ToPrettyString(gridUid)}.");
+    }
+
+    private int PruneInvalidContainerContents(EntityUid owner, ContainerManagerComponent manager)
+    {
+        var pruned = 0;
+
+        foreach (var container in manager.Containers.Values)
+        {
+            pruned += PruneInvalidContainerContents(owner, container);
+        }
+
+        if (pruned > 0)
+            Dirty(owner, manager);
+
+        return pruned;
+    }
+
+    private int PruneInvalidContainerContents(EntityUid owner, BaseContainer container)
+    {
+        var stale = new List<EntityUid>();
+
+        foreach (var contained in container.ContainedEntities.ToArray())
+        {
+            if (!contained.IsValid()
+                || TerminatingOrDeleted(contained)
+                || !HasComp<MetaDataComponent>(contained)
+                || !HasComp<TransformComponent>(contained))
+            {
+                stale.Add(contained);
+            }
+        }
+
+        if (stale.Count == 0)
+            return 0;
+
+        switch (container)
+        {
+            case Container standard when ContainerListField?.GetValue(standard) is List<EntityUid> list:
+                foreach (var contained in stale)
+                {
+                    list.Remove(contained);
+                }
+
+                return stale.Count;
+
+            case ContainerSlot slot when slot.ContainedEntity is { } contained && stale.Contains(contained):
+                ContainerSlotEntityField?.SetValue(slot, null);
+                ContainerSlotArrayField?.SetValue(slot, null);
+                return 1;
+
+            default:
+                foreach (var contained in stale)
+                {
+                    _sawmill.Warning($"[ShipLoad] Failed to scrub stale contained UID {contained} from {container.GetType().Name} on {ToPrettyString(owner)}.");
+                }
+
+                return 0;
+        }
     }
 
     /// <summary>

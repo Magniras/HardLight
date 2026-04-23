@@ -516,6 +516,12 @@ public sealed class ThrusterSystem : EntitySystem
 
     #region Burning
 
+    // Reusable scratch buffer for the per-tick burn loop. Iterating Colliding directly is unsafe
+    // because TryChangeDamage may kill the colliding entity, which raises EndCollideEvent and
+    // mutates Colliding. Snapshotting into a single reused list avoids the per-firing-thruster
+    // allocation that ToArray() caused at high CCU / capital-ship combat.
+    private readonly List<EntityUid> _burnScratch = new();
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -533,10 +539,13 @@ public sealed class ThrusterSystem : EntitySystem
             if (!comp.Firing || comp.Colliding.Count == 0 || comp.Damage == null)
                 continue;
 
-            foreach (var uid in comp.Colliding.ToArray())
+            _burnScratch.Clear();
+            _burnScratch.AddRange(comp.Colliding);
+            for (var i = 0; i < _burnScratch.Count; i++)
             {
-                _damageable.TryChangeDamage(uid, comp.Damage);
+                _damageable.TryChangeDamage(_burnScratch[i], comp.Damage);
             }
+            _burnScratch.Clear();
         }
     }
 

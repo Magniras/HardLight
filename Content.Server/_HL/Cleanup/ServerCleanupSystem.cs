@@ -183,7 +183,11 @@ public sealed class ServerCleanupSystem : EntitySystem
     private void CleanupFloatingEntities()
     {
         var deleted = 0;
-        var playerPositions = new List<(MapId Map, Vector2 Pos)>();
+
+        // Bucket player positions by (map, cellX, cellY) where cell size == FloatingEntitySafeRadius.
+        // Then a candidate entity only needs to check players in its own cell + 8 neighbours,
+        // turning the previous O(entities * players) scan into ~O(entities) at high CCU.
+        var playerBuckets = new Dictionary<(MapId Map, int X, int Y), List<Vector2>>();
         var playerQuery = EntityQueryEnumerator<ActorComponent, TransformComponent>();
         while (playerQuery.MoveNext(out _, out _, out var playerXform))
         {
@@ -191,10 +195,21 @@ public sealed class ServerCleanupSystem : EntitySystem
             if (playerXform.MapID == MapId.Nullspace)
                 continue;
 
-            playerPositions.Add((playerXform.MapID, _transformSystem.GetWorldPosition(playerXform)));
+            var pos = _transformSystem.GetWorldPosition(playerXform);
+            var key = (playerXform.MapID,
+                       (int)MathF.Floor(pos.X / FloatingEntitySafeRadius),
+                       (int)MathF.Floor(pos.Y / FloatingEntitySafeRadius));
+            if (!playerBuckets.TryGetValue(key, out var list))
+            {
+                list = new List<Vector2>();
+                playerBuckets[key] = list;
+            }
+            list.Add(pos);
         }
+
         var query = EntityQueryEnumerator<PhysicsComponent, TransformComponent>();
         var entitiesToDelete = new List<EntityUid>();
+        var safeRadiusSq = FloatingEntitySafeRadius * FloatingEntitySafeRadius;
 
         while (query.MoveNext(out var uid, out _, out var xform))
         {
@@ -224,18 +239,25 @@ public sealed class ServerCleanupSystem : EntitySystem
 			
             var entityPos = _transformSystem.GetWorldPosition(xform);
             var entityMap = xform.MapID;
+            var cx = (int)MathF.Floor(entityPos.X / FloatingEntitySafeRadius);
+            var cy = (int)MathF.Floor(entityPos.Y / FloatingEntitySafeRadius);
             var nearPlayer = false;
 
-            foreach (var (playerMap, playerPos) in playerPositions)
+            for (var dx = -1; dx <= 1 && !nearPlayer; dx++)
             {
-                if (playerMap != entityMap)
-                    continue;
-
-                var distance = Vector2.Distance(entityPos, playerPos);
-                if (distance <= FloatingEntitySafeRadius)
+                for (var dy = -1; dy <= 1 && !nearPlayer; dy++)
                 {
-                    nearPlayer = true;
-                    break;
+                    if (!playerBuckets.TryGetValue((entityMap, cx + dx, cy + dy), out var bucket))
+                        continue;
+
+                    foreach (var playerPos in bucket)
+                    {
+                        if (Vector2.DistanceSquared(entityPos, playerPos) <= safeRadiusSq)
+                        {
+                            nearPlayer = true;
+                            break;
+                        }
+                    }
                 }
             }
 

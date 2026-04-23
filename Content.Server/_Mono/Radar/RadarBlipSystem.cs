@@ -159,9 +159,27 @@ public sealed partial class RadarBlipSystem : EntitySystem
 
     private void OnBlipShutdown(EntityUid blipUid, RadarBlipComponent component, ComponentShutdown args)
     {
-        _recentRadarReports.Clear();
-
         var netBlipUid = GetNetEntity(blipUid);
+
+        // Surgically remove this blip from any cached reports rather than clearing the
+        // entire _recentRadarReports dictionary on every shutdown. The previous behaviour
+        // thrashed the cache during combat (every projectile/torpedo despawn invalidated
+        // every console's cache), forcing a full AssembleBlipsReport per console per frame.
+        // Per-blip removal preserves cache hits for unrelated blips while still preventing
+        // a dead blip from appearing in a cached payload served within the 75ms TTL.
+        foreach (var report in _recentRadarReports.Values)
+        {
+            var blips = report.Blips;
+            for (var i = blips.Count - 1; i >= 0; i--)
+            {
+                if (blips[i].Uid == netBlipUid)
+                {
+                    blips.RemoveAt(i);
+                    break;
+                }
+            }
+        }
+
         var removalEv = new BlipRemovalEvent(netBlipUid);
         RaiseNetworkEvent(removalEv);
     }

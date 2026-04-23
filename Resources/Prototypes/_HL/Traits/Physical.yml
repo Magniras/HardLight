@@ -277,7 +277,8 @@
     pseudoItem: true
   - type: CritThresholdModifier
     critThresholdDelta: -15
-  - type: SmallWeaponHandling
+  - type: GunAccuracyModifier
+    spreadMultiplier: 2
   - type: MeleeDamageModifier
     flatBonus: -2
     damageType: Blunt
@@ -317,7 +318,9 @@
     - 3,0,4,3
   - type: CritThresholdModifier
     critThresholdDelta: -30
-  - type: TinyWeaponHandling
+  - type: GunAccuracyModifier
+    spreadMultiplier: 3
+  - type: GunUserThrowback
   - type: MeleeDamageModifier
     flatBonus: -3.5
     damageType: Blunt

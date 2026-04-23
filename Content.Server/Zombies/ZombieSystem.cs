@@ -1,11 +1,13 @@
 using System.Linq;
 using Content.Server.Actions;
+using Content.Server._HL.Body.Systems;
 using Content.Server.Body.Systems;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Emoting.Systems;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Roles;
+using Content.Shared._HL.Body.Components;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Armor;
 using Content.Shared.Bed.Sleep;
@@ -34,6 +36,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
+        [Dependency] private readonly BloodSolutionModifierSystem _bloodSolutionModifier = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly ActionsSystem _actions = default!;
@@ -297,6 +300,7 @@ namespace Content.Server.Zombies
                 appcomp.EyeColor = zombiecomp.BeforeZombifiedEyeColor;
             }
             _humanoidAppearance.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor, false);
+            RemComp<BloodSolutionModifierComponent>(target);
             _bloodstream.ChangeBloodReagent(target, zombiecomp.BeforeZombifiedBloodReagent);
 
             return true;

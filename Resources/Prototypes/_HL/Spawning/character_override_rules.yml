@@ -141,15 +141,11 @@
     flashDamage:
         types:
            Heat: 120
-  - type: Bloodstream
-    bloodReagent: AbyssalBlood
-    bloodMaxVolume: 650
-    bloodlossDamage:
-      types:
-        Bloodloss: 0.5
-    bloodlossHealDamage:
-      types:
-        Bloodloss: -1
+  - type: BloodSolutionModifier
+    solution:
+      reagents:
+      - ReagentId: AbyssalBlood
+        Quantity: 650
 
 - type: spawnCharacterOverrideRule
   id: Phlogbloodphoenix
@@ -162,12 +158,8 @@
   - type: ThermalVision
   - type: BreathingImmunity
   - type: PressureImmunity
-  - type: Bloodstream
-    bloodReagent: Phlogiston
-    bloodMaxVolume: 650
-    bloodlossDamage:
-      types:
-        Bloodloss: 0.5
-    bloodlossHealDamage:
-      types:
-        Bloodloss: -1
+  - type: BloodSolutionModifier
+    solution:
+      reagents:
+      - ReagentId: Phlogiston
+        Quantity: 650

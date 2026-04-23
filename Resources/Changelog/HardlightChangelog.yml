@@ -2977,3 +2977,13 @@ Entries:
       message: more vinyls
   id: 322
   time: '2026-04-22T21:23:53.0000000+00:00'
+- author: Kronyxxx
+  changes:
+    - type: Fix
+      message: Removed a redundant Mono radar hitscan broadcast path.
+    - type: Fix
+      message: >-
+        Kept hitscan radar updates on the normal radar reply path to avoid
+        duplicate client updates.
+  id: 323
+  time: '2026-04-23T00:48:24.0000000+00:00'

@@ -3025,3 +3025,27 @@ Entries:
       message: Glasses now properly fix short-sightedness.
   id: 327
   time: '2026-04-23T23:34:43.0000000+00:00'
+- author: Illumos
+  changes:
+    - type: Tweak
+      message: Generic pouches are now 2x4
+    - type: Tweak
+      message: Engineering pouches are now 2x6, but can only fit tools.
+    - type: Tweak
+      message: >-
+        First Aid pouches are now 3x4 (1/4th of a medical bag), but can only fit
+        topicals.
+    - type: Tweak
+      message: >-
+        Botanist pouches are now 4x4, but can only fit seeds, vials, and
+        bottles.
+    - type: Tweak
+      message: >-
+        Janitorial pouches are now 4x4, but can only fit soap, janitorial tools,
+        and buckets.
+    - type: Tweak
+      message: >-
+        Private security pouches are now a generous 4x6, but can only fit
+        magazines.
+  id: 328
+  time: '2026-04-23T23:43:31.0000000+00:00'

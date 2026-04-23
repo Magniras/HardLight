@@ -83,13 +83,63 @@ public class PointCannonSystem : EntitySystem
 
     private void OnGridShapeChange(EntityUid gridUid, MapGridComponent grid, ref GridFixtureChangeEvent args)
     {
-        //Logger.Error($"Running grid fixture change on {MetaData(gridUid).EntityName}, NUMBER {gridUid}");
+        // GridFixtureChangeEvent fires on any fixture change (damage, anchor, tile placement, etc).
+        // The previous implementation unconditionally unlinked every cannon from every console on
+        // the grid and then re-linked them all, which during combat (capital ships taking hits)
+        // caused continuous churn: every group dictionary was rebuilt and PVS overrides were
+        // toggled off-then-on for every cannon, every fixture event.
+        //
+        // Diff the current cannon set on the grid against what each console already has linked
+        // and only act on the difference. LinkCannon is already idempotent for already-linked
+        // cannons, but skipping the call entirely also skips the redundant
+        // TogglePvsOverride / RegenerateCannons set per cannon.
         HashSet<Entity<TargetingConsoleComponent>> targetingConsoles = new();
         _lookup.GetGridEntities(gridUid, targetingConsoles);
+
+        if (targetingConsoles.Count == 0)
+            return;
+
+        HashSet<Entity<PointCannonComponent>> cannonsOnGridEnt = new();
+        _lookup.GetGridEntities(gridUid, cannonsOnGridEnt);
+
+        var cannonsOnGrid = new HashSet<EntityUid>();
+        foreach (var c in cannonsOnGridEnt)
+        {
+            if (Transform(c.Owner).Anchored)
+                cannonsOnGrid.Add(c.Owner);
+        }
+
+        var currentlyLinked = new HashSet<EntityUid>();
+        var toUnlink = new List<EntityUid>();
+
         foreach (var console in targetingConsoles)
         {
-            UnlinkAllCannonsFromConsole(console.Owner, console.Comp);
-            LinkAllCannonsToConsole(console.Owner, console.Comp);
+            currentlyLinked.Clear();
+            if (console.Comp.CannonGroups.TryGetValue("all", out var allGroup))
+            {
+                foreach (var c in allGroup)
+                    currentlyLinked.Add(c);
+            }
+
+            // Cheap path: nothing changed for this console.
+            if (currentlyLinked.Count == cannonsOnGrid.Count && currentlyLinked.SetEquals(cannonsOnGrid))
+                continue;
+
+            toUnlink.Clear();
+            foreach (var linked in currentlyLinked)
+            {
+                if (!cannonsOnGrid.Contains(linked))
+                    toUnlink.Add(linked);
+            }
+
+            foreach (var cannon in toUnlink)
+                UnlinkConsole(cannon, console.Owner, console.Comp);
+
+            foreach (var cannon in cannonsOnGrid)
+            {
+                if (!currentlyLinked.Contains(cannon))
+                    LinkCannon(cannon, console.Owner, console.Comp, MetaData(cannon).EntityName);
+            }
         }
         // _hardpoint.QueueHardpointRefresh(gridUid);
     }

@@ -411,6 +411,38 @@
           - SecurityUplink
 
 - type: listing
+  id: UplinkSecurityNullSpaceGoggles
+  name: uplink-nullspace-goggles-name
+  description: uplink-nullspace-goggles-desc
+  productEntity: ClothingEyesGlassesNullSpace
+  icon: { sprite: /Textures/_Starlight/Clothing/Eyes/Glasses/nullspacegoogles.rsi, state: icon }
+  cost:
+    FrontierUplinkCoin: 5
+  categories:
+    - UplinkSecurityUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - SecurityUplink
+
+- type: listing
+  id: UplinkSecurityBluespaceFlasher
+  name: bluespace flasher
+  description: A bluespace crystal set to a proximity trigger, useful for making an area off limits to Shadekin.
+  productEntity: BluespaceFlasher
+  icon: { sprite: _HL/Objects/Weapons/bflash.rsi, state: off }
+  cost:
+    FrontierUplinkCoin: 4
+  categories:
+    - UplinkSecurityUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - SecurityUplink
+
+- type: listing
   id: UplinkSecurityJetpack
   name:  uplink-security-jetpack-name
   description: uplink-security-jetpack-desc

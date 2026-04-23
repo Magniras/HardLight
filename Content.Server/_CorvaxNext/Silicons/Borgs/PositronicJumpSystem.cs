@@ -23,8 +23,10 @@ namespace Content.Server._CorvaxNext.Silicons.Borgs;
 
 public sealed class PositronicJumpSystem : EntitySystem
 {
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SiliconLawSystem _lawSystem = default!;
     [Dependency] private readonly MechSystem _mech = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -45,6 +47,7 @@ public sealed class PositronicJumpSystem : EntitySystem
         SubscribeLocalEvent<PositronicReturnComponent, ComponentShutdown>(OnPositronicReturnShutdown);
         SubscribeLocalEvent<PositronicReturnComponent, ReturnMindIntoAiEvent>(OnReturnMindIntoAi);
         SubscribeLocalEvent<RemoteMechPilotComponent, EntGotRemovedFromContainerMessage>(OnRemoteMechPilotRemoved);
+        SubscribeLocalEvent<RemoteMechPilotComponent, ComponentShutdown>(OnRemoteMechPilotShutdown);
     }
 
     private void OnBrainGetVerbs(EntityUid uid, BorgBrainComponent component, ref GetVerbsEvent<AlternativeVerb> args)
@@ -270,10 +273,7 @@ public sealed class PositronicJumpSystem : EntitySystem
 
     private void OnPositronicReturnShutdown(EntityUid uid, PositronicReturnComponent component, ref ComponentShutdown args)
     {
-        if (component.ReturnActionEntity != null)
-        {
-            _actions.RemoveAction(uid, component.ReturnActionEntity);
-        }
+        RemoveReturnAction(component);
     }
 
     public bool TryTakeControl(EntityUid user, EntityUid target)
@@ -322,11 +322,7 @@ public sealed class PositronicJumpSystem : EntitySystem
         if (!ReturnTargetAvailable(returnTarget))
             return false;
 
-        if (returnComp.ReturnActionEntity != null)
-        {
-            _actions.RemoveAction(target, returnComp.ReturnActionEntity);
-            returnComp.ReturnActionEntity = null;
-        }
+        RemoveReturnAction(returnComp);
 
         _mind.TransferTo(mindId, returnTarget, ghostCheckOverride: true, mind: mind);
         RemComp<PositronicReturnComponent>(target);
@@ -422,11 +418,7 @@ public sealed class PositronicJumpSystem : EntitySystem
             _mech.TryEject(remotePilot.Mech, mechComponent);
         }
 
-        if (returnComp.ReturnActionEntity != null)
-        {
-            _actions.RemoveAction(proxy, returnComp.ReturnActionEntity);
-            returnComp.ReturnActionEntity = null;
-        }
+        RemoveReturnAction(returnComp);
 
         _mind.TransferTo(mindId, returnTarget, ghostCheckOverride: true, mind: mind);
         Del(proxy);
@@ -445,6 +437,31 @@ public sealed class PositronicJumpSystem : EntitySystem
             TryReturnControl(uid);
         else
             Del(uid);
+    }
+
+    private void OnRemoteMechPilotShutdown(EntityUid uid, RemoteMechPilotComponent component, ref ComponentShutdown args)
+    {
+        if (component.Mech == EntityUid.Invalid || !Exists(component.Mech))
+            return;
+
+        _container.RemoveEntity(component.Mech, uid, reparent: false, force: true);
+    }
+
+    private void RemoveReturnAction(PositronicReturnComponent component)
+    {
+        if (component.ReturnActionEntity is not { } actionId || !actionId.IsValid())
+        {
+            component.ReturnActionEntity = null;
+            return;
+        }
+
+        if (Exists(actionId))
+        {
+            _actionContainer.RemoveAction(actionId);
+            QueueDel(actionId);
+        }
+
+        component.ReturnActionEntity = null;
     }
 
     private void RewriteLaws(EntityUid from, EntityUid to)

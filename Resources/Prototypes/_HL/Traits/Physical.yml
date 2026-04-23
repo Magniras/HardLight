@@ -14,7 +14,7 @@
   name: inoculated-name
   description: inoculated-text
   category: Physical
-  cost: 5
+  cost: 10
   speciesBlacklist:
   - IPC
   - Synth
@@ -62,7 +62,7 @@
       dermal:
         id: heatresistantTrait
         coefficients:
-          Heat: 0.01
+          Heat: 0.1
   - type: FireProtection
     reduction: 0
 
@@ -130,7 +130,7 @@
       dermal:
         id: cryoresistantTrait
         coefficients:
-          Cold: 0.01
+          Cold: 0.1
 
 - type: trait
   id: NaturalRegen
@@ -222,7 +222,7 @@
   name: big-name
   description: big-text
   category: Physical
-  cost: 2
+  cost: 3
   replaceComponents: true
   mutuallyExclusiveTraits:
   - Small
@@ -231,8 +231,8 @@
   - type: SizeAttribute
     tall: true
   - type: TallWhitelist
-    scale: 1.45
-    borgScale: 1.15
+    scale: 1.25
+    borgScale: 1
     borgFixtureRadius: 0.45
     densityMultiplier: 1.25
     cosmeticOnly: false
@@ -261,7 +261,7 @@
   name: small-name
   description: small-text
   category: Physical
-  cost: 0
+  cost: -1
   mutuallyExclusiveTraits:
   - Big
   - Tiny
@@ -270,7 +270,7 @@
     short: true
   - type: ShortWhitelist
     scale: 0.7
-    borgScale: 0.4
+    borgScale: 0.55
     borgFixtureRadius: 0.45
     densityMultiplier: 0.85
     cosmeticOnly: false
@@ -296,7 +296,7 @@
   name: tiny-name
   description: tiny-text
   category: Physical
-  cost: -2
+  cost: -3
   mutuallyExclusiveTraits:
   - Big
   - Small
@@ -304,8 +304,8 @@
   - type: SizeAttribute
     short: true
   - type: ShortWhitelist
-    scale: 0.6
-    borgScale: 0.3
+    scale: 0.5
+    borgScale: 0.4
     borgFixtureRadius: 0.45
     densityMultiplier: 0.7
     cosmeticOnly: false

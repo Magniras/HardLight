@@ -1,4 +1,5 @@
 using Content.Shared.Eye;
+using Content.Shared.Body.Components;
 using Robust.Server.GameObjects;
 using Content.Server.Atmos.Components;
 using Content.Server.Temperature.Components;
@@ -13,16 +14,29 @@ using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Carrying;
+using Content.Server.Body.Systems;
+using Content.Server.Hands.Systems;
 using Content.Shared.Stunnable;
+using Content.Shared.Hands.Components;
+using Content.Shared.Inventory;
 using Robust.Shared.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Content.Shared._Starlight;
+using Robust.Server.Containers;
+using Robust.Shared.Containers;
 
 namespace Content.Server._Starlight.NullSpace;
 
 public sealed class EtherealSystem : SharedEtherealSystem
 {
+    private sealed class HiddenEquipmentState
+    {
+        public Dictionary<string, EntityUid> HiddenSlots = new();
+        public Dictionary<string, EntityUid> HiddenHands = new();
+        public string? HiddenActiveHand;
+    }
+
     private static readonly SoundPathSpecifier NullSpaceCutoffSound = new("/Audio/_HL/Effects/ma cutoff.ogg");
 
     [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
@@ -33,6 +47,15 @@ public sealed class EtherealSystem : SharedEtherealSystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly InternalsSystem _internals = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly HandsSystem _hands = default!;
+    [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly CarryingSystem _carrying = default!;
+
+    private const string HiddenEquipmentContainerId = "nullspace-hidden-equipment";
+    private readonly Dictionary<EntityUid, HiddenEquipmentState> _hiddenEquipment = new();
 
     public override void Initialize()
     {
@@ -83,6 +106,9 @@ public sealed class EtherealSystem : SharedEtherealSystem
             _pulling.TryStopPull(pullerComp.Pulling.Value, subjectPulling);
         }
 
+        DisconnectInternals(uid);
+        HideEquipment(uid, component);
+
         if (TryComp<CarryingComponent>(uid, out var carrying)
             && !HasComp<PressureImmunityComponent>(carrying.Carried))
         {
@@ -129,6 +155,8 @@ public sealed class EtherealSystem : SharedEtherealSystem
         {
             _pulling.TryStopPull(pullerComp.Pulling.Value, subjectPulling);
         }
+
+        RestoreEquipment(uid, component);
 
         if (TryComp<CarryingComponent>(uid, out var carrying)
             && HasComp<NullCarryPressureImmunityComponent>(carrying.Carried))
@@ -186,5 +214,124 @@ public sealed class EtherealSystem : SharedEtherealSystem
         }
 
         args.Handled = true;
+    }
+
+    private void DisconnectInternals(EntityUid uid)
+    {
+        if (!TryComp<InternalsComponent>(uid, out var internals))
+            return;
+
+        _internals.DisconnectTank((uid, internals), forced: true);
+    }
+
+    private void HideEquipment(EntityUid uid, NullSpaceComponent component)
+    {
+        if (_hiddenEquipment.ContainsKey(uid))
+            return;
+
+        var state = new HiddenEquipmentState();
+        var hiddenContainer = _container.EnsureContainer<Container>(uid, HiddenEquipmentContainerId);
+
+        if (TryComp<CarryingComponent>(uid, out var carrying))
+            _carrying.DropCarried(uid, carrying.Carried);
+
+        if (TryComp<HandsComponent>(uid, out var hands))
+            state.HiddenActiveHand = hands.ActiveHand?.Name;
+
+        if (TryComp<InventoryComponent>(uid, out var inventory))
+        {
+            foreach (var slot in inventory.Slots)
+            {
+                if (_inventory.TryGetSlotEntity(uid, slot.Name, out var equipped, inventory)
+                    && HasComp<NullPhaseComponent>(equipped.Value))
+                    continue;
+
+                if (!_inventory.TryUnequip(uid, slot.Name, out var item, silent: true, force: true, inventory: inventory))
+                    continue;
+
+                if (_container.Insert(item.Value, hiddenContainer))
+                    state.HiddenSlots[slot.Name] = item.Value;
+            }
+        }
+
+        if (!TryComp<HandsComponent>(uid, out hands))
+            return;
+
+        foreach (var hand in _hands.EnumerateHands(uid, hands).ToArray())
+        {
+            if (hand.HeldEntity is not { } held)
+                continue;
+
+            if (_container.Insert(held, hiddenContainer))
+                state.HiddenHands[hand.Name] = held;
+        }
+
+        _hiddenEquipment[uid] = state;
+    }
+
+    private void RestoreEquipment(EntityUid uid, NullSpaceComponent component)
+    {
+        if (!_hiddenEquipment.TryGetValue(uid, out var state))
+            return;
+
+        if (!_container.TryGetContainer(uid, HiddenEquipmentContainerId, out var hiddenContainer))
+            return;
+
+        if (TryComp<InventoryComponent>(uid, out var inventory))
+        {
+            foreach (var (slot, item) in state.HiddenSlots.ToArray())
+            {
+                if (TerminatingOrDeleted(item))
+                {
+                    state.HiddenSlots.Remove(slot);
+                    continue;
+                }
+
+                if (_inventory.TryEquip(uid, item, slot, silent: true, force: true, inventory: inventory))
+                {
+                    state.HiddenSlots.Remove(slot);
+                    continue;
+                }
+
+                DropHiddenItem(uid, item, hiddenContainer);
+                state.HiddenSlots.Remove(slot);
+            }
+        }
+
+        if (TryComp<HandsComponent>(uid, out var hands))
+        {
+            foreach (var (handName, item) in state.HiddenHands.ToArray())
+            {
+                if (TerminatingOrDeleted(item))
+                {
+                    state.HiddenHands.Remove(handName);
+                    continue;
+                }
+
+                var restored = _hands.TryGetHand(uid, handName, out var hand, hands)
+                    && _hands.TryPickup(uid, item, hand, checkActionBlocker: false, handsComp: hands);
+
+                restored |= _hands.TryPickupAnyHand(uid, item, checkActionBlocker: false, handsComp: hands);
+
+                if (!restored)
+                    DropHiddenItem(uid, item, hiddenContainer);
+
+                state.HiddenHands.Remove(handName);
+            }
+
+            if (state.HiddenActiveHand != null)
+                _hands.TrySetActiveHand(uid, state.HiddenActiveHand, hands);
+        }
+
+        _hiddenEquipment.Remove(uid);
+    }
+
+    private void DropHiddenItem(EntityUid uid, EntityUid item, BaseContainer hiddenContainer)
+    {
+        if (!_container.Remove(item, hiddenContainer))
+            return;
+
+        _transform.AttachToGridOrMap(item);
+        _transform.SetCoordinates(item, Transform(uid).Coordinates);
     }
 }

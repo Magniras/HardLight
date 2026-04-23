@@ -58,6 +58,8 @@ public sealed class ArtifactMagnetTriggerSystem : EntitySystem
 
     private void OnMagnetActivated(ref SalvageMagnetActivatedEvent ev)
     {
+        _toActivate.Clear();
+
         var magXform = Transform(ev.Magnet);
 
         var query = EntityQueryEnumerator<ArtifactMagnetTriggerComponent, TransformComponent>();
@@ -74,7 +76,7 @@ public sealed class ArtifactMagnetTriggerSystem : EntitySystem
 
         foreach (var a in _toActivate)
         {
-            _artifact.TryActivateArtifact(a);
+            _artifact.TryActivateArtifact(a, logMissing: false);
         }
     }
 }

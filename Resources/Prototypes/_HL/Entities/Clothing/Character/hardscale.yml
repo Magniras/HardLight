@@ -1,0 +1,150 @@
+- type: entity
+  parent: ClothingBackpackDeathSquad
+  id: ClothingBackpackHardscale
+  name: DS backpack
+  description: Holds the kit of Hardscale, the hell happened to it? 
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/hardscale.rsi
+  - type: Storage
+    grid:
+    - 0,0,7,6
+
+- type: entity
+  parent: ClothingMaskGasDeathSquad
+  id: ClothingMaskGasHardscale
+  name: DS gas mask
+  description: A unique gas mask for Hardscale, what the hell happened to it? 
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/hardscale.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/hardscale.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.80
+        Slash: 0.80
+        Piercing: 0.90
+        Heat: 0.90
+
+- type: entity
+  parent: DeathsquadPDA
+  id: HardscalePDA
+  suffix: Death Squad
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+  - type: Pda
+    id: CentcomIDCardDeathsquad
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-hardscale
+  - type: PdaBorderColor
+    borderColor: "#A32D26"
+  - type: Icon
+    sprite: Objects/Devices/pda.rsi
+    state: pda-hardscale
+  - type: Tag #  Ignore Chameleon tags
+    tags:
+    - Admin
+    - DoorBumpOpener
+
+- type: entity
+  parent: ClothingUniformJumpsuitDeathSquad
+  id: ClothingUniformJumpsuitHardscale
+  name: death squad uniform
+  description: Advanced armored jumpsuit used by Hardscale
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/hardscale.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/hardscale.rsi
+    
+- type: entity
+  parent: [ ClothingOuterHardsuitDeathsquad ]
+  id: ClothingOuterHardsuitHardscale
+  name: hardscales hardsuit
+  description: An advanced hardsuit favored by Hardscale, looks like it's been through hell.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/hardscale.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/hardscale.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitHardscale
+
+- type: entity
+  parent: [ClothingNeckMantleHOS] # Frontier: BaseCommandContraband<BaseC2ContrabandUnredeemable
+  id: ClothingNeckMantleHardscale
+  name: Hardscales mantle
+  description: Not much left of this thing.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/mantles/hardscale.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/mantles/hardscale.rsi
+    
+- type: entity
+  parent: [ ClothingHeadHelmetHardsuitDeathsquad ]
+  id: ClothingHeadHelmetHardsuitHardscale
+  name: hardscales hardsuit helmet
+  description: A robust helmet for special operations.
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/hardscale.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/hardscale.rsi
+    
+# - type: job
+  # id: Hardscale
+  # name: Hardscale
+  # description: CC Head
+  # playTimeTracker: JobDeathSquad
+  # setPreference: false
+  # startingGear: HardscaleGear
+  # icon: "JobIconColComm"
+  # supervisors: job-supervisors-centcom
+  # canBeAntag: false
+  # accessGroups:
+  # - AllAccess
+  # access:
+  # - CentralCommand
+  # special:
+  # - !type:AddImplantSpecial
+    # implants: [ MindShieldImplant, DeathRattleImplantColcomm ]
+
+- type: startingGear
+  id: HardscaleGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHardscale
+    back: ClothingBackpackHardscale
+    neck: ClothingNeckMantleHardscale
+    mask: ClothingMaskGasHardscale
+    eyes: ClothingEyesHudSecurity
+    ears: ClothingHeadsetAltColCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitHardscale
+    shoes: ClothingShoesBootsMagSecurity
+    id: HardscalePDA
+    pocket1: WeaponPistolBolter
+    pocket2: Omnitool
+    belt: ClothingBeltMilitaryWebbingMedFilled
+  storage:
+    back:
+    - WeaponVolkitePistol
+    - WeaponVolkiteCharger
+    - Magazine75BoltCFusor
+    - Magazine75BoltCFusor
+    - Magazine75BoltCFusor
+    - Magazine75BoltCFusor # spanish army knife
+    - WelderExperimental
+    - Hypospray
+    - DeathAcidifierImplanter # crew will try to steal their amazing hardsuits
+    - FreedomImplanter
+    - HandHeldMassScannerBorg
+  inhand:
+  - WeaponVolkiteCaliver # Frontier: WeaponPulseRifle<NFWeaponEnergyRiflePulse

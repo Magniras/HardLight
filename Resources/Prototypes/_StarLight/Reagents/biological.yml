@@ -8,3 +8,38 @@
   color: "#6C3BAA"
   recognizable: true
   physicalDesc: reagent-physical-desc-avali
+  # Hardlight addition for Floofstation vampires - start
+  isNourishing: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 0.5
+        conditions:
+          - !type:OrganType
+            type: Human
+            shouldHave: false
+      - !type:SatiateHunger
+        factor: 0.5
+        conditions:
+        - !type:OrganType
+          type: Vampiric
+      - !type:AdjustReagent
+        conditions:
+        - !type:OrganType
+          type: Vampiric
+        reagent: Water
+        amount: 0.3
+      - !type:AdjustReagent
+        conditions:
+        - !type:OrganType
+          type: Vampiric
+        reagent: Protein
+        amount: 0.25 # See below
+      - !type:AdjustReagent
+        conditions:
+        - !type:OrganType
+          type: Vampiric
+        reagent: Omnizine
+        amount: 0.3
+  # Hardlight addition for Floofstation vampires - end

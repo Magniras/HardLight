@@ -20,6 +20,12 @@ public static class ShipSaveYamlSanitizer
 
     // Components stripped from all entities during ship-save export.
     // Add new always-remove component types here.
+    //
+    // The runtime-only block at the end holds components whose [DataField] persists
+    // EntityUid references that only make sense at runtime (action grants, in-flight
+    // projectiles, currently-playing sound entities, etc.). On load these refs resolve
+    // to EntityUid.Invalid (uid 0), which leaks into transform child sets and spams
+    // "system.entity_lookup: Encountered deleted entity 0" on every spatial query.
     private static readonly HashSet<string> FilteredTypes = new(StringComparer.Ordinal)
     {
         "Joint",
@@ -39,6 +45,20 @@ public static class ShipSaveYamlSanitizer
         "VendingMachine",
         "Forensics",
         "ContainmentFieldGenerator",
+        // Runtime-only entity-ref state — stripping prevents stale-uid spam at load.
+        // NOTE: NetworkConfigurator is intentionally NOT in this list. Its Devices
+        // dictionary is player-configured persistent state (device address -> entity
+        // UID for manually-scanned grid devices); stripping it would silently lose the
+        // operator's setup. On-grid Devices entries are already remapped correctly by
+        // the engine's EntityDeserializer.UidMap. Cross-grid entries that resolve to
+        // EntityUid.Invalid only show up as a UI inconsistency in the configurator,
+        // not as the per-tick lookup spam this filter is fixing.
+        "Actions",
+        "Projectile",
+        "ItemToggleActiveSound",
+        "Blocking",
+        "Turnstile",
+        "SubdermalImplant",
     };
 
     // Fill components that are normally removed from ship saves.
@@ -549,8 +569,44 @@ public static class ShipSaveYamlSanitizer
             }
         }
 
-        // Final pass: remove stale container/storage references to entities dropped above.
-        PruneContainerReferencesToRemovedEntities(protoSeq, removedEntityUids);
+        // Final pass: remove stale container/storage references to entities dropped above
+        // OR to entities that were never in this grid to begin with (e.g. mobs that despawned
+        // mid-flight, players who logged off while in storage, parented sub-grids that got
+        // cleaned up). Without this, those refs deserialize to EntityUid.Invalid (uid 0) and
+        // the engine's RecursiveAdd in EntityLookupSystem spams "Encountered deleted entity 0"
+        // on every spatial query for the lifetime of the loaded grid.
+        var declaredEntityUids = CollectDeclaredEntityUids(protoSeq);
+        PruneContainerReferencesToRemovedEntities(protoSeq, removedEntityUids, declaredEntityUids);
+    }
+
+    /// <summary>
+    /// Returns the set of every uid string declared as an entity in the save's
+    /// <c>entities</c> sequence. Used by <see cref="PruneContainerReferencesToRemovedEntities"/>
+    /// to detect dangling references to entities that were never present in this save.
+    /// </summary>
+    private static HashSet<string> CollectDeclaredEntityUids(SequenceDataNode protoSeq)
+    {
+        var declared = new HashSet<string>(StringComparer.Ordinal);
+
+        foreach (var protoNode in protoSeq)
+        {
+            if (protoNode is not MappingDataNode protoMap)
+                continue;
+
+            if (!protoMap.TryGet("entities", out SequenceDataNode? entitiesSeq) || entitiesSeq == null)
+                continue;
+
+            foreach (var entityNode in entitiesSeq)
+            {
+                if (entityNode is not MappingDataNode entMap)
+                    continue;
+
+                if (entMap.TryGet("uid", out ValueDataNode? uidNode) && uidNode != null && !uidNode.IsNull)
+                    declared.Add(uidNode.Value);
+            }
+        }
+
+        return declared;
     }
 
     private static string? GetPaintStylePrototype(SequenceDataNode components)
@@ -704,10 +760,16 @@ public static class ShipSaveYamlSanitizer
         return false;
     }
 
-    private static void PruneContainerReferencesToRemovedEntities(SequenceDataNode protoSeq, HashSet<string> removedEntityUids)
+    private static void PruneContainerReferencesToRemovedEntities(
+        SequenceDataNode protoSeq,
+        HashSet<string> removedEntityUids,
+        HashSet<string> declaredEntityUids)
     {
-        if (removedEntityUids.Count == 0)
-            return;
+        // A reference is stale if it points at an entity we explicitly removed during
+        // sanitation, OR at an entity that was never declared in this save at all.
+        // The latter happens for runtime refs that were captured at save time but
+        // pointed outside the grid (despawned mobs, off-grid players, parent stations).
+        bool IsStale(string uid) => removedEntityUids.Contains(uid) || !declaredEntityUids.Contains(uid);
 
         // Remove dangling references from both ContainerContainer and Storage serialized structures.
         foreach (var protoNode in protoSeq)
@@ -753,14 +815,14 @@ public static class ShipSaveYamlSanitizer
                                     if (entsNode[idx] is not ValueDataNode entValue || entValue.IsNull)
                                         continue;
 
-                                    if (removedEntityUids.Contains(entValue.Value))
+                                    if (IsStale(entValue.Value))
                                         entsNode.RemoveAt(idx);
                                 }
                             }
 
                             if (containerMap.TryGet("ent", out ValueDataNode? entNode) && entNode != null && !entNode.IsNull)
                             {
-                                if (removedEntityUids.Contains(entNode.Value))
+                                if (IsStale(entNode.Value))
                                     containerMap["ent"] = ValueDataNode.Null();
                             }
                         }
@@ -773,7 +835,7 @@ public static class ShipSaveYamlSanitizer
                         var removeKeys = new List<string>();
                         foreach (var (itemUid, _) in storedItemsMap)
                         {
-                            if (removedEntityUids.Contains(itemUid))
+                            if (IsStale(itemUid))
                                 removeKeys.Add(itemUid);
                         }
 

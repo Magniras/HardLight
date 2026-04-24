@@ -1,0 +1,19 @@
+- type: trait
+  id: Vampirism
+  name: trait-name-Vampirism
+  description: trait-description-Vampirism
+  category: Physical
+  cost: 4 # Whilst they can still eat everything this is literally only a positive trait.
+  speciesBlacklist:
+    - IPC
+    - Synth
+  components:
+    - type: Vampirism
+      succDelay: 3
+      specialDigestible: # Vampires cannot eat food chat is that real
+        tags:
+        - IceCream
+        - Pill
+        - Crayon
+        - Paper
+      isSpecialDigestibleExclusive: true

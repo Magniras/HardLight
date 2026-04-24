@@ -74,3 +74,8 @@ trait-description-MilkProducer = You have a pair of large mammaries.
 
 trait-name-SquirtProducer = Pussy
 trait-description-SquirtProducer = You have a slit between your legs.
+
+trait-name-Vampirism = Vampirism
+trait-description-Vampirism =
+    Your body has evolved to be able to suck blood from beings that contain it and metabolize it into useful compounds.
+    You cannot eat normal food, but drinking blood satiates your hunger and thirst, and also improves your health.

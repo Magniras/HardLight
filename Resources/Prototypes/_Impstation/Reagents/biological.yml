@@ -46,13 +46,40 @@
   color: "#ff624a" # a slightly warmer color than the ichor extracted from dragon flesh
   recognizable: true
   physicalDesc: reagent-physical-desc-shimmering-blood
+  isNourishing: true
   metabolisms:
     Food:
       effects:
       - !type:SatiateHunger
         factor: 1
+        conditions: # TheDen - Vampires get their own numbers
+          - !type:OrganType
+            type: Vampiric
+            shouldHave: false
       - !type:SatiateThirst
         factor: 1
+      - !type:SatiateHunger # TheDen - Vampiric additions start
+        conditions:
+        - !type:OrganType
+          type: Vampiric
+      - !type:AdjustReagent
+        conditions:
+        - !type:OrganType
+          type: Vampiric
+        reagent: Water
+        amount: 0.125 # Hardlight 0.375 -> 0.125
+      - !type:AdjustReagent
+        conditions:
+        - !type:OrganType
+          type: Vampiric
+        reagent: Protein
+        amount: 0.125 # Hardlight 0.375 -> 0.125
+      - !type:AdjustReagent
+        conditions:
+        - !type:OrganType
+          type: Vampiric
+        reagent: Omnizine
+        amount: 0.125 # TheDen - Vampiric additions end | # Hardlight 0.375 -> 0.125
     Narcotic:
       effects:
       - !type:GenericStatusEffect

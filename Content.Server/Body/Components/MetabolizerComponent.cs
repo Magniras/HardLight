@@ -1,4 +1,5 @@
 using Content.Server.Body.Systems;
+using Content.Server.Floofstation.Traits;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
@@ -44,7 +45,7 @@ namespace Content.Server.Body.Components
         ///     List of metabolizer types that this organ is. ex. Human, Slime, Felinid, w/e.
         /// </summary>
         [DataField]
-        [Access(typeof(MetabolizerSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
+        [Access(typeof(MetabolizerSystem), typeof(VampirismSystem), Other = AccessPermissions.ReadExecute)] // Floof: VamprismSystem
         public HashSet<ProtoId<MetabolizerTypePrototype>>? MetabolizerTypes = null;
 
         /// <summary>

@@ -1,0 +1,9 @@
+- type: company
+  id: LRSI
+  form: Protagonist
+  name: Lux Radians Stellarum Immortalis
+  color: "#F5A9BB" # transflag pink
+  disabled: false
+  logins:
+  - Illumos # Supreme Commander
+  - nggnyfbg55

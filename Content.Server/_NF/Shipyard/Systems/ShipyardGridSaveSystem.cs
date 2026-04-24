@@ -917,7 +917,9 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
         using var writer = new StringWriter();
         var stream = new YamlStream { document };
         stream.Save(new YamlMappingFix(new Emitter(writer)), false);
-        return writer.ToString();
+        // HardLight: stamp a marker so ShipyardSystem can skip the load-time sanitizer pass
+        // for ships that were already scrubbed at save time.
+        return ShipSaveYamlSanitizer.SanitizedMarkerComment + "\n" + writer.ToString();
     }
 
     /// <summary>

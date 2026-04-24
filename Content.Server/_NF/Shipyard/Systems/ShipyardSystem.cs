@@ -2,6 +2,7 @@ using Content.Server.Shuttles.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Station.Components;
 using Content.Server.Cargo.Systems;
+using Content.Server._HL.Shipyard; // HardLight
 using Content.Server.Shuttles.Save; // HardLight
 using Robust.Shared.Timing; // For IGameTiming
 using Content.Server.Station.Systems;
@@ -349,6 +350,14 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
     {
         shuttleEntityUid = null;
         var fileName = $"shipyard_load_{DateTime.UtcNow:yyyyMMdd_HHmmss_fff}_{Guid.NewGuid():N}.yml";
+
+        // HardLight: scrub legacy saves through the same sanitizer used at save time.
+        // Modern saves carry SanitizedMarkerComment and skip this work entirely; only
+        // pre-marker saves pay the parse/walk/emit cost, and only once - the next save will
+        // re-stamp them. This keeps load-time CPU low for the common case while still fixing
+        // existing users' broken ships without forcing them to re-save.
+        if (!HasSanitizedMarker(yamlData))
+            yamlData = ApplyShipSaveSanitizerForLoad(yamlData);
 
         try
         {
@@ -810,6 +819,54 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         var normalized = NormalizeSerializedUidToken(uidNode.Value);
         if (normalized.Length > 0)
             knownEntityUids.Add(normalized);
+    }
+
+    // HardLight: Cheap textual probe so we can skip the load-time sanitizer for saves that
+    // were already scrubbed at save time. Marker is the first line of the file when present.
+    private static bool HasSanitizedMarker(string yamlData)
+    {
+        if (string.IsNullOrEmpty(yamlData))
+            return false;
+
+        // Tolerate a UTF-8 BOM and leading whitespace introduced by editors or transports.
+        var start = 0;
+        if (yamlData.Length > 0 && yamlData[0] == '\uFEFF')
+            start = 1;
+        while (start < yamlData.Length && (yamlData[start] == ' ' || yamlData[start] == '\t' || yamlData[start] == '\r' || yamlData[start] == '\n'))
+            start++;
+
+        var marker = ShipSaveYamlSanitizer.SanitizedMarkerComment;
+        if (yamlData.Length - start < marker.Length)
+            return false;
+
+        return string.CompareOrdinal(yamlData, start, marker, 0, marker.Length) == 0;
+    }
+
+    // HardLight: Run the ship-save sanitizer over the YAML on the way in. Mirrors the
+    // sanitation that ShipyardGridSaveSystem.SerializeShipForSaving applies on the way out,
+    // so users with previously-saved ships get the same scrubbing on load (dangling
+    // EntityUid refs, filtered components/prototypes, container ref pruning, etc.).
+    // Falls back to the original YAML if anything goes wrong - we never want this to break a load.
+    private string ApplyShipSaveSanitizerForLoad(string yamlData)
+    {
+        if (string.IsNullOrWhiteSpace(yamlData))
+            return yamlData;
+
+        try
+        {
+            using var reader = new StringReader(yamlData);
+            var documents = DataNodeParser.ParseYamlStream(reader).ToArray();
+            if (documents.Length != 1 || documents[0].Root is not MappingDataNode root)
+                return yamlData;
+
+            ShipSaveYamlSanitizer.SanitizeShipSaveNode(root, _prototypeManager);
+            return WriteLoadYamlNodeToString(root);
+        }
+        catch (Exception ex)
+        {
+            _sawmill.Debug($"[ShipLoad] Load-time sanitizer pass skipped: {ex.Message}");
+            return yamlData;
+        }
     }
 
     // Write the edited YAML tree back out.

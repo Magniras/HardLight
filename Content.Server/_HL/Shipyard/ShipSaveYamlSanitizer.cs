@@ -10,6 +10,13 @@ namespace Content.Server._HL.Shipyard;
 /// </summary>
 public static class ShipSaveYamlSanitizer
 {
+    /// <summary>
+    /// Marker line stamped at the top of newly-sanitized ship-save YAML so the load path
+    /// can skip a redundant sanitizer pass for already-clean saves. Bump the version suffix
+    /// when the sanitizer rules change in a way that should re-scrub previously-saved ships.
+    /// </summary>
+    public const string SanitizedMarkerComment = "# hl-sanitized: 1";
+
     // Implants that should not persist when found inside implanters during ship save.
     private static readonly HashSet<string> BlockedContainedImplantPrototypes = new(StringComparer.Ordinal)
     {

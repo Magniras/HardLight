@@ -39,7 +39,7 @@
   - type: AtmosExposed
   - type: Temperature
     currentTemperature: 290 # copied from meat
-    
+
 - type: entity
   id: OrganAnimalLungs
   parent: BaseAnimalOrgan

@@ -184,6 +184,9 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));
 
+        [DataField]
+        public bool IsNourishing; // The Den
+
         public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume, IEntityManager entityManager, List<ReagentData>? data)
         {
             var removed = FixedPoint2.Zero;

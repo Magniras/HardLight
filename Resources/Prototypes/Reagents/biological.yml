@@ -13,6 +13,7 @@
   metamorphicChangeColor: false
   recognizable: true
   physicalDesc: reagent-physical-desc-ferrous
+  isNourishing: true
   metabolisms:
     Drink:
       effects:
@@ -22,11 +23,39 @@
           - !type:OrganType
             type: Human
             shouldHave: false
+      - !type:SatiateHunger
+        factor: 0.5
+        conditions:
+        - !type:OrganType
+          type: Vampiric
+      - !type:AdjustReagent
+        conditions:
+        - !type:OrganType
+          type: Vampiric
+        reagent: Water
+        amount: 0.1 # Hardlight 0.3 -> 0.1
+      - !type:AdjustReagent
+        conditions:
+        - !type:OrganType
+          type: Vampiric
+        reagent: Protein
+        amount: 0.1 # Hardlight 0.25 -> 0.1
+      - !type:AdjustReagent
+        conditions:
+        - !type:OrganType
+          type: Vampiric
+        reagent: Omnizine
+        amount: 0.1 # hardlight 0.3 -> 0.1
     Food:
       effects:
         - !type:AdjustReagent
           reagent: UncookedAnimalProteins
-          amount: 0.01 # Frontier - 0.1<0.01
+          amount: 0.01 # Frontier - 0.1<0.01 | Floof has this at 0.125 for vampires but I guess we'll see if this has issues with 0.01 first for whatever reason
+          # Floofstation - prevent vampires from getting sick by drinking blood
+          conditions:
+          - !type:OrganType
+            type: Vampiric
+            shouldHave: false
     Medicine:
       effects:
       - !type:HealthChange

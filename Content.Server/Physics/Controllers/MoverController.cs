@@ -130,6 +130,17 @@ public sealed class MoverController : SharedMoverController
                 continue;
             }
 
+            // HardLight: guard against a stale parent chain. HandleMobMovement walks up the
+            // parent chain via _transform.GetWorldRotation(xform), which throws KeyNotFoundException
+            // if any ancestor's TransformComponent has been deleted (chaotic round shutdown,
+            // grid cleanup races, etc.). The mover's own xform can survive its parent dying for
+            // a tick before re-parenting catches up. Skip this mover for the tick instead of
+            // spamming the runtime log every frame for every affected entity.
+            if (xform.ParentUid != EntityUid.Invalid && !XformQuery.HasComponent(xform.ParentUid))
+            {
+                continue;
+            }
+
             PhysicsComponent? body;
             var xformMover = xform;
 

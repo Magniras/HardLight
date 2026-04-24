@@ -386,12 +386,18 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
             // directly within a secret stash so that they are also considered preserved.
             TagStashContents(gridUid);
 
-            // Clean up broken device links before serialization
-            CleanupBrokenDeviceLinks(gridUid);
-
             // Purge transient entities (unanchored or inside containers) before serialization.
             // This mutates the live grid, but only removes objects explicitly deemed non-persistent by design.
             PurgeTransientEntities(gridUid);
+
+            // HardLight: Clean up broken device links AFTER PurgeTransientEntities. The purge can
+            // delete sink entities that were targets of DeviceLinkSourceComponent.LinkedPorts, leaving
+            // dangling EntityUid keys. The engine's EntityUid serializer writes any unresolved entity
+            // ref as the literal NetEntity string "invalid", and a dictionary with multiple stale
+            // refs collides on that key with
+            //   ArgumentException: An item with the same key has already been added. Key: invalid
+            // which aborts the entire ship save (observed: Phantom, Kestrel).
+            CleanupBrokenDeviceLinks(gridUid);
 
             // HardLight: Remove components that fail serialization (e.g., player state) from entities on the grid.
             RemoveSerializationBlockingComponentsOnGrid(gridUid);

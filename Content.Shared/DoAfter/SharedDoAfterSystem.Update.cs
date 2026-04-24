@@ -18,6 +18,14 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
     private DoAfter[] _doAfters = Array.Empty<DoAfter>();
 
+    // HardLight: snapshot buffer reused across ticks to avoid per-tick allocation when iterating
+    // active do-afters. We snapshot before iterating because per-uid Update can raise events that
+    // add or remove DoAfterComponent/ActiveDoAfterComponent on *other* entities (e.g. completing
+    // a doafter that ends another doafter via interaction), which invalidates the live
+    // EntityQueryEnumerator and throws "Collection was modified" from the outer MoveNext call,
+    // tearing down the entire DoAfter tick.
+    private readonly List<(EntityUid Uid, ActiveDoAfterComponent Active, DoAfterComponent Comp)> _updateSnapshot = new();
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -26,9 +34,20 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         var xformQuery = GetEntityQuery<TransformComponent>();
         var handsQuery = GetEntityQuery<HandsComponent>();
 
+        _updateSnapshot.Clear();
         var enumerator = EntityQueryEnumerator<ActiveDoAfterComponent, DoAfterComponent>();
         while (enumerator.MoveNext(out var uid, out var active, out var comp))
         {
+            _updateSnapshot.Add((uid, active, comp));
+        }
+
+        for (var snapIndex = 0; snapIndex < _updateSnapshot.Count; snapIndex++)
+        {
+            var (uid, active, comp) = _updateSnapshot[snapIndex];
+
+            // Skip entries whose components were removed by a previous iteration this tick.
+            if (active.Deleted || comp.Deleted)
+                continue;
 
             try
             {

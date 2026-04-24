@@ -82,3 +82,11 @@
   color: "#FFA500"
   # Long range because Avali Nexus tech
   longRange: true
+
+- type: radioChannel
+  id: Starbound
+  name: chat-radio-starbound
+  keycode: 'j'
+  frequency: 1249
+  color: "#005dbf"
+  longRange: true

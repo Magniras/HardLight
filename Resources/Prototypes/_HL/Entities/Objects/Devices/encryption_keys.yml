@@ -146,6 +146,7 @@
       layers:
         - state: crypt_purple
         - state: dominosrobotics_label
+
 - type: entity
   parent: [EncryptionKey, RecyclableItemDeviceTiny]
   id: EncryptionKeyADFTalon
@@ -159,4 +160,19 @@
     - type: Sprite
       layers:
         - state: crypt_avaliblue
+
+- type: entity
+  parent: [EncryptionKey, RecyclableItemDeviceTiny]
+  id: EncryptionKeyStarboundBSS
+  name: Starbound BSS Encryption Key
+  description: An encyption key used by Starbound members to communicate securely.
+  components:
+    - type: EncryptionKey
+      channels:
+        - Starbound
+      defaultChannel: Starbound
+    - type: Sprite
+      layers:
+        - state: crypt_blue
+        - state: starbound_label
       

@@ -49,6 +49,8 @@ public sealed partial class FireControlSystem : EntitySystem
         SubscribeLocalEvent<FireControlServerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<FireControlServerComponent, EntityTerminatingEvent>(OnServerTerminating);
 
+        SubscribeLocalEvent<FireControlServerComponent, ComponentStartup>(OnServerStartup);
+        SubscribeLocalEvent<FireControllableComponent, ComponentStartup>(OnControllableStartup);
         SubscribeLocalEvent<FireControllableComponent, PowerChangedEvent>(OnControllablePowerChanged);
         SubscribeLocalEvent<FireControllableComponent, ComponentShutdown>(OnControllableShutdown);
         SubscribeLocalEvent<FireControllableComponent, EntParentChangedMessage>(OnControllableParentChanged);
@@ -62,6 +64,12 @@ public sealed partial class FireControlSystem : EntitySystem
         _artilleryQuery = GetEntityQuery<SpaceArtilleryComponent>();
         _fireRotateQuery = GetEntityQuery<FireControlRotateComponent>();
         _gunQuery = GetEntityQuery<GunComponent>();
+    }
+
+    private void OnServerStartup(EntityUid uid, FireControlServerComponent component, ComponentStartup args)
+    {
+        if (_power.IsPowered(uid))
+            TryConnect(uid, component);
     }
 
     private void OnPowerChanged(EntityUid uid, FireControlServerComponent component, PowerChangedEvent args)
@@ -102,6 +110,12 @@ public sealed partial class FireControlSystem : EntitySystem
             TryRegister(uid, component);
         else
             Unregister(uid, component);
+    }
+
+    private void OnControllableStartup(EntityUid uid, FireControllableComponent component, ComponentStartup args)
+    {
+        if (_power.IsPowered(uid))
+            TryRegister(uid, component);
     }
 
     private void OnControllableShutdown(EntityUid uid, FireControllableComponent component, ComponentShutdown args)
@@ -216,6 +230,19 @@ public sealed partial class FireControlSystem : EntitySystem
             UpdateUi(console);
     }
 
+    private void RefreshConsoles(EntityUid grid)
+    {
+        var query = EntityQueryEnumerator<FireControlConsoleComponent>();
+
+        while (query.MoveNext(out var consoleUid, out var consoleComp))
+        {
+            if (_xform.GetGrid(consoleUid) != grid || !_power.IsPowered(consoleUid))
+                continue;
+
+            TryRegisterConsole(consoleUid, consoleComp);
+        }
+    }
+
     private bool TryConnect(EntityUid server, FireControlServerComponent? component = null)
     {
         if (!Resolve(server, ref component))
@@ -247,6 +274,7 @@ public sealed partial class FireControlSystem : EntitySystem
         component.ConnectedGrid = grid;
 
         RefreshControllables((EntityUid)grid, controlGrid);
+        RefreshConsoles((EntityUid)grid);
 
         return true;
     }

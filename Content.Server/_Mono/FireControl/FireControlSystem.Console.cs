@@ -17,6 +17,13 @@ public sealed partial class FireControlSystem : EntitySystem
         SubscribeLocalEvent<FireControlConsoleComponent, FireControlConsoleRefreshServerMessage>(OnRefreshServer);
         SubscribeLocalEvent<FireControlConsoleComponent, FireControlConsoleFireMessage>(OnFire);
         SubscribeLocalEvent<FireControlConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
+        SubscribeLocalEvent<FireControlConsoleComponent, ComponentStartup>(OnConsoleStartup);
+    }
+
+    private void OnConsoleStartup(EntityUid uid, FireControlConsoleComponent component, ComponentStartup args)
+    {
+        if (_power.IsPowered(uid))
+            TryRegisterConsole(uid, component);
     }
 
     private void OnPowerChanged(EntityUid uid, FireControlConsoleComponent component, PowerChangedEvent args)
@@ -84,10 +91,10 @@ public sealed partial class FireControlSystem : EntitySystem
 
         var gridServer = TryGetGridServer(console);
 
-        if (gridServer.ServerComponent == null)
+        if (gridServer.ServerUid == null || gridServer.ServerComponent == null)
             return false;
 
-        if (gridServer.ServerComponent.Consoles.Add(console))
+        if (gridServer.ServerComponent.Consoles.Add(console) || consoleComponent.ConnectedServer != gridServer.ServerUid)
         {
             consoleComponent.ConnectedServer = gridServer.ServerUid;
             UpdateUi(console, consoleComponent);

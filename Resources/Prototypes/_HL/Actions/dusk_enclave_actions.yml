@@ -1,0 +1,11 @@
+- type: entity
+  id: ActionDuskEnclaveOnboarding
+  name: dusk-enclave-onboarding-action-name
+  description: dusk-enclave-onboarding-action-desc
+  components:
+  - type: InstantAction
+    useDelay: 5
+    icon:
+      sprite: _HL/Objects/Storage/dusk_enclave_key_box.rsi
+      state: icon
+    event: !type:DuskEnclaveOnboardingActionEvent {}

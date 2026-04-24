@@ -75,12 +75,15 @@ public sealed class TraitSystem : EntitySystem
 
         foreach (var traitPrototype in sortedTraits)
         {
+            // HardLight: skip login-restricted traits for players not in the list
+            if (traitPrototype.Logins.Count > 0 && !traitPrototype.Logins.Contains(args.Player.Name))
+                continue;
+
             // Check requirements if they exist
             if (traitPrototype.Requirements.Count > 0)
             {
                 var job = _prototype.Index<JobPrototype>(args.JobId ?? _prototype.EnumeratePrototypes<JobPrototype>().First().ID);
                 var playTimes = _playTimeTracking.GetTrackerTimes(args.Player);
-                var whitelisted = args.Player.ContentData()?.Whitelisted ?? false;
 
                 var requirementsMet = true;
                 foreach (var requirement in traitPrototype.Requirements)

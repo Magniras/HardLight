@@ -59,6 +59,27 @@
   conditions:
   - !type:TileNotBlocked
 
+# Dusk Enclave Banners
+- type: construction
+  id: BannerDuskEnclave
+  graph: DuskEnclaveBannersGraph
+  startNode: start
+  targetNode: BannerDuskEnclaveNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: FlagDuskEnclave
+  graph: DuskEnclaveBannersGraph
+  startNode: start
+  targetNode: FlagDuskEnclaveNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
 # Banners
 - type: construction
   id: BannerNanotrasenReal
@@ -71,3 +92,4 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+

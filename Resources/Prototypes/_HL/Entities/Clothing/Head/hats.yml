@@ -62,3 +62,14 @@
       sprite: _HL/Clothing/Head/interdyneberet.rsi
     - type: Clothing
       sprite: _HL/Clothing/Head/interdyneberet.rsi
+
+- type: entity
+  parent: ClothingHeadHatBeret
+  id: ClothingHeadHatBeretDuskEnclave
+  name: dusk enclave beret
+  description: A Dusk Enclave beret.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Head/duskenclaveberet.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Head/duskenclaveberet.rsi

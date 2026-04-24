@@ -1556,3 +1556,16 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
+
+- type: construction
+  id: PosterDuskEnclave
+  graph: Poster
+  startNode: start
+  targetNode: PosterDuskEnclave
+  category: construction-category-Poster
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition

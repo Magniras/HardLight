@@ -686,8 +686,18 @@ namespace Content.Client.Lobby.UI
 
             var allSelectors = new Dictionary<ProtoId<TraitPrototype>, TraitPreferenceSelector>();
 
+            // HardLight: get login name once for login-restricted trait filtering (same pattern as company logins)
+            var localUsername = _playerManager.LocalPlayer?.Session?.Name;
+
             foreach (var trait in traits)
             {
+                // HardLight: hide login-restricted traits from players not in the list
+                if (trait.Logins.Count > 0 && (localUsername == null || !trait.Logins.Contains(localUsername)))
+                {
+                    Profile = Profile?.WithoutTraitPreference(trait.ID, _prototypeManager);
+                    continue;
+                }
+
                 // Begin DeltaV Additions - Species trait exclusion
                 if (Profile?.Species is { } selectedSpecies && trait.SpeciesBlacklist.Contains(selectedSpecies))
                 {

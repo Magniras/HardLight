@@ -1,0 +1,87 @@
+# Dusk Enclave wall decorations: banner and flag
+
+- type: entity
+  id: BannerDuskEnclave
+  parent: BannerBase
+  name: Dusk Enclave banner
+  description: A banner bearing the colors and sigil of the Dusk Enclave.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Factions/DuskEnclave/decoration.rsi
+    state: banner
+  - type: Construction
+    graph: DuskEnclaveBannersGraph
+    node: BannerDuskEnclaveNode
+
+- type: entity
+  id: FlagDuskEnclave
+  parent: PosterBase
+  name: Dusk Enclave flag
+  description: A wall-mounted flag displaying the colors and sigil of the Dusk Enclave.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Factions/DuskEnclave/decoration.rsi
+    state: flag
+    scale: 0.9, 0.9
+  - type: Construction
+    graph: DuskEnclaveBannersGraph
+    node: FlagDuskEnclaveNode
+
+- type: constructionGraph
+  id: DuskEnclaveBannersGraph
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: BannerDuskEnclaveNode
+          completed:
+            - !type:SnapToGrid {}
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+            - material: Cloth
+              amount: 2
+              doAfter: 1
+        - to: FlagDuskEnclaveNode
+          completed:
+            - !type:SnapToGrid {}
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+            - material: Cloth
+              amount: 2
+              doAfter: 1
+
+    - node: BannerDuskEnclaveNode
+      entity: BannerDuskEnclave
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: FlagDuskEnclaveNode
+      entity: FlagDuskEnclave
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1

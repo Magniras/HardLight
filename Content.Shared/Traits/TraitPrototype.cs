@@ -114,6 +114,13 @@ public sealed partial class TraitPrototype : IPrototype, IComparable<TraitProtot
     public bool ReplaceComponents = false;
 
     /// <summary>
+    ///     HardLight: If non-empty, this trait is visible and selectable only by players whose SS14
+    ///     login name appears in this list. Hidden entirely from all other players to prevent UI cluttering.
+    /// </summary>
+    [DataField]
+    public List<string> Logins { get; private set; } = new();
+
+    /// <summary>
     ///     Comparison for sorting traits by cost.
     /// </summary>
     public int CompareTo(TraitPrototype? other)

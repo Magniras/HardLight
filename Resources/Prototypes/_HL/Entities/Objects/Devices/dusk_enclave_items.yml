@@ -1,0 +1,43 @@
+# Onboarding duffel — opens to spawn initial faction supplies
+- type: entity
+  parent: BaseItem
+  id: DuskEnclaveOnboardingPackage
+  name: Dusk Enclave onboarding package
+  description: A sealed duffel containing onboarding package for new Dusk Enclave members.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Storage/dusk_enclave_key_box.rsi
+    state: icon
+  - type: Item
+    size: Normal
+  - type: SpawnItemsOnUse
+    items:
+    - id: PaperDuskEnclavePamphlet
+    - id: ClothingNeckPinDuskEnclave
+    - id: ClothingNeckMantleDuskEnclave
+    - id: ClothingHeadHatBeretDuskEnclave
+    - id: EncryptionKeyDuskEnclave
+    - id: PlushieShadekin
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+# Dusk Enclave pamphlet
+- type: entity
+  parent: Paper
+  id: PaperDuskEnclavePamphlet
+  name: Dusk Enclave pamphlet
+  description: A folded pamphlet about the Dusk Enclave.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: true
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: Paper
+    content: book-text-dusk-enclave-pamphlet
+    editingDisabled: true

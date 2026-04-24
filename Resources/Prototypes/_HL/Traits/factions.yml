@@ -1,0 +1,15 @@
+- type: traitCategory
+  id: FactionOnboarding
+  name: trait-category-faction-onboarding
+
+- type: trait
+  id: DuskEnclaveOnboarding
+  name: dusk-enclave-onboarding-name
+  description: dusk-enclave-onboarding-desc
+  category: FactionOnboarding
+  cost: 0
+  logins: ["IngvarJackal"]  # fill in SS14 username(s) of the Dusk Enclave head player(s)
+  components:
+  - type: ActionGrant
+    actions:
+    - ActionDuskEnclaveOnboarding

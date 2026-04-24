@@ -41,3 +41,17 @@
     sprite: _HL/Structures/Wallmounts/Posters/Bekind.rsi
     state: poster_ccbekind
     scale: 0.45, 0.45
+
+- type: entity
+  parent: PosterBase
+  id: PosterDuskEnclave
+  name: Dusk Enclave poster
+  description: A Dusk Enclave poster educating on interdimensional travellers.
+  components:
+  - type: Sprite
+    sprite: _HL/Structures/Wallmounts/Posters/DuskEnclave.rsi
+    state: poster_duskenclave
+    scale: 0.9, 0.9
+  - type: Construction
+    graph: Poster
+    node: PosterDuskEnclave

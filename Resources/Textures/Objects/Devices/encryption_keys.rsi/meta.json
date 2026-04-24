@@ -52,6 +52,7 @@
     {"name": "crypt-interdyne"},
 	{"name": "crypt_avali"},
 	{"name": "crypt_avaliblue"},
-    {"name": "starbound_label"}
+    {"name": "starbound_label"},
+	{"name": "duskenclave_label"}
   ]
 }

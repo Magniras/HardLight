@@ -1,0 +1,16 @@
+# Faction pins for neck slot
+
+# Dusk Enclave Pin
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckPinDuskEnclave
+  name: Dusk Enclave pin
+  description: A small pin bearing the sigil of the Dusk Enclave.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _HL/Clothing/Neck/Pins/pin_dusk_enclave.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Neck/Pins/pin_dusk_enclave.rsi
+    slots: [ neck ]

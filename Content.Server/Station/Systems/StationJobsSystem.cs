@@ -830,8 +830,18 @@ public sealed partial class StationJobsSystem : EntitySystem
 
         if (_colcommJobs.TryGetColcommRegistry(out var colcomm))
         {
+            // Use the per-station TryGetJobSlot helper, which already returns
+            // MIN(localSlots, globalSlots). The previous implementation read colcomm-only
+            // counts, which could disagree with what TryAssignJob actually enforces:
+            // TryAssignJob requires both the per-station JobList count AND the colcomm
+            // count to be > 0. When the per-station JobList hit 0 (e.g. depleted by
+            // earlier joiners) but colcomm still showed > 0 (because colcomm is shared
+            // across stations and may still have headroom, or DynamicJobAllocationRule
+            // rebalanced the colcomm registry), the lobby would advertise the slot as
+            // open while the join was rejected. Aligning the lobby read with the same
+            // helper TryAssignJob effectively gates on closes that gap.
             return stationJobs.SetupAvailableJobs.Keys
-                .Select(job => (job, found: _colcommJobs.TryGetJobSlot(colcomm, GetColcommJobId(job), out var slots), slots))
+                .Select(job => (job, found: TryGetJobSlot(station, job, out var slots, stationJobs), slots))
                 .Where(entry => entry.found)
                 .ToDictionary(entry => entry.job, entry => entry.slots);
         }

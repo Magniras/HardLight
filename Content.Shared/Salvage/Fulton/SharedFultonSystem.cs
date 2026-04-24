@@ -213,7 +213,8 @@ public abstract partial class SharedFultonSystem : EntitySystem
 
     protected bool CanFulton(EntityUid uid)
     {
-        var xform = Transform(uid);
+        if (!TryComp(uid, out TransformComponent? xform))
+            return false;
 
         if (xform.Anchored)
             return false;

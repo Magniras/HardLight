@@ -12,7 +12,13 @@ public sealed partial class BodyPartAppearanceComponent : Component
     /// <summary>
     ///     HumanoidVisualLayer type for this body part.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    /// <remarks>
+    ///     Serialized as "partType" to avoid collision with the engine's reserved
+    ///     component-name "type" key in <c>EntitySerializer</c>, which previously
+    ///     caused "Already contains key type" exceptions when saving grids
+    ///     (e.g. ship saves) carrying humanoid body parts.
+    /// </remarks>
+    [DataField("partType"), AutoNetworkedField]
     public HumanoidVisualLayers Type { get; set; }
 
     /// <summary>

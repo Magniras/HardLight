@@ -3186,3 +3186,15 @@ Entries:
       message: Added snack vending machines back to the expedition spawn pool!
   id: 343
   time: '2026-04-25T05:29:25.0000000+00:00'
+- author: re-silvered
+  changes:
+    - type: Tweak
+      message: Gateway sound to be a bit easier on the ears
+    - type: Tweak
+      message: Allowed synths to take the vampiric trait
+    - type: Tweak
+      message: removed unusable cybernetics from research/crafting
+    - type: Fix
+      message: fixed injector deny popup localization not working
+  id: 344
+  time: '2026-04-25T21:13:56.0000000+00:00'

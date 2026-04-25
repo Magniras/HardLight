@@ -112,7 +112,7 @@
         coordinatesKey: TargetCoordinates
 
 # Short-range shooter for derelict-style hostile ships (e.g. xenoborg
-# "byte" drones). When something with a ShipNpcTarget is within ~1200m
+# "byte" drones). When something with a ShipNpcTarget is within ~500m
 # the byte opens fire; otherwise it wanders between random waypoints in
 # an annulus around the world origin (smart patrol). Pairs with mounted
 # (non-piloting) AI turrets.
@@ -129,7 +129,7 @@
         shutdownState: TaskFinished
         removeKeyOnFinish: false
         leadingAccuracy: 0.4 # stupid
-        maxTargetingRange: 1200
+        maxTargetingRange: 500
         targetKey: TargetCoordinates
       services:
       - !type:UtilityService
@@ -161,10 +161,90 @@
         # operator doesn't drop the waypoint mid-flight.
         maxTargetingRange: 60000
 
-# Combined "byte" AI: stationary by default, switches to a chasing
-# attacker if the ShipAggroSystem has set the "Aggroed" blackboard key
-# (player crossed 500m or shot the ship). Aggro auto-expires after the
-# duration on ShipAggroComponent, returning the ship to passive shooter.
+# Aggroed chase variant for "byte" drones. Two distance tiers so byte
+# ships pursue past 500m up to 1000m but commit less throttle the
+# further the target gets, giving the player a chance to disengage:
+#  - Close tier (target inside 500m): orbit at 300m, full speed,
+#    fire up to 500m.
+#  - Far tier  (target 500-1000m): GoToRange ~700m with a low
+#    InRangeMaxSpeed so the ship cruises in slowly and brakes early,
+#    fire up to 1000m.
+#  - Past 1000m: no branch matches (utility queries return no target);
+#    HTN falls through to the patrol/shooter compound, and the
+#    ShipAggroSystem drops aggro after the configured deaggro delay.
+- type: htnCompound
+  id: AttackerShuttleByteCompound
+  branches:
+  # Close pursuit: target inside 500m, full chase + orbit + fire.
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:UtilityOperator
+        proto: NearbyShuttleTargetsByte
+    - !type:HTNPrimitiveTask
+      operator: !type:ShipMoveToOperator
+        shutdownState: PlanFinished
+        removeKeyOnFinish: false
+        alwaysFaceTarget: true
+        inRangeMaxSpeed: null # orbit at top velocity
+        range: 300
+        rangeTolerance: 100
+        avoidProjectiles: true
+        maxTargetingRange: 500
+        targetKey: TargetCoordinates
+        mode: Orbit
+    - !type:HTNPrimitiveTask
+      operator: !type:ShipFireGunsOperator
+        shutdownState: TaskFinished
+        removeKeyOnFinish: false
+        leadingAccuracy: 1
+        maxTargetingRange: 500
+        targetKey: TargetCoordinates
+      services:
+      - !type:UtilityService
+        id: TargetsService
+        proto: NearbyShuttleTargetsByte
+        key: Target
+        coordinatesKey: TargetCoordinates
+  # Far pursuit: target between 500-1000m, slower trail + long-range fire.
+  # Lower InRangeMaxSpeed makes the steerer brake earlier, so the ship
+  # accelerates noticeably less aggressively the further out it has to
+  # chase.
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:UtilityOperator
+        proto: NearbyShuttleTargetsByteFar
+    - !type:HTNPrimitiveTask
+      operator: !type:ShipMoveToOperator
+        shutdownState: PlanFinished
+        removeKeyOnFinish: false
+        alwaysFaceTarget: true
+        inRangeMaxSpeed: 5 # earlier brake = slower committed pursuit
+        range: 700
+        rangeTolerance: 100
+        avoidProjectiles: true
+        maxTargetingRange: 1000
+        targetKey: TargetCoordinates
+        mode: GoToRange
+    - !type:HTNPrimitiveTask
+      operator: !type:ShipFireGunsOperator
+        shutdownState: TaskFinished
+        removeKeyOnFinish: false
+        leadingAccuracy: 1
+        maxTargetingRange: 1000
+        targetKey: TargetCoordinates
+      services:
+      - !type:UtilityService
+        id: TargetsService
+        proto: NearbyShuttleTargetsByteFar
+        key: Target
+        coordinatesKey: TargetCoordinates
+
+# Combined "byte" AI: patrols by default, switches to the byte chase
+# compound (close fast / far slow tiers up to 1000m) if the
+# ShipAggroSystem has set the "Aggroed" blackboard key. Aggro is
+# triggered when a hostile crosses 500m or shoots the ship, kept
+# refreshed while a target is inside 1000m, and auto-expires after
+# AggroDuration of no contact past 1000m, returning the ship to patrol.
 - type: htnCompound
   id: ShooterShuttleByteAggroCompound
   branches:
@@ -173,7 +253,7 @@
       key: Aggroed
     tasks:
     - !type:HTNCompoundTask
-      task: AttackerShuttleSmartCompound
+      task: AttackerShuttleByteCompound
   - tasks:
     - !type:HTNCompoundTask
       task: ShooterShuttleByteCompound
@@ -182,7 +262,27 @@
   id: NearbyShuttleTargetsByte
   query:
   - !type:NearbyHostileShuttlesQuery
-    range: 1200
+    range: 500
+    blacklist:
+      tags:
+      - ShuttleAIIgnore
+  considerations:
+  - !type:TargetInverseDistanceCon
+    curve: !type:QuadraticCurve
+      slope: 1
+      exponent: 1
+      yOffset: 0
+      xOffset: 0
+
+# Wider variant of NearbyShuttleTargetsByte used by the far-tier byte
+# chase branch. Mirrors NearbyShuttleTargetsByte but extends out to the
+# aggro leash distance so the byte can keep tracking targets that
+# escape past 500m without re-entering passive shooter mode.
+- type: utilityQuery
+  id: NearbyShuttleTargetsByteFar
+  query:
+  - !type:NearbyHostileShuttlesQuery
+    range: 1000
     blacklist:
       tags:
       - ShuttleAIIgnore

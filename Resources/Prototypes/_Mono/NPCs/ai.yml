@@ -164,7 +164,7 @@
       task: AttackerShuttleBroadsideCompound
 
 # Stationary short-range shooter used by xenoborg "byte" drone derelicts.
-# Doesn't pilot the grid: just fires when targets enter ~1200m and stops
+# Doesn't pilot the grid: just fires when targets enter ~500m and stops
 # when they leave. Pairs with mounted turret HTN to avoid steering conflict.
 # Switches to chase/orbit if attacked or if a target enters 500m
 # (ShipAggroSystem flips the "Aggroed" blackboard key).
@@ -180,7 +180,8 @@
       task: ShooterShuttleByteAggroCompound
   - type: ShipAggro
     aggroProximityRange: 500
-    aggroDuration: 30
+    aggroLeashRange: 1000
+    aggroDuration: 10
 
 #region Drone AIs
 

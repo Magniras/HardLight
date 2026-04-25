@@ -77,18 +77,43 @@ public sealed class ShipAggroSystem : EntitySystem
                 continue;
 
             var corePos = _xform.GetMapCoordinates(coreUid, coreXform);
+            var aggroed = now < aggro.AggroEndTime;
 
-            // GetEntitiesInRange already filters by range; we just need to
-            // confirm the target is on a different grid (i.e. not part of
-            // the byte ship itself).
-            foreach (var found in _lookup.GetEntitiesInRange<ShipNpcTargetComponent>(corePos, aggro.AggroProximityRange))
+            // Use the larger leash range for the lookup; a hostile inside
+            // AggroProximityRange is the only thing that can *start* aggro,
+            // but anything inside AggroLeashRange will *maintain* aggro
+            // once started (so it only fades after the target is past the
+            // leash AND AggroDuration has elapsed).
+            var scanRange = MathF.Max(aggro.AggroProximityRange, aggro.AggroLeashRange);
+            foreach (var found in _lookup.GetEntitiesInRange<ShipNpcTargetComponent>(corePos, scanRange))
             {
-                var targetGrid = Transform(found.Owner).GridUid;
+                var targetXform = Transform(found.Owner);
+                var targetGrid = targetXform.GridUid;
                 if (targetGrid == null || targetGrid == coreGrid)
                     continue;
 
-                aggro.AggroEndTime = now + aggro.AggroDuration;
-                break;
+                var targetPos = _xform.GetMapCoordinates(found.Owner, targetXform);
+                if (targetPos.MapId != corePos.MapId)
+                    continue;
+
+                var distSq = (targetPos.Position - corePos.Position).LengthSquared();
+
+                if (aggroed)
+                {
+                    if (distSq <= aggro.AggroLeashRange * aggro.AggroLeashRange)
+                    {
+                        aggro.AggroEndTime = now + aggro.AggroDuration;
+                        break;
+                    }
+                }
+                else
+                {
+                    if (distSq <= aggro.AggroProximityRange * aggro.AggroProximityRange)
+                    {
+                        aggro.AggroEndTime = now + aggro.AggroDuration;
+                        break;
+                    }
+                }
             }
         }
     }

@@ -17,11 +17,22 @@ public sealed partial class ShipAggroComponent : Component
     public float AggroProximityRange = 500f;
 
     /// <summary>
-    /// How long aggro persists after the most recent trigger (damage or
-    /// proximity). Refreshed every tick the trigger is still active.
+    /// While aggroed, distance within which a hostile ShipNpcTarget keeps
+    /// aggro refreshed. Aggro only fades once the target is past this
+    /// range AND <see cref="AggroDuration"/> has elapsed since the last
+    /// trigger. Should be larger than <see cref="AggroProximityRange"/>
+    /// so the AI doesn't immediately re-engage after dropping aggro.
     /// </summary>
     [DataField]
-    public TimeSpan AggroDuration = TimeSpan.FromSeconds(30);
+    public float AggroLeashRange = 1000f;
+
+    /// <summary>
+    /// How long aggro persists after the most recent trigger (damage or
+    /// proximity / in-leash). Refreshed every tick the trigger is still
+    /// active.
+    /// </summary>
+    [DataField]
+    public TimeSpan AggroDuration = TimeSpan.FromSeconds(10);
 
     /// <summary>
     /// Server time at which aggro currently expires. Default = never aggroed.

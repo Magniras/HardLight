@@ -3180,3 +3180,9 @@ Entries:
       message: Added mono upstream features for shields and AI
   id: 342
   time: '2026-04-25T05:29:14.0000000+00:00'
+- author: DDoubleDee
+  changes:
+    - type: Add
+      message: Added snack vending machines back to the expedition spawn pool!
+  id: 343
+  time: '2026-04-25T05:29:25.0000000+00:00'

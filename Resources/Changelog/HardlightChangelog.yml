@@ -3216,3 +3216,18 @@ Entries:
         FTL/shipyard moves, a major source of recent server lag.
   id: 346
   time: '2026-04-25T21:16:48.0000000+00:00'
+- author: Kronyxxx
+  changes:
+    - type: Add
+      message: >-
+        Xenoborg byte drone ships now patrol deep space, only attack ships that
+        get within ~1.2 km, and chase ships that shoot them or get within 500 m.
+        Aggro fades after 30 s of no contact.
+    - type: Tweak
+      message: Xenoborg byte drone ships no longer spawn within 5 km of the trade hub.
+    - type: Tweak
+      message: >-
+        AI ship-mounted turrets no longer fight the AI core for steering;
+        mounted turrets only fire, the core does the flying.
+  id: 347
+  time: '2026-04-25T22:05:54.0000000+00:00'

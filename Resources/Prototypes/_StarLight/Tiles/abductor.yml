@@ -1,0 +1,12 @@
+- type: tile
+  id: FloorAbductor
+  name: tiles-abductor-floor
+  sprite: /Textures/_Starlight/Tiles/abductor_tile.png
+  baseTurf: Plating
+  isSubfloor: false
+  footstepSounds:
+    collection: FootstepFloor
+  heatCapacity: 10000
+  indestructible: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemAbductor

@@ -1,0 +1,254 @@
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemCarpetDeco
+  result: FloorTileItemCarpetDeco
+  materials:
+    Cloth: 25
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemDarkBitile
+  result: FloorTileItemDarkBitile
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemSteelBitile
+  result: FloorTileItemSteelBitile
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemWhiteBitile
+  result: FloorTileItemWhiteBitile
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemHierophant
+  result: FloorTileItemHierophant
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemSepia
+  result: FloorTileItemSepia
+
+- type: latheRecipe
+  parent: BaseConcreteTileRecipe
+  id: FloorTileItemTerracotta
+  result: FloorTileItemTerracotta
+
+- type: latheRecipe
+  parent: BaseConcreteTileRecipe
+  id: FloorTileItemTerracottaDiagonal
+  result: FloorTileItemTerracottaDiagonal
+
+- type: latheRecipe
+  parent: BaseConcreteTileRecipe
+  id: FloorTileItemTerracottaSmall
+  result: FloorTileItemTerracottaSmall
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemDarkWood
+  result: FloorTileItemDarkWood
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemDarkWoodPattern
+  result: FloorTileItemDarkWoodPattern
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemDarkWoodBroken
+  result: FloorTileItemDarkWoodBroken
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemDarkWoodLarge
+  result: FloorTileItemDarkWoodLarge
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemWoodParquet
+  result: FloorTileItemWoodParquet
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemWoodBlack
+  result: FloorTileItemWoodBlack
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemWoodDark
+  result: FloorTileItemWoodDark
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemWoodLight
+  result: FloorTileItemWoodLight
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemWoodRed
+  result: FloorTileItemWoodRed
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemWoodLargeBlack
+  result: FloorTileItemWoodLargeBlack
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemWoodLargeDark
+  result: FloorTileItemWoodLargeDark
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemWoodLargeLight
+  result: FloorTileItemWoodLargeLight
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemWoodLargeRed
+  result: FloorTileItemWoodLargeRed
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemWoodParquetBlack
+  result: FloorTileItemWoodParquetBlack
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemWoodParquetDark
+  result: FloorTileItemWoodParquetDark
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemWoodParquetLight
+  result: FloorTileItemWoodParquetLight
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemWoodParquetRed
+  result: FloorTileItemWoodParquetRed
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemWoodChess
+  result: FloorTileItemWoodChess
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemWoodChessBlack
+  result: FloorTileItemWoodChessBlack
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemWoodChessDark
+  result: FloorTileItemWoodChessDark
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemWoodChessLight
+  result: FloorTileItemWoodChessLight
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemWoodChessRed
+  result: FloorTileItemWoodChessRed
+
+# Metal
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemMetalDark
+  result: FloorTileItemMetalDark
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemMetalBrown
+  result: FloorTileItemMetalBrown
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemMetalBlue
+  result: FloorTileItemMetalBlue
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemMetalPurple
+  result: FloorTileItemMetalPurple
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemMetalRed
+  result: FloorTileItemMetalRed
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemMetalGreen
+  result: FloorTileItemMetalGreen
+
+- type: latheRecipe
+  parent: BaseWoodTileRecipe
+  id: FloorTileItemAstroDirt
+  result: FloorTileItemAstroDirt
+
+# Custom SL Ports
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemAbyssOne
+  result: FloorTileItemAbyssOne
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemAbyssTwo
+  result: FloorTileItemAbyssTwo
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemAbductor
+  result: FloorTileItemAbductor
+  materials:
+    Steel: 50
+    Plastic: 50
+# Make glass things doable
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemCutPlasmaGlass
+  result: FloorTileItemCutPlasmaGlass
+  materials:
+    Glass: 50
+    Plasma: 50
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemGemCutPlasmaGlass
+  result: FloorTileItemGemCutPlasmaGlass
+  materials:
+    Glass: 50
+    Plasma: 50
+    Steel: 25
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemCutUraniumGlass
+  result: FloorTileItemCutUraniumGlass
+  materials:
+    Glass: 50
+    Uranium: 50
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemGemCutUraniumGlass
+  result: FloorTileItemGemCutUraniumGlass
+  materials:
+    Glass: 50
+    Uranium: 50
+    Steel: 25
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemCutBrassGlass
+  result: FloorTileItemCutBrassGlass
+  materials:
+    Glass: 50
+    Brass: 50

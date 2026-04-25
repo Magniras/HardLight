@@ -1106,6 +1106,7 @@
     - NFFloorsMiscStatic # Frontier
     - NFFloorTiles # Frontier
     - NFFloorTilesCarpet # Frontier
+    - FloorTilesStaticSL
     dynamicPacks: # Frontier
     - FauxTiles # Frontier
   - type: EmagLatheRecipes # Frontier

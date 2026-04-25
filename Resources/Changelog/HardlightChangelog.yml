@@ -3198,3 +3198,9 @@ Entries:
       message: fixed injector deny popup localization not working
   id: 344
   time: '2026-04-25T21:13:56.0000000+00:00'
+- author: VoidedDevNull
+  changes:
+    - type: Add
+      message: New Starlight Tiles Ported
+  id: 345
+  time: '2026-04-25T21:15:17.0000000+00:00'

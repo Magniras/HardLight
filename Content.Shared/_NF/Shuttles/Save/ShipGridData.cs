@@ -50,6 +50,19 @@ namespace Content.Shared.Shuttles.Save
         [DataField("checksum")]
         public string? Checksum { get; set; } = null;
 
+        // Room save metadata (HardLight apartments): when true, tile/entity coordinates are
+        // stored relative to the room anchor, and rotations are stored relative to anchor rotation.
+        // This allows loading the same save into any apartment orientation.
+        [DataField("room_relative")]
+        public bool RoomRelative { get; set; } = false;
+
+        // Optional informational fields for debugging/migration visibility.
+        [DataField("room_anchor_position")]
+        public Vector2 RoomAnchorPosition { get; set; } = Vector2.Zero;
+
+        [DataField("room_anchor_rotation")]
+        public float RoomAnchorRotation { get; set; } = 0f;
+
         // Add other relevant metadata as needed, e.g., game version, server ID
     }
 

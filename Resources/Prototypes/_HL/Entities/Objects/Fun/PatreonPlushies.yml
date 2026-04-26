@@ -33,3 +33,14 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/_Starlight/Voice/Resomi/resomi_cry_2.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieVytian
+  name: Vytian Plushie
+  description:
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: VytianPlush
+    scale: 0.8, 0.8

@@ -1049,3 +1049,33 @@
     heldPrefix: shadeplush
 
 # Same with a shadekin plushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieRemiie
+  name: Remiie Plushie
+  description: A marketable plushie of Remiie in her head of personnel outfit before CC.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/HLtoys.rsi
+    state: RemiiePlush
+    scale: 0.8, 0.8
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_chirp1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Resomi/resomi_scream.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_chirp1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_chirp1.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Resomi/resomi_scream.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+     path: /Audio/_Starlight/Voice/Resomi/resomi_cry_1.ogg

@@ -111,6 +111,9 @@
         {
             "name": "shadeplush-inhand-right",
             "directions": 4
+        },
+        {
+            "name": "RemiiePlush"
         }
     ]
 }

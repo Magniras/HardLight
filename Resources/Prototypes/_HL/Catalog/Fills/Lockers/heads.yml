@@ -139,6 +139,7 @@
     - id: RubberStampHop
     - id: NFWeaponEnergyPistolDisabler
     - id: ClothingEyesHudCommand
+    - id: PlushieRemiie
 
 - type: entity
   id: HLLockerHeadOfPersonnelFilled

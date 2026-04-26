@@ -3293,3 +3293,9 @@ Entries:
         tiles.
   id: 353
   time: '2026-04-26T21:40:39.0000000+00:00'
+- author: R3v3l4t1on
+  changes:
+    - type: Fix
+      message: Fixed all xenoborgs apart from the quad looking like engis
+  id: 354
+  time: '2026-04-26T21:42:08.0000000+00:00'

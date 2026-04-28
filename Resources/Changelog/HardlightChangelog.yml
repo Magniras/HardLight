@@ -3308,3 +3308,13 @@ Entries:
         tick.
   id: 355
   time: '2026-04-26T21:43:56.0000000+00:00'
+- author: R3v3l4t1on
+  changes:
+    - type: Tweak
+      message: >-
+        Tweaked a bunch of modules to be more like what they are over on
+        wizden/SL (minus changes I couldn't make due to the omega PR revert)
+    - type: Fix
+      message: Fixed sec borg locales
+  id: 356
+  time: '2026-04-28T07:36:16.0000000+00:00'

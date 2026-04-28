@@ -3,6 +3,9 @@
   id: BasePillow
   abstract: true
   components:
+  - type: Item
+    shape:
+    - 0,0,1,0
   - type: Tag
     tags:
       - Payload

@@ -109,7 +109,7 @@
 - type: entity
   parent: BaseBlueprintExpedition
   id: NFBlueprintWeaponLaserCannon
-  name: laser cannon blueprint
+  name: beam rifle blueprint
   description: A blueprint with a schematic of a laser cannon. It can be inserted into an autolathe or a techfab.
   components:
   - type: Blueprint

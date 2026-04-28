@@ -306,6 +306,8 @@
         - GasAnalyzer
         - SprayPainter
         - Flashlight
+        - TrayScanner
+        - HolosignProjector
       tags:
         - CableCoil # Hardlight end
   - type: Sprite
@@ -1115,6 +1117,7 @@
         - Magazine45_ACPSubMachineGunFMJ
         - Magazine45_ACPSubMachineGunTopMountedFMJ
         - Magazine45_ACPFMJBox
+        - Magazine45_magnumPistolFMJ
         - Magazine9x19mm
         - Magazine9x19mmImprovised
         - Magazine9x19mmSMGImprovised
@@ -1139,6 +1142,14 @@
         - MagazineRifleM52
         - MagazineSMGPPSH
         - MagazineSMGUzi
+        - MagazineCalico
+        - Magazine635x40mmCaseless
+        - Magazine762x39mmPan
+        - Magazine635x40mmCaselessPistol
+        - Magazine12_gaugeBuckshot
+        - Magazine45_magnumSubMachineGunFMJ
+        - Magazine8x65mmSKR # mono
+        - Magazine40mm
   - type: Sprite
     layers:
     - state: base

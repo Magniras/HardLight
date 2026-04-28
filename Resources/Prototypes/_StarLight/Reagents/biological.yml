@@ -29,17 +29,17 @@
         - !type:OrganType
           type: Vampiric
         reagent: Water
-        amount: 0.3
+        amount: 0.1
       - !type:AdjustReagent
         conditions:
         - !type:OrganType
           type: Vampiric
         reagent: Protein
-        amount: 0.25 # See below
+        amount: 0.1
       - !type:AdjustReagent
         conditions:
         - !type:OrganType
           type: Vampiric
         reagent: Omnizine
-        amount: 0.3
+        amount: 0.1
   # Hardlight addition for Floofstation vampires - end

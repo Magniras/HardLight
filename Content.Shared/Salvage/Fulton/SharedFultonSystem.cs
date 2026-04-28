@@ -102,7 +102,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
             Act = () =>
             {
                 Unfulton(uid);
-                _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.User):player} unfultoned {ToPrettyString(uid):target}");
+                _adminLogger.Add(LogType.Unfulton, LogImpact.High, $"{ToPrettyString(args.User):player} unfultoned {ToPrettyString(uid):target}");
             }
         });
     }

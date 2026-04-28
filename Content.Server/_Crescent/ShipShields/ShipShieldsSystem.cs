@@ -143,10 +143,24 @@ public sealed partial class ShipShieldsSystem : EntitySystem
     private void OnPreventCollide(EntityUid uid, ShipShieldComponent component, ref PreventCollideEvent args)
     {
         // only handle ship weapons for now. engine update introduced physics regressions. Let's polish everything else and circle back yeah?
-        // Ensuring projectiles coming froms same grid don't hit shield is handled by ProjectileGridPhaseComponent
         if (!_shipWeaponProjectileQuery.HasComponent(args.OtherEntity) ||
         !_projectileQuery.TryGetComponent(args.OtherEntity, out var projectile) ||
         projectile.ProjectileSpent)
+        {
+            args.Cancelled = true;
+            return;
+        }
+
+        // Don't deflect/consume projectiles fired from the same grid we're shielding. This was
+        // previously claimed to be handled by ProjectileGridPhaseComponent, but that component
+        // does not exist in this fork. SpaceArtillerySystem cancels the same-grid contact on the
+        // projectile-side PreventCollideEvent, but each side gets a fresh event with Cancelled=false
+        // so the order in which the two handlers run is non-deterministic. Without this check, a
+        // ship's own ship-weapon fire frequently collides with its own shield on the first physics
+        // step, gets QueueDel'd, and damages the emitter -- which players see as "shields don't
+        // work" / "guns don't shoot through our shield".
+        if (projectile.Weapon is { } weapon
+            && _transformSystem.GetGrid(weapon) == component.Shielded)
         {
             args.Cancelled = true;
             return;

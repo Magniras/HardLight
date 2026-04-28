@@ -231,8 +231,8 @@
   - type: SizeAttribute
     tall: true
   - type: TallWhitelist
-    scale: 1.25
-    borgScale: 1
+    scale: 1.3
+    borgScale: 1.1
     borgFixtureRadius: 0.45
     densityMultiplier: 1.25
     cosmeticOnly: false

@@ -1,6 +1,7 @@
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
@@ -31,6 +32,17 @@ public sealed partial class GunSystem
         {
             component.UnspawnedCount--;
             Dirty(uid, component);
+
+            if (component.Proto is { } proto &&
+                ProtoManager.TryIndex<EntityPrototype>(proto, out var entityProto) &&
+                entityProto.Components.TryGetValue(_factory.GetComponentName(typeof(CartridgeAmmoComponent)), out var cartridgeComp) &&
+                cartridgeComp.Component is CartridgeAmmoComponent { DeleteOnSpawn: true })
+            {
+                var caselessCycledEvent = new GunCycledEvent();
+                RaiseLocalEvent(uid, ref caselessCycledEvent);
+                return;
+            }
+
             ent = Spawn(component.Proto, coordinates);
             EnsureShootable(ent.Value);
         }

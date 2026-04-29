@@ -7,6 +7,7 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 10800
+  weight: 10 # HardLight
   startingGear: ChaplainGear
   icon: "JobIconChaplain"
   supervisors: job-supervisors-hop
@@ -19,8 +20,8 @@
   special:
   - !type:AddComponentSpecial
     components:
-    - type: BibleUser #Lets them heal with bibles
-    - type: PsionicBonusChance #Nyano - Summary: makes it more likely to become psionic.
+    - type: BibleUser # Lets them heal with bibles
+    - type: PsionicBonusChance #Nyano: Makes it more likely to become psionic.
       multiplier: 3
     - type: InnatePsionicPowers
       powersToAdd:
@@ -30,7 +31,7 @@
 - type: startingGear
   id: ChaplainGear
   equipment:
-#    shoes: ClothingShoesColorBlack # HL - Add NF-style departmental loadouts
+    # shoes: ClothingShoesColorBlack # HardLight: Add NF-style departmental loadouts
     id: ChaplainPDA
     ears: ClothingHeadsetService
   storage:

@@ -99,7 +99,7 @@
 - type: entity
   parent: [ ClothingBackpackDuffelSr, StorageFillEVASuitSr ]
   id: ClothingBackpackDuffelEVABundleSr
-  name: station representative EVA bundle
+  name: harbor master EVA bundle # HardLight: station representative<harbor master; migrate to _HL in the future
   suffix: Filled
 
 - type: entity

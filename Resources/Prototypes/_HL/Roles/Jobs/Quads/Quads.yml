@@ -5,11 +5,12 @@
   playTimeTracker: JobMedicalQuadBorg
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 21600 #6 hrs floof
+      time: 21600 # Floof: 6 hrs
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 3600 #1 hrs floof
+      time: 3600 # Floof: 1 hrs
   canBeAntag: false
+  weight: -20
   startingGear: MedicalQuadBorgGear
   icon: JobIconMedicalBorg
   supervisors: job-supervisors-cmo
@@ -17,9 +18,8 @@
   special:
   - !type:AddComponentSpecial
     components:
-    - type: SurgerySpeedModifier #shitmed
+    - type: SurgerySpeedModifier # Shitmed
       SpeedModifier: 1.75
-
 
 - type: job
   id: ServiceQuadBorg
@@ -28,8 +28,9 @@
   playTimeTracker: JobServiceQuadBorg
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 21600 #6 hrs floof
+      time: 21600 # Floof: 6 hrs
   canBeAntag: false
+  weight: -50 # HardLight
   startingGear: ServiceQuadBorgGear
   icon: JobIconServiceBorg
   supervisors: job-supervisors-hop
@@ -42,11 +43,12 @@
   playTimeTracker: JobSalvageQuadBorg
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 21600 #6 hrs floof
+      time: 21600 # Floof: 6 hrs
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 3600 #1 hrs floof
+      time: 3600 # Floof: 1 hrs
   canBeAntag: false
+  weight: -20
   startingGear: SalvageQuadBorgGear
   icon: JobIconSalvageBorg
   supervisors: job-supervisors-Quartermaster
@@ -59,10 +61,10 @@
   playTimeTracker: JobSecurityQuadBorg
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 21600 #6 hrs floof
+      time: 21600 # Floof: 6 hrs
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 3600 #1 hrs floof
+      time: 3600 # Floof: 1 hrs
   canBeAntag: false
   startingGear: SecurityQuadBorgGear
   icon: JobIconSecurityBorg
@@ -76,10 +78,10 @@
   playTimeTracker: JobEngineeringQuadBorg
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 21600 #6 hrs floof
+      time: 21600 # Floof: 6 hrs
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 3600 #1 hrs floof
+      time: 3600 # Floof: 1 hrs
   canBeAntag: false
   startingGear: EngineeringQuadBorgGear
   icon: JobIconEngineeringBorg

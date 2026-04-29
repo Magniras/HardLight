@@ -6,7 +6,7 @@
   setPreference: true
   startingGear: PassengerGear
   icon: "JobIconPassenger"
-#  supervisors: job-supervisors-everyone
+  # supervisors: job-supervisors-everyone
   access:
   - Maintenance
   accessGroups: # Frontier
@@ -17,6 +17,6 @@
   equipment:
     id: PassengerPDA
     ears: ClothingHeadsetGrey
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff

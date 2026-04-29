@@ -127,11 +127,11 @@
   groups:
   - ContractorNeck
   - MailCarrierJumpsuit
-  - MailCarrierGloves # HL - Add departmental NF-style loadouts
+  - MailCarrierGloves # HardLight: Add departmental NF-style loadouts
   - MailCarrierBackpack
   - MailCarrierOuterClothing
   - MailCarrierForcedOuterClothing
-  - MailCarrierShoes # HL - Add departmental NF-style loadouts
+  - MailCarrierShoes # HardLight: Add departmental NF-style loadouts
   - ContractorFace
   - ContractorEars
   - ContractorEncryptionKey
@@ -146,17 +146,18 @@
 - type: roleLoadout
   id: JobStationTrafficController
   groups:
-  - StationRepNeck
-  - StationRepHead
-  - StationRepGloves
-  - StationRepBackpack
-  - StationRepOuterClothing
-  - StationRepForcedOuterClothing
-  - StationRepJumpsuit
+  - StcHead
+  - ContractorNeck
+  - StcJumpsuit
+  - StcGloves # HardLight: Add lingerie
+  - ContractorBackpack
+  - ContractorOuterClothing
+  - StcForcedOuterClothing
+  - StcShoes
   - ContractorFace
   - ContractorGlasses
   - ContractorBelt
-  - StationRepEars
+  - StcEars
   - ContractorBoxSurvival
   - ContractorWallet
   - ContractorCartridge
@@ -164,8 +165,6 @@
   - ContractorBackpackItems
   - ContractorHandItems
   - NFSpeciesSpecific
-  - ContractorShoes
-  - StationRepPDA
 
 - type: roleLoadout
   id: JobStationRepresentative

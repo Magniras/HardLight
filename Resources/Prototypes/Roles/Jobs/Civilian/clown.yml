@@ -7,12 +7,13 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 10800
+  weight: -40 # HardLight
   startingGear: ClownGear
   icon: "JobIconClown"
   access:
   - Theatre
   - Maintenance
-#  - Clown # Isn't this called Theatre?
+  # - Clown # Isn't this called Theatre?
   accessGroups: # Frontier
   - GeneralAccess # Frontier
   special:
@@ -20,7 +21,7 @@
     components:
     - type: Clumsy
       gunShootFailDamage:
-        types: #literally just picked semi random valus. i tested this once and tweaked it.
+        types: # Literally just picked semi random valus. I tested this once and tweaked it.
           Blunt: 5
           Piercing: 4
         groups:
@@ -34,7 +35,7 @@
 - type: startingGear
   id: ClownGear
   equipment:
-#    mask: ClothingMaskClown # HL - Add NF-style departmental loadouts
+    # mask: ClothingMaskClown # HardLight: Add NF-style departmental loadouts
     pocket1: BikeHorn
     pocket2: ClownRecorder
     id: ClownPDA

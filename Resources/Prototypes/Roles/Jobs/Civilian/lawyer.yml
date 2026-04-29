@@ -7,6 +7,7 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 9000 # 2.5 hrs
+  weight: 10 # HardLight
   startingGear: LawyerGear
   icon: "JobIconLawyer"
   supervisors: job-supervisors-centcom
@@ -14,7 +15,7 @@
   access:
   - Service
   - Security
-#  - Justice # Isn't this called Lawyer?
+  # - Justice # Isn't this called Lawyer?
   - Lawyer
   - Maintenance
   accessGroups: # Frontier
@@ -23,7 +24,7 @@
 - type: startingGear
   id: LawyerGear
   equipment:
-#    shoes: ClothingShoesBootsLaceup # HL - Add NF-style departmental loadouts
+    # shoes: ClothingShoesBootsLaceup # HardLight: Add NF-style departmental loadouts
     id: LawyerPDA
     ears: ClothingHeadsetSecurity
   inhand:

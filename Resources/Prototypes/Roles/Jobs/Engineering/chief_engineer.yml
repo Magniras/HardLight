@@ -7,14 +7,14 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobAtmosphericTechnician
-      time: 9000 #2.5 hrs
+      time: 9000 # 2.5 hrs
     - !type:RoleTimeRequirement
       role: JobStationEngineer
-      time: 18000 #5 hrs
+      time: 18000 # 5 hrs
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 36000 #10 hrs
-  weight: 10
+      time: 36000 # 10 hrs
+  weight: 40 # HardLight: 10<40
   startingGear: ChiefEngineerGear
   icon: "JobIconChiefEngineer"
   supervisors: job-supervisors-captain
@@ -36,7 +36,7 @@
   - !type:AddComponentSpecial
     components:
     - type: CommandStaff
-    - type: PsionicBonusChance #Nyano - Summary: makes it more likely to become psionic.
+    - type: PsionicBonusChance # Nyano: Makes it more likely to become psionic.
       flatBonus: 0.025
   accessGroups: # Frontier
   - GeneralAccess # Frontier
@@ -45,7 +45,7 @@
   id: ChiefEngineerGear
   equipment:
     id: CEPDA
-#    eyes: ClothingEyesGlassesMeson # HL - Add departmental NF-style loadouts
+    # eyes: ClothingEyesGlassesMeson # HardLight: Add departmental NF-style loadouts
     ears: ClothingHeadsetCE
     belt: ClothingBeltUtilityEngineering
   storage:

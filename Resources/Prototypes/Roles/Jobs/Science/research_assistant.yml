@@ -3,11 +3,11 @@
   name: job-name-research-assistant
   description: job-description-research-assistant
   playTimeTracker: JobResearchAssistant
-  # requirements:
-    # - !type:DepartmentTimeRequirement
-      # department: Science
-      # time: 18000 #5 hrs
-      # inverted: true # stop playing intern if you're good at science!
+  requirements:
+  # - !type:DepartmentTimeRequirement
+  #   department: Science
+  #   time: 18000 #5 hrs
+  #   inverted: true # stop playing intern if you're good at science!
   startingGear: ResearchAssistantGear
   icon: "JobIconResearchAssistant"
   supervisors: job-supervisors-science
@@ -22,10 +22,10 @@
 - type: startingGear
   id: ResearchAssistantGear
   equipment:
-#    shoes: ClothingShoesColorWhite # HL - Add departmental NF-style loadouts
+    # shoes: ClothingShoesColorWhite # HardLight: Add departmental NF-style loadouts
     id: ResearchAssistantPDA
     ears: ClothingHeadsetScience
     pocket2: BookScientistsGuidebook
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff

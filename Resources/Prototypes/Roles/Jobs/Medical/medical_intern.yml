@@ -4,10 +4,10 @@
   description: job-description-intern
   playTimeTracker: JobMedicalIntern
   requirements:
-  #    - !type:DepartmentTimeRequirement
-  #      department: Medical
-  #      time: 54000 # 15 hrs
-  #      inverted: true # stop playing intern if you're good at med!
+  # - !type:DepartmentTimeRequirement
+  #   department: Medical
+  #   time: 54000 # 15 hrs
+  #   inverted: true # stop playing intern if you're good at med!
   - !type:OverallPlaytimeRequirement # Frontier
     time: 10800 # Frontier
   startingGear: MedicalInternGear
@@ -29,11 +29,11 @@
 - type: startingGear
   id: MedicalInternGear
   equipment:
-#    shoes: ClothingShoesColorWhite # HL - Add departmental NF-style loadouts
+    # shoes: ClothingShoesColorWhite # HardLight: Add departmental NF-style loadouts
     id: MedicalInternPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled
     pocket2: BookMedicalReferenceBook
-    #storage:
-    #back:
-    #- Stuff
+    # storage:
+    # back:
+    # - Stuff

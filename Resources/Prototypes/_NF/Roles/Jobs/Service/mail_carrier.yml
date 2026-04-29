@@ -8,11 +8,10 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 10800
+  canBeAntag: false
+  weight: -10 # HardLight: 90<-10
   icon: "JobIconMailCarrier"
   supervisors: job-supervisors-sr
-  weight: 90 # Frontier
-  displayWeight: 30 # Frontier
-  canBeAntag: false
   access:
   - External # Frontier
   - Maintenance
@@ -33,7 +32,7 @@
     head: ClothingHeadMailCarrier
     eyes: ClothingEyesHudMail
     id: CourierPDA
-#    ears: ClothingHeadsetService # Frontier - ClothingHeadsetCargo<ClothingHeadsetService
+    # ears: ClothingHeadsetService # Frontier: ClothingHeadsetCargo<ClothingHeadsetService
     belt: NFMailBag
   storage:
     back:

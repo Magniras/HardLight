@@ -5,9 +5,10 @@
   playTimeTracker: JobScientist
   setPreference: true
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Science
-      time: 9000 #2.5 hrs
+  - !type:DepartmentTimeRequirement
+    department: Science
+    time: 9000 #2.5 hrs
+  weight: 10 # HardLight
   startingGear: ScientistGear
   icon: "JobIconScientist"
   supervisors: job-supervisors-rd
@@ -21,6 +22,6 @@
   id: ScientistGear
   equipment:
     ears: ClothingHeadsetScience
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff

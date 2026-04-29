@@ -8,76 +8,76 @@
     Reach:
       stationProto: StandardNanotrasenStation
       components:
-        - type: StationNameSetup
-          mapNameTemplate: '{0} Reach Transport {1}'
-          nameGenerator:
-            !type:NanotrasenNameGenerator
-            prefixCreator: 'SC'
-        - type: ExtraStationInformation
-          iconPath: /Textures/_HL/Logo/icon/icon-256x256.png # used the biggest one, looks better when downscaling than upscaling
-          stationSubtext: 'hardlight-lobby-hardlight-subtext'
-          stationDescription: 'hardlight-lobby-hardlight-description'
-          lobbySortOrder: 1
-        - type: StationJobs
-          availableJobs: # HardLight: Reordered + additions added
-            # Command (8)
-            StationCaptain: [ 1, 1 ]
-            HeadOfPersonnel: [ 1, 1 ]
-            HeadOfSecurity: [ 1, 1 ]
-            ChiefMedicalOfficer: [ 1, 1 ]
-            ChiefEngineer: [ 1, 1 ]
-            ResearchDirector: [ 1, 1 ]
-            Quartermaster: [ 1, 1 ]
-            StationTrafficController: [ 1, 1 ]
-            # Silicon (2)
-            StationAi: [ 1, 1 ]
-            Borg: [ 3, 3 ]
-            # Service (11)
-            Chef: [ 2, 2 ]
-            Botanist: [ 2, 3 ]
-            Bartender: [ 2, 2 ]
-            Janitor: [ 3, 4 ]
-            ServiceWorker: [ 4, 4 ]
-            Chaplain: [ 1, 1 ]
-            Reporter: [ 2, 2 ]
-            Librarian: [ 1, 1 ]
-            Valet: [ 1, 2 ]
-            Boxer: [ 2, 2 ]
-            ServiceQuadBorg: [ 3, 3 ]
-            # Security (6)
-            Warden: [ 1, 1 ]
-            Detective: [ 2, 2 ]
-            SecurityOfficer: [ 6, 6 ]
-            SecurityCadet: [ 3, 3 ]
-            Lawyer: [ 1, 1 ]
-            SecurityQuadBorg: [ 3, 3 ]
-            # Medical (7)
-            Paramedic: [ 2, 3 ]
-            Geneticist: [ 1, 2 ]
-            Chemist: [ 2, 3 ]
-            MedicalDoctor: [ 6, 6 ]
-            MedicalIntern: [ 3, 3 ]
-            Psychologist: [ 1, 1 ]
-            MedicalQuadBorg: [ 3, 3 ]
-            # Engineering (4)
-            AtmosphericTechnician: [ 3, 3 ]
-            StationEngineer: [ 6, 6 ]
-            TechnicalAssistant: [ 3, 3 ]
-            EngineeringQuadBorg: [ 3, 3 ]
-            # Science (3)
-            ForensicMantis: [ 1, 1 ]
-            Scientist: [ 4, 4 ]
-            ResearchAssistant: [ 3, 3 ]
-            # Supply (4)
-            SalvageSpecialist: [ 3, 3 ]
-            CargoTechnician: [ 4, 4 ]
-            MailCarrier: [ 2, 2 ]
-            SalvageQuadBorg: [ 3, 3 ]
-            # Civilian (6)
-            Mercenary: [ 0, 40 ]
-            Passenger: [ -1, -1 ]
-            Prisoner: [ 3, 3 ]
-            Clown: [ 2, 2 ]
-            Mime: [ 2, 2 ]
-            Musician: [ 2, 2 ]
-
+      - type: StationNameSetup
+        mapNameTemplate: '{0} Reach Transport {1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: 'SC'
+      - type: ExtraStationInformation
+        iconPath: /Textures/_HL/Logo/icon/icon-256x256.png # used the biggest one, looks better when downscaling than upscaling
+        stationSubtext: 'hardlight-lobby-hardlight-subtext'
+        stationDescription: 'hardlight-lobby-hardlight-description'
+        lobbySortOrder: 1
+      - type: StationJobs # HardLight: Reordered + additions added
+        availableJobs:
+          # Command (8)
+          StationCaptain: [ 1, 1 ]
+          HeadOfPersonnel: [ 1, 1 ]
+          HeadOfSecurity: [ 1, 1 ]
+          ChiefMedicalOfficer: [ 1, 1 ]
+          ChiefEngineer: [ 1, 1 ]
+          ResearchDirector: [ 1, 1 ]
+          Quartermaster: [ 1, 1 ]
+          StationRepresentative: [ 1, 1 ] # Harbor Master
+          # Silicon (2)
+          StationAi: [ 1, 1 ]
+          Borg: [ 3, 3 ]
+          # Service (10)
+          Chef: [ 2, 2 ]
+          Botanist: [ 2, 3 ]
+          Bartender: [ 2, 2 ]
+          Janitor: [ 3, 4 ]
+          ServiceWorker: [ 4, 4 ]
+          Chaplain: [ 1, 1 ]
+          Reporter: [ 2, 2 ] # Station Host
+          Librarian: [ 1, 1 ]
+          Valet: [ 1, 2 ]
+          ServiceQuadBorg: [ 3, 3 ]
+          # Security (5)
+          Warden: [ 1, 1 ]
+          Detective: [ 2, 2 ]
+          SecurityOfficer: [ 6, 6 ]
+          SecurityCadet: [ 3, 3 ]
+          SecurityQuadBorg: [ 3, 3 ]
+          # Medical (7)
+          Paramedic: [ 2, 3 ]
+          Geneticist: [ 1, 2 ]
+          Chemist: [ 2, 3 ]
+          MedicalDoctor: [ 6, 6 ]
+          MedicalIntern: [ 3, 3 ]
+          Psychologist: [ 1, 1 ]
+          MedicalQuadBorg: [ 3, 3 ]
+          # Engineering (4)
+          AtmosphericTechnician: [ 3, 3 ]
+          StationEngineer: [ 6, 6 ]
+          TechnicalAssistant: [ 3, 3 ]
+          EngineeringQuadBorg: [ 3, 3 ]
+          # Science (3)
+          ForensicMantis: [ 1, 1 ]
+          Scientist: [ 4, 4 ]
+          ResearchAssistant: [ 3, 3 ]
+          # Supply (4)
+          SalvageSpecialist: [ 3, 3 ]
+          CargoTechnician: [ 4, 4 ]
+          MailCarrier: [ 2, 2 ]
+          SalvageQuadBorg: [ 3, 3 ]
+          # Frontier (1)
+          Mercenary: [ 0, 40 ] # Freelancer
+          # Civilian (7)
+          Lawyer: [ 1, 1 ]
+          Passenger: [ -1, -1 ]
+          Prisoner: [ 3, 3 ]
+          Boxer: [ 2, 2 ]
+          Clown: [ 2, 2 ]
+          Mime: [ 2, 2 ]
+          Musician: [ 2, 2 ]

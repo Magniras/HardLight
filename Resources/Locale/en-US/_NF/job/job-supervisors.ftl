@@ -1,4 +1,4 @@
-job-supervisors-sr = the Station Representative
+job-supervisors-sr = the Harbor Master
 job-supervisors-sheriff = the Sheriff
 job-supervisors-bailiff = the Bailiff
 job-supervisors-sergeant = the Sergeant

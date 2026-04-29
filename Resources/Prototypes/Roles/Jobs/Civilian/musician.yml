@@ -7,13 +7,14 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 10800
+  weight: -60 # HardLight
   startingGear: MusicianGear
   icon: "JobIconMusician"
   supervisors: job-supervisors-hop # changed from Frontier
   access:
   - Maintenance # TODO Remove maint access for all gimmick jobs once access work is completed
   - Theatre
-#  - Musician # Isn't this called Theatre?
+  # - Musician # Isn't this called Theatre?
   accessGroups: # Frontier
   - GeneralAccess # Frontier
   special:
@@ -24,10 +25,10 @@
 - type: startingGear
   id: MusicianGear
   equipment:
-#    eyes: ClothingEyesGlassesSunglasses # HL - Add NF-style departmental loadouts
-#    shoes: ClothingShoesBootsLaceup # HL - Add NF-style departmental loadouts
+    # eyes: ClothingEyesGlassesSunglasses # HardLight: Add NF-style departmental loadouts
+    # shoes: ClothingShoesBootsLaceup # HardLight: Add NF-style departmental loadouts
     id: MusicianPDA
     ears: ClothingHeadsetService
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff

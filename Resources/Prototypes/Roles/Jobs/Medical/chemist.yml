@@ -7,6 +7,7 @@
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 10800
+  weight: 20 # HardLight
   startingGear: ChemistGear
   icon: "JobIconChemist"
   supervisors: job-supervisors-cmo
@@ -29,7 +30,7 @@
     ears: ClothingHeadsetMedical
     belt: ChemBag
     pocket1: HandLabeler
-#    eyes: ClothingEyesGlassesChemical # HL - Add departmental NF-style loadouts
-    #storage:
-    #back:
-    #- Stuff
+    # eyes: ClothingEyesGlassesChemical # HardLight: Add departmental NF-style loadouts
+    # storage:
+    # back:
+    # - Stuff

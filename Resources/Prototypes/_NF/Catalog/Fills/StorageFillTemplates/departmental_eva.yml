@@ -28,7 +28,7 @@
 - type: entity
   abstract: true
   id: StorageFillEVASuitSr
-  description: Contains a standard issue station representative EVA kit.
+  description: Contains a standard issue harbor master EVA kit. # HardLight: station representative<harbor master; migrate to _HL in the future
   components:
   - type: StorageFill
     contents:

@@ -6,7 +6,8 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 9000 #2.5 hrs
+      time: 9000 # 2.5 hrs
+  weight: 30 # HardLight
   startingGear: SecurityOfficerGear
   icon: "JobIconSecurityOfficer"
   supervisors: job-supervisors-hos
@@ -29,7 +30,7 @@
 - type: startingGear
   id: SecurityOfficerGear
   equipment:
-#    eyes: ClothingEyesGlassesSecurity # HL - Add departmental NF-style loadouts
+    # eyes: ClothingEyesGlassesSecurity # HardLight: Add departmental NF-style loadouts
     ears: ClothingHeadsetSecurity
     pocket1: NFWeaponPistolMk58 # Frontier: use NF variant
   storage:

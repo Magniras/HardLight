@@ -19,5 +19,5 @@ job-description-security-guard = Patrol the empty halls, whistle simple tunes yo
 job-description-senior-officer = Teach new deputies the basics of searches, preforming arrests, prison times and how to properly shoot a firearm.
 job-description-sheriff = Manage your department and keep them efficient, quell dissent, and keep the sector safe.
 job-description-stc = Handle the freelancers, Place bounties, Coordinate between Freelancers and the Station. Send CC faxes on egregious crimes commited by Freelancers.
-job-description-sr = Handle access reassignment fairly using your ID console, manage Frontier outpost, and keep Clippy safe.
+job-description-sr = Handle access reassignment fairly using your ID console, manage Frontier outpost, coordinate station administration, and keep Clippy safe.
 job-description-valet = Take care of the station and its many guests.

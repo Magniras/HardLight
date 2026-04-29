@@ -5,11 +5,12 @@
   playTimeTracker: JobTechnicalAssistant
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 3600 #1 hr
+      time: 3600 # 1 hr
     # - !type:DepartmentTimeRequirement
-      # department: Engineering
-      # time: 18000 #5 hrs
-      # inverted: true # stop playing intern if you're good at engineering!
+    #   department: Engineering
+    #   time: 18000 #5 hrs
+    #   inverted: true # stop playing intern if you're good at engineering!
+  weight: 10 # HardLight
   startingGear: TechnicalAssistantGear
   icon: "JobIconTechnicalAssistant"
   supervisors: job-supervisors-engineering
@@ -25,11 +26,11 @@
 - type: startingGear
   id: TechnicalAssistantGear
   equipment:
-#    shoes: ClothingShoesBootsWork # HL - Add departmental NF-style loadouts
+    # shoes: ClothingShoesBootsWork # HardLight Add departmental NF-style loadouts
     id: TechnicalAssistantPDA
-    belt: ClothingBeltUtilityEngineering # Frontier - Moved to locker
+    belt: ClothingBeltUtilityEngineering # Frontier: Moved to locker
     ears: ClothingHeadsetEngineering
     pocket2: BookEngineersHandbook
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff

@@ -1,5 +1,6 @@
-- type: department
-  id: UnionOfSovietSocialistPlanets
-  name: department-UnionOfSovietSocialistPlanets
-  description: department-UnionOfSovietSocialistPlanets-description
-  color: "#B01340"
+# HardLight: Commented out due to not currently being used.
+# - type: department
+#   id: UnionOfSovietSocialistPlanets
+#   name: department-UnionOfSovietSocialistPlanets
+#   description: department-UnionOfSovietSocialistPlanets-description
+#   color: "#B01340"

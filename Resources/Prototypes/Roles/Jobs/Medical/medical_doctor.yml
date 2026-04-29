@@ -7,6 +7,7 @@
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 10800
+  weight: 10 # HardLight
   startingGear: DoctorGear
   icon: "JobIconMedicalDoctor"
   supervisors: job-supervisors-cmo
@@ -33,6 +34,6 @@
   equipment:
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled
-    #storage:
-    #back:
-    #- Stuff
+    # storage:
+    # back:
+    # - Stuff

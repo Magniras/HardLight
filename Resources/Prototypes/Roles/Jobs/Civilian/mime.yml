@@ -7,12 +7,13 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 10800
+  weight: -50 # HardLight
   startingGear: MimeGear
   icon: "JobIconMime"
   access:
   - Theatre
   - Maintenance
-#  - Mime # Isn't this called Theatre?
+  # - Mime # Isn't this called Theatre?
   accessGroups: # Frontier
   - GeneralAccess # Frontier
   special:
@@ -25,8 +26,8 @@
 - type: startingGear
   id: MimeGear
   equipment:
-#    gloves: ClothingHandsGlovesColorWhite # HL - Add NF-style departmental loadouts
-#    shoes: ClothingShoesColorWhite # HL - Add NF-style departmental loadouts
+    # gloves: ClothingHandsGlovesColorWhite # HardLight: Add NF-style departmental loadouts
+    # shoes: ClothingShoesColorWhite # HardLight: Add NF-style departmental loadouts
     id: MimePDA
     pocket1: CrayonMime
     ears: ClothingHeadsetService

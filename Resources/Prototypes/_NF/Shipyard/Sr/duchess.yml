@@ -12,7 +12,7 @@
   id: Duchess
   parent: BaseVessel
   name: NT Duchess
-  description: A mobile office and personal transport for the Station Representative, based on the BB Bodkin.
+  description: A mobile office and personal transport for the Harbor Master, based on the BB Bodkin. # HardLight: station representative<harbor master
   price: 25000 #Appraises at ~22920. Markup of ~9%.
   category: Small
   group: Sr

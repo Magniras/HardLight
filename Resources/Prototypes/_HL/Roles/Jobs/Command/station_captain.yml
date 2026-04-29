@@ -20,7 +20,7 @@
     - !type:DepartmentTimeRequirement
       department: Command
       time: 14400 # 4 hours
-  weight: 20
+  weight: 80
   startingGear: CaptainGear
   icon: "JobIconCaptain"
   requireAdminNotify: true
@@ -42,7 +42,7 @@
   - External
   - Cryogenics
   - Chemistry
-  - Paramedic # Hardlight: Add Paramedic access
+  - Paramedic
   - Engineering
   - Research
   - Detective
@@ -54,8 +54,8 @@
   - Atmospherics
   - Medical
   - Frontier
-  - Genetics # HL
-  - Journalism # HL
+  - Genetics
+  - Journalism
   accessGroups:
   - GeneralAccess
   - AllAccess

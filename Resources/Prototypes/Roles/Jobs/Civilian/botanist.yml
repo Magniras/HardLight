@@ -4,6 +4,7 @@
   description: job-description-botanist
   playTimeTracker: JobBotanist
   setPreference: true # Frontier
+  weight: 50 # HardLight
   startingGear: BotanistGear
   icon: "JobIconBotanist"
   supervisors: job-supervisors-hop
@@ -24,10 +25,10 @@
 - type: startingGear
   id: BotanistGear
   equipment:
-#    shoes: ClothingShoesColorBrown # HL - Add NF-style departmental loadouts
+    # shoes: ClothingShoesColorBrown # HardLight: Add NF-style departmental loadouts
     id: BotanistPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltPlantFilled
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff

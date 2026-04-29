@@ -13,7 +13,7 @@
   extendedAccess:
   - Salvage
   - Cargo
-#  - Orders # Frontier/ Removed because seems deprecated
+  # - Orders # Frontier: Removed because seems deprecated
   accessGroups: # Frontier
   - GeneralAccess # Frontier
   special:
@@ -27,6 +27,6 @@
     id: CargoPDA
     ears: ClothingHeadsetCargo
     pocket1: AppraisalTool
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff

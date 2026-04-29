@@ -3,19 +3,15 @@
 # Sidearms
 
 - type: entity # Knife
-  parent:
-
-  - SurvivalKnife
+  parent: SurvivalKnife
   name: PMC Survival Knife
   id: SurvivalKnifePMC
-  description: A Knife that has been properly registered for private security and mercenary use. Why did you register you knife?
+  description: A knife that has been properly registered for private security and mercenary use. Why did you register your knife? # HardLight: Knife<knife; you<your
 
 # SMGs
 
-- type: entity #WT-550
-  parent:
-
-  - WeaponSubMachineGunWt550
+- type: entity # WT-550
+  parent: WeaponSubMachineGunWt550
   name: PMC WT-550
   id: WeaponSubMachineGunWt550PMC
   description: A WT-550 that has been properly registered for private security and mercenary use.
@@ -23,10 +19,8 @@
   - type: PirateBountyItem
     id: PMCGun
 
-- type: entity #Drozd
-  parent:
-
-  - WeaponSubMachineGunDrozd
+- type: entity # Drozd
+  parent: WeaponSubMachineGunDrozd
   name: PMC Drozd
   id: WeaponSubMachineGunDrozdPMC
   description: A Drozd that has been properly registered for private security and mercenary use.
@@ -34,10 +28,8 @@
   - type: PirateBountyItem
     id: PMCGun
 
-- type: entity #C-20r
-  parent:
-    - BaseC2ContrabandMercenary
-    - WeaponSubMachineGunC20r
+- type: entity # C-20r
+  parent: [ WeaponSubMachineGunC20r, BaseC2ContrabandMercenary ]
   name: PMC C-20r
   id: WeaponSubMachineGunC20rPMC
   description: A C-20r that has been properly registered for private security and mercenary use.
@@ -47,10 +39,8 @@
 
 # Rifles
 
-- type: entity #Lecter
-  parent:
-
-  - WeaponRifleLecter
+- type: entity # Lecter
+  parent: WeaponRifleLecter
   name: PMC Lecter
   id: WeaponRifleLecterPMC
   description: A Lecter that has been properly registered for private security and mercenary use.
@@ -60,10 +50,8 @@
 
 # Shotguns
 
-- type: entity #Kammerer
-  parent:
-
-  - WeaponShotgunKammerer
+- type: entity # Kammerer
+  parent: WeaponShotgunKammerer
   name: PMC Kammerer (12 gauge)
   id: WeaponShotgunKammererPMC
   description: A Kammerer that has been properly registered for private security and mercenary use. An old yet faithfully designed shotgun. Is a favorite among Mercenaries on many worlds. Uses 12 gauge shotgun shells.
@@ -72,9 +60,7 @@
     price: 800
 
 - type: entity
-  parent:
-  - BaseC2ContrabandMercenary
-  - WeaponPistolViper
+  parent: [ WeaponPistolViper, BaseC2ContrabandMercenary ]
   name: PMC Viper
   id: WeaponPistolViperPMC
   description: A Viper that has been properly registered for private security and mercenary use.
@@ -85,8 +71,7 @@
 # Additional PMC Ballistic / Energy Variants
 
 - type: entity # Enforcer
-  parent:
-  - WeaponShotgunEnforcer
+  parent: WeaponShotgunEnforcer
   name: PMC Enforcer (12 gauge)
   id: WeaponShotgunEnforcerPMC
   description: An Enforcer that has been properly registered for private security and mercenary use.
@@ -95,8 +80,7 @@
     id: PMCGun
 
 - type: entity # Laser Carbine
-  parent:
-  - WeaponLaserCarbine
+  parent: WeaponLaserCarbine
   name: PMC Laser Carbine
   id: WeaponLaserCarbinePMC
   description: A laser carbine that has been properly registered for private security and mercenary use.
@@ -105,8 +89,7 @@
     id: PMCGun
 
 - type: entity # Laser Cannon
-  parent:
-  - WeaponLaserCannon
+  parent: WeaponLaserCannon
   name: PMC Laser Cannon
   id: WeaponLaserCannonPMC
   description: A laser cannon that has been properly registered for private security and mercenary use.
@@ -115,8 +98,7 @@
     id: PMCGun
 
 - type: entity # Energy Gun
-  parent:
-  - WeaponEnergyGun
+  parent: WeaponEnergyGun
   name: PMC Energy Gun
   id: WeaponEnergyGunPMC
   description: An energy gun that has been properly registered for private security and mercenary use.
@@ -125,8 +107,7 @@
     id: PMCGun
 
 - type: entity # Disabler SMG
-  parent:
-  - WeaponDisablerSMG
+  parent: WeaponDisablerSMG
   name: PMC Disabler SMG
   id: WeaponDisablerSMGPMC
   description: A disabler SMG that has been properly registered for private security and mercenary use.
@@ -134,20 +115,18 @@
   - type: PirateBountyItem
     id: PMCGun
 
-#- type: entity # Vulcan CFCM Variant
-#  parent:
-#  - WeaponRifleVulcan
-#  name: CFCM Vulcan (762x51mm)
-#  id: WeaponRifleVulcanCFCM
-#  description: A Vulcan configured for CFCM issue and registration.
-#  components:
-#  - type: PirateBountyItem
-#    id: CFCMLongarm
+# - type: entity # Vulcan CFCM Variant
+#   parent:
+#   - WeaponRifleVulcan
+#   name: CFCM Vulcan (762x51mm)
+#   id: WeaponRifleVulcanCFCM
+#   description: A Vulcan configured for CFCM issue and registration.
+#   components:
+#   - type: PirateBountyItem
+#     id: CFCMLongarm
 
 - type: entity # PMC Energy Shotgun
-  parent:
-  - WeaponEnergyShotgun
-  - BaseC2ContrabandUnredeemable
+  parent: [ WeaponEnergyShotgun, BaseC2ContrabandUnredeemable ]
   name: PMC Energy Shotgun
   id: EnergyShotgunPMC
   description: A PMC version of the "One-Of-A-Kind" energy shotgun. Registered for mercenary use in a more mass-producable fashion.

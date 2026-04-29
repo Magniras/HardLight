@@ -149,7 +149,7 @@
 - type: entity
   parent: ClothingHeadEVAHelmetWithLightBase
   id: ClothingHeadEVAHelmetSr
-  name: station representative EVA helmet
+  name: harbor master EVA helmet # HardLight: station representative<harbor master; migrate to _HL in the future
 #  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite

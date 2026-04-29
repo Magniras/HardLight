@@ -4,6 +4,7 @@
   description: job-description-janitor
   playTimeTracker: JobJanitor
   setPreference: true
+  weight: 30 # HardLight
   startingGear: JanitorGear
   icon: "JobIconJanitor"
   supervisors: job-supervisors-hop
@@ -21,13 +22,13 @@
 - type: startingGear
   id: JanitorGear
   equipment:
-#    shoes: ClothingShoesGaloshes # HL - Add NF-style departmental loadouts
+    # shoes: ClothingShoesGaloshes # HardLight: Add NF-style departmental loadouts
     id: JanitorPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff
 
 - type: startingGear
   id: JanitorMaidGear

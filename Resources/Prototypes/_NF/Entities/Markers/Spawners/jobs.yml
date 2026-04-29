@@ -147,7 +147,7 @@
 - type: entity
   id: SpawnPointStationRepresentative
   parent: SpawnPointHeadOfPersonnel
-  name: station representative
+  name: harbor master # HardLight: station representative<harbor master; migrate to _HL in the future
   components:
   - type: SpawnPoint
     job_id: StationRepresentative

@@ -35,7 +35,7 @@
   categories: [ HideSpawnMenu ] # debloat spawn menu
   id: LockerWallEVAColorSr
   parent: NFBaseLockerGridInvWallColor
-  name: station representative EVA wall locker
+  name: harbor master EVA wall locker # HardLight: station representative<harbor master; migrate to _HL in the future
   components:
   - type: Sprite
     layers:

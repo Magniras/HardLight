@@ -5,7 +5,7 @@
   components:
   - type: Contraband
     severity: Class2Restricted
-    allowedDepartments: [ PMC, Security, Command, CentralCommand ]
+    allowedDepartments: [ Security, Command, CentralCommand ] # HardLight: Removed PMC
 
 - type: entity
   parent: BaseC3Contraband

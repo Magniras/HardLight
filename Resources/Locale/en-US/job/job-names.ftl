@@ -20,8 +20,8 @@ job-name-hop = Head of Personnel
 job-name-captain = Captain
 job-name-serviceworker = Service Worker
 job-name-centcomoff = ColComm Official
-job-name-cburn = Colcomm Quarantine Officer
-job-name-deathsquad = Colcomm Agent
+job-name-cburn = ColComm Quarantine Officer
+job-name-deathsquad = ColComm Agent
 job-name-reporter = Station Host
 job-name-musician = Musician
 job-name-librarian = Librarian
@@ -90,10 +90,8 @@ JobERTJanitor = ERT Janitor
 JobERTLeader = ERT Leader
 JobERTMedical = ERT Medical
 JobERTSecurity = ERT Security
-# Frontier: Head of Personnel<Station Representative
-JobHeadOfPersonnel = Station Representative
-# Frontier: Head of Security<Sheriff
-JobHeadOfSecurity = Sheriff
+JobHeadOfPersonnel = Head of Personnel
+JobHeadOfSecurity = Head of Security
 JobJanitor = Janitor
 JobLawyer = Lawyer
 JobLibrarian = Librarian
@@ -102,8 +100,7 @@ JobMedicalIntern = Medical intern
 JobMime = Mime
 JobMusician = Musician
 JobParamedic = Paramedic
-# Frontier: Passenger<Contractor
-JobPassenger = Contractor
+JobPassenger = Passenger
 JobPsychologist = Psychologist
 JobQuartermaster = Quartermaster
 JobReporter = Reporter
@@ -111,15 +108,12 @@ JobResearchAssistant = Research Assistant
 JobResearchDirector = Research Director
 JobSalvageSpecialist = Salvage Specialist
 JobScientist = Scientist
-# Frontier: Security Cadet<Cadet
-JobSecurityCadet = Cadet
-# Frontier: Security Officer<Deputy
-JobSecurityOfficer = Deputy
+JobSecurityCadet = Security Cadet
+JobSecurityOfficer = Security Officer
 JobServiceWorker = Service Worker
 JobStationAi = Station AI
 JobStationEngineer = Station Engineer
 JobTechnicalAssistant = Technical Assistant
 JobVisitor = Visitor
-# Frontier: Warden<Bailiff
-JobWarden = Bailiff
+JobWarden = Warden
 JobZookeeper = Zookeeper

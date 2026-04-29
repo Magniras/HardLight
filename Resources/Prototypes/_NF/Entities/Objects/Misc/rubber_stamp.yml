@@ -1,5 +1,5 @@
 - type: entity
-  name: station representative's rubber stamp
+  name: harbor master's rubber stamp # HardLight: station representative<harbor master; migrate to _HL in the future
   parent: [RubberStampHop, BaseCommandContraband]
   id: RubberStampSr
   components:

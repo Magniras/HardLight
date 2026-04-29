@@ -7,6 +7,7 @@
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 10800
+  weight: 40 # HardLight
   startingGear: ParamedicGear
   icon: "JobIconParamedic"
   supervisors: job-supervisors-cmo
@@ -14,7 +15,7 @@
   - Medical
   - Maintenance
   - External
-  - Paramedic # DeltaV - Add Paramedic access
+  - Paramedic # Delta V: Add Paramedic access
   extendedAccess:
   - Chemistry
   accessGroups: # Frontier

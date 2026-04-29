@@ -195,7 +195,7 @@
 - type: entity
   id: LockerStationRepresentative
   parent: [BaseStructureIndestructible, BaseStructureLockImmuneToEmag, BaseStructureAccessReaderImmuneToEmag, NFLockerBaseSecure, LockerHeadOfPersonnel]
-  name: station representative's locker
+  name: harbor master's locker # HardLight: station representative<harbor master; migrate to _HL in the future
   components:
   - type: EntityStorageVisuals
     stateBaseClosed: sr

@@ -7,11 +7,11 @@
   requirements:
   - !type:RoleTimeRequirement
     role: JobScientist
-    time: 18000 #5 hrs
+    time: 18000 # 5 hrs
   - !type:DepartmentTimeRequirement
     department: Science
-    time: 36000 #10 hrs
-  weight: 10
+    time: 36000 # 10 hrs
+  weight: 30 # HardLight: 10<30
   startingGear: ResearchDirectorGear
   icon: "JobIconResearchDirector"
   supervisors: job-supervisors-captain
@@ -31,7 +31,7 @@
   - !type:AddComponentSpecial
     components:
     - type: CommandStaff
-    - type: PsionicBonusChance #Nyano - Summary: makes it more likely to become psionic.
+    - type: PsionicBonusChance # Nyano: Makes it more likely to become psionic.
       flatBonus: 1
   accessGroups: # Frontier
   - GeneralAccess # Frontier

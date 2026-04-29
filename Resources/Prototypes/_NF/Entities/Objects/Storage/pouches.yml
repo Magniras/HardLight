@@ -184,7 +184,7 @@
 - type: entity
   id: NFPouchSr
   parent: NFPouchUtility
-  name: station representative's pouch
+  name: harbor master's pouch # HardLight: station representative<harbor master; migrate to _HL in the future
   components:
   - type: Sprite
     layers:

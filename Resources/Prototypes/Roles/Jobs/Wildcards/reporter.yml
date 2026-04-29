@@ -4,13 +4,14 @@
   description: job-description-reporter
   playTimeTracker: JobReporter
   setPreference: true
+  weight: -20 # HardLight
   startingGear: ReporterGear
   icon: "JobIconReporter"
   supervisors: job-supervisors-hop
   access: # Frontier
   - Service # Frontier
   - Maintenance # Frontier
-  - Journalism # HL
+  - Journalism # HardLight
   accessGroups: # Frontier
   - GeneralAccess # Frontier
 

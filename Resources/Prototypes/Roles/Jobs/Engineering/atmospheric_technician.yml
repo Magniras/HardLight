@@ -7,7 +7,8 @@
   requirements:
   - !type:DepartmentTimeRequirement
     department: Engineering
-    time: 9000 #2.5 hrs
+    time: 9000 # 2.5 hrs
+  weight: 30 # HardLight
   startingGear: AtmosphericTechnicianGear
   icon: "JobIconAtmosphericTechnician"
   supervisors: job-supervisors-ce
@@ -26,10 +27,10 @@
 - type: startingGear
   id: AtmosphericTechnicianGear
   equipment:
-#    eyes: ClothingEyesGlassesMeson # HL - Add departmental NF-style loadouts
+    # eyes: ClothingEyesGlassesMeson # HardLight: Add departmental NF-style loadouts
     id: AtmosPDA
-    belt: ClothingBeltUtilityEngineering # Frontier - Moved to locker
+    belt: ClothingBeltUtilityEngineering # Frontier: Moved to locker
     ears: ClothingHeadsetEngineering
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff

@@ -6,8 +6,6 @@
   startingGear: MercenaryGear
   icon: "JobIconMercenary"
   supervisors: job-supervisors-hire
-  weight: 3 # Prioritize station & department jobs
-  displayWeight: 20 # Second from the bottom
   access:
   - Mercenary
   - Captain

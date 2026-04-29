@@ -7,13 +7,14 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 10800
+  weight: -30 # HardLight
   startingGear: BoxerGear
   icon: "JobIconBoxer"
   supervisors: job-supervisors-hop
   access:
   - Maintenance
-  - Theatre # DeltaV - Add Theatre access
-#  - Boxer # Unused for now
+  - Theatre # Delta V: Add Theatre access
+  # - Boxer # Unused for now
   accessGroups: # Frontier
   - GeneralAccess # Frontier
   special:
@@ -28,6 +29,6 @@
     ears: ClothingHeadsetService
     shoes: ClothingShoesColorRed
     belt: ClothingBeltChampion
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff

@@ -19,7 +19,7 @@
     - !type:DepartmentTimeRequirement
       department: Command
       time: 9000 # 2.5 hours
-    weight: 20
+    weight: 70 # HardLight: 20<70
     startingGear: HoPGear
     icon: "JobIconHeadOfPersonnel"
     supervisors: job-supervisors-captain
@@ -51,8 +51,8 @@
     - Atmospherics
     - Medical
     - Frontier
-    - Journalism # HL
-    - Genetics # HL
+    - Journalism # HardLight
+    - Genetics # HardLight
     accessGroups:
     - GeneralAccess # Frontier: default access
     - AllAccess
@@ -62,14 +62,14 @@
     - !type:AddComponentSpecial
       components:
       - type: CommandStaff
-      - type: PsionicBonusChance #Nyano - Summary: makes it more likely to become psionic.
+      - type: PsionicBonusChance # Nyano: Makes it more likely to become psionic.
         flatBonus: 0.025
   - type: startingGear
     id: HoPGear
     equipment:
-#      shoes: ClothingShoesColorBrown # HL - Add NF-style departmental loadouts
+      # shoes: ClothingShoesColorBrown # HardLight: Add NF-style departmental loadouts
       id: HoPPDA
-#      gloves: ClothingHandsGlovesHop # HL - Add NF-style departmental loadouts
+      # gloves: ClothingHandsGlovesHop # HardLight: Add NF-style departmental loadouts
       ears: ClothingHeadsetAltCommand
       belt: BoxFolderClipboard
     storage:

@@ -2,17 +2,16 @@
   id: Valet
   name: job-name-valet
   description: job-description-valet
-  setPreference: false # Frontier
+  setPreference: true # HardLight: false<true
   playTimeTracker: JobValet
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 10800
+  weight: -40 # HardLight
   startingGear: ValetGear
   alwaysUseSpawner: true
   icon: "JobIconValet" # Frontier: JobIconServiceWorker<JobIconValet
   supervisors: job-supervisors-sr
-  weight: 60 # Frontier
-  displayWeight: 10 # Frontier
   canBeAntag: false
   access:
   - Maintenance
@@ -26,7 +25,7 @@
     holiday: FrontierBirthday # Frontier
     prototype: FrontierBirthdayGift # Frontier
 
-# Frontier: valet loadout
+# Frontier start: Valet loadout
 - type: startingGear
   id: ValetGear
   equipment:
@@ -37,4 +36,4 @@
     back:
     - EncryptionKeyService # Frontier
     - ShipVoucherFrontierValet
-# End Frontier
+# Frontier end

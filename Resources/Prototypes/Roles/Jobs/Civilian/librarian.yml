@@ -7,6 +7,7 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 10800
+  weight: -30 # HardLight
   startingGear: LibrarianGear
   icon: "JobIconLibrarian"
   supervisors: job-supervisors-hop
@@ -19,7 +20,7 @@
 - type: startingGear
   id: LibrarianGear
   equipment:
-#    shoes: ClothingShoesBootsLaceup # HL - Add NF-style departmental loadouts
+    # shoes: ClothingShoesBootsLaceup # HardLight: Add NF-style departmental loadouts
     id: LibrarianPDA
     ears: ClothingHeadsetService
     pocket1: d20Dice

@@ -1,48 +1,10 @@
-- type: department
-  id: Cargo
-  name: department-Cargo
-  description: department-Cargo-description
-  color: "#A46106"
-  roles:
-  - CargoTechnician
-  - Quartermaster
-  - SalvageSpecialist
-  - MailCarrier
-  - SalvageQuadBorg
-
-- type: department
-  id: Civilian
-  name: department-Civilian
-  description: department-NFCivilian-description # Frontier
-  color: "#9FED58"
-  weight: -10
-  roles:
-   - Bartender # Frontier
-   - Botanist # Frontier
-   - Boxer # Frontier
-   - Chaplain # Frontier
-   - Chef # Frontier
-   - Clown # Frontier
-   - HeadOfPersonnel # Frontier
-   - Lawyer # Frontier
-   - Librarian # Frontier
-   - Mime # Frontier
-   - Musician # Frontier
-   - Passenger # Frontier
-   - Reporter # Frontier
-   - Visitor # Frontier
-   - Zookeeper # Frontier
-   - ServiceWorker # Frontier
-   - Contractor # Frontier
-   - Mercenary # Frontier
-   - Pilot # Frontier
-   - Janitor
-   - ServiceQuadBorg # Floof
+# HardLight start: Reorginized departments and added Service department.
 - type: department
   id: CentralCommand
   name: department-CentralCommand
-  description: department-NFCentralCommand-description # Frontier
+  description: department-CentralCommand-description
   color: "#0c344d"
+  weight: 120
   roles:
   - CentralCommandOfficial
   - CBURN # Frontier
@@ -55,75 +17,104 @@
   - DeathSquad # Frontier
   - ERTMailCarrier # Frontier
   editorHidden: true
-  weight: 120
 
 - type: department
   id: Command
   name: department-Command
-  description: department-NFCommand-description # Frontier
+  description: department-Command-description
   color: "#334E6D"
-  roles:
-   - ChiefEngineer # Frontier
-   - ChiefMedicalOfficer # Frontier
-   - HeadOfPersonnel # Frontier
-   - HeadOfSecurity # Frontier
-   - ResearchDirector # Frontier
-   - Quartermaster # Frontier
-   - StationTrafficController # Frontier
-   - StationCaptain # hardlight
-  primary: false
   weight: 100
- # editorHidden: true # Frontier
+  roles:
+   - StationCaptain # HardLight
+   - HeadOfPersonnel
+   - HeadOfSecurity
+   - ChiefMedicalOfficer
+   - ChiefEngineer
+   - ResearchDirector
+   - Quartermaster
+   - StationTrafficController # Frontier
+   - StationRepresentative # HardLight: Harbor Master
+  primary: false
+  # editorHidden: true # Frontier
 
 - type: department
-  id: Engineering
-  name: department-Engineering
-  description: department-Engineering-description
-  color: "#EFB341"
+  id: Silicon
+  name: department-Silicon
+  description: department-Silicon-description
+  color: "#D381C9"
+  weight: 90 # HardLight
   roles:
-  - AtmosphericTechnician
-  - ChiefEngineer
-  - StationEngineer
-  - TechnicalAssistant
-  - EngineeringQuadBorg
+  - StationAi
+  - Borg
 
-
-- type: department
-  id: Medical
-  name: department-Medical
-  description: department-Medical-description
-  color: "#52B4E9"
+- type: department # HardLight
+  id: Service
+  name: department-Service
+  description: department-Civilian-description
+  color: "#9FED58"
+  weight: 80
   roles:
-  - Chemist
-  - ChiefMedicalOfficer
-  - MedicalDoctor
-  - MedicalIntern
-  - Psychologist
-  - Paramedic
-  - MedicalQuadBorg # Floof
-  - Geneticist # Funkystation - Genetics
+   - HeadOfPersonnel
+   - Chef
+   - Botanist
+   - Bartender
+   - Janitor
+   - ServiceWorker
+   - Chaplain
+   - Reporter # HardLight: Station Host
+   - Librarian
+   - Valet
+   - ServiceQuadBorg
 
 - type: department
   id: Security
   name: department-Security
   description: department-Security-description
   color: "#DE3A3A"
-  weight: 20
+  weight: 70 # HardLight: 20<70
   roles:
   - HeadOfSecurity
-  - SecurityCadet
-  - SecurityOfficer
-  - Detective
   - Warden
-  - PrisonGuard
-  - Prisoner
+  - Detective
+  - SecurityOfficer
+  - SecurityCadet
   - SecurityQuadBorg
+
+- type: department
+  id: Medical
+  name: department-Medical
+  description: department-Medical-description
+  color: "#52B4E9"
+  weight: 60 # HardLight
+  roles:
+  - ChiefMedicalOfficer
+  - Paramedic
+  - Geneticist # Funkystation
+  - Chemist
+  - MedicalDoctor
+  - MedicalIntern
+  - Psychologist
+  - MedicalQuadBorg # Floof
+
+- type: department
+  id: Engineering
+  name: department-Engineering
+  description: department-Engineering-description
+  color: "#EFB341"
+  weight: 50 # HardLight
+  roles:
+  - ChiefEngineer
+  - AtmosphericTechnician
+  - StationEngineer
+  - TechnicalAssistant
+  - EngineeringQuadBorg
 
 - type: department
   id: Science
   name: department-Science
   description: department-Science-description
   color: "#D381C9"
+  weight: 40 # HardLight
   roles:
   - ResearchDirector
   - ForensicMantis # Hardlight
@@ -131,24 +122,45 @@
   - ResearchAssistant
 
 - type: department
-  id: Silicon
-  name: department-Silicon
-  description: department-Silicon-description
-  color: "#D381C9"
+  id: Cargo
+  name: department-Cargo
+  description: department-Cargo-description
+  color: "#A46106"
+  weight: 30 # HardLight
   roles:
-  - Borg
-  - StationAi
+  - Quartermaster
+  - SalvageSpecialist
+  - CargoTechnician
+  - MailCarrier
+  - SalvageQuadBorg
+
+- type: department
+  id: Civilian
+  name: department-Civilian
+  description: department-Civilian-description
+  color: "#9FED58"
+  weight: 10 # HardLight: -10<10
+  roles:
+   - Lawyer
+   - Passenger
+   - Prisoner # HardLight
+   - Boxer
+   - Clown
+   - Mime
+   - Musician
+   - Visitor
 
 - type: department
   id: Specific
   name: department-Specific
   description: department-Specific-description
   color: "#9FED58"
-  weight: 10
+  # weight: 10 # HardLight
   roles:
-  - RadioHost # Goobstation
-  - Boxer
-  - Reporter
-  - Zookeeper
+  - Geneticist # HardLight\
   - Psychologist
+  - Boxer
+  # - RadioHost # Goobstation, # HardLight: Superceded by Station Host
+  - Reporter # HardLight: Station Host
   primary: false
+# HardLight end

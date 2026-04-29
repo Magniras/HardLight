@@ -9,48 +9,21 @@
     - !type:OverallPlaytimeRequirement
       time: 72000 # 20 hrs
     - !type:RoleTimeRequirement
-# HL start - Replace security guard requirement with security officer
-#      role: JobSecurityGuard
-      role: JobSecurityOfficer
+      role: JobSecurityOfficer # HardLight: JobSecurityGuard<JobSecurityOfficer
       time: 10800 # 3 hrs
-    - !type:RoleTimeRequirement
-      role: JobMercenary
-      time: 72000 #20h
-    - !type:RoleTimeRequirement
-      role: JobQuartermaster
-      time: 36000 #20h
-# HL end
   canBeAntag: false
   icon: "JobIconStc"
   supervisors: job-supervisors-captain
   weight: 160
   displayWeight: 50 # Second from the top
-  setPreference: true
+  setPreference: false # HardLight: true<false
   access:
-    - Command
-    - HeadOfPersonnel
-    - Bar
-    - Service
-    - Maintenance
-    - Janitor
-    - Theatre
-    - Kitchen
-    - Chapel
-    - Hydroponics
-    - External
-    - Cryogenics
-    - Chemistry
-    - Engineering
-    - Research
-    - Detective
-    - Salvage
-    - Security
-    - Brig
-    - Lawyer
-    - Cargo
-    - Atmospherics
-    - Medical
-    - Frontier
+  - Command # HardLight
+  - Service
+  - Maintenance
+  - External
+  - Brig # HardLight
+  - Frontier
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
@@ -60,10 +33,11 @@
 
 - type: startingGear
   id: StcGear
+  equipment:
+    id: StcPDA
   storage:
     back:
     - Flash
     - RubberStampStc
-    - ShipVoucherFrontierStc
     - BoxFolderStc
-    - WeaponRevolverLucky
+    - ShipVoucherFrontierStc

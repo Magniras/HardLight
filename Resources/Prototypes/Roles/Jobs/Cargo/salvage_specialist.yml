@@ -8,8 +8,9 @@
     - !type:DepartmentTimeRequirement
       department: Cargo
       time: 9000 # 2.5 hrs
-  icon: "JobIconShaftMiner"
+  weight: 10 # HardLight
   startingGear: SalvageSpecialistGear
+  icon: "JobIconShaftMiner"
   supervisors: job-supervisors-qm
   access:
   - Cargo
@@ -22,9 +23,9 @@
 - type: startingGear
   id: SalvageSpecialistGear
   equipment:
-#    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist # HL - Add NF-style departmental loadouts
+    # jumpsuit: ClothingUniformJumpsuitSalvageSpecialist # HardLight: Add NF-style departmental loadouts
     id: SalvagePDA
     ears: ClothingHeadsetCargo
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff

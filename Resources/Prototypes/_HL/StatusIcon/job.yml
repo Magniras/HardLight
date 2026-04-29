@@ -1,13 +1,5 @@
 - type: jobIcon
   parent: JobIcon
-  id: JobIconNanotrasen
-  icon:
-    sprite: /Textures/_HL/Interface/Misc/job_icons.rsi
-    state: Nanotrasen
-  jobName: job-name-nanotrasen
-
-- type: jobIcon
-  parent: JobIcon
   id: JobIconArcadia
   icon:
     sprite: /Textures/_HL/Interface/Misc/job_icons.rsi
@@ -32,6 +24,23 @@
 
 - type: jobIcon
   parent: JobIcon
+  id: JobIconDirectorate
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi # placeholder
+    state: ColComm # placeholder
+  jobName: job-name-directorate
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconHarborMaster
+  icon:
+    sprite: /Textures/_HL/Interface/Misc/job_icons.rsi
+    state: HarborMaster
+  jobName: job-name-station-representative
+
+- type: jobIcon
+  parent: JobIcon
   id: JobIconInterdyne
   icon:
     sprite: /Textures/_HL/Interface/Misc/job_icons.rsi
@@ -48,18 +57,17 @@
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconDirectorate
+  id: JobIconNanotrasen
   icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi # place holder
-    state: ColComm # place holder
-  jobName: job-name-directorate
-  allowSelection: false
+    sprite: /Textures/_HL/Interface/Misc/job_icons.rsi
+    state: Nanotrasen
+  jobName: job-name-nanotrasen
 
 - type: jobIcon
   parent: JobIcon
   id: JobIconNaval
   icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi # place holder
-    state: ColComm # place holder
+    sprite: /Textures/Interface/Misc/job_icons.rsi # placeholder
+    state: ColComm # placeholder
   jobName: job-name-naval
   allowSelection: false

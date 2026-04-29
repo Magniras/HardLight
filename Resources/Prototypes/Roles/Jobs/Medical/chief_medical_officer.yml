@@ -9,11 +9,11 @@
   requirements:
   - !type:RoleTimeRequirement
     role: JobChemist
-    time: 18000 #5h
+    time: 18000 # 5 hrs
   - !type:RoleTimeRequirement
     role: JobMedicalDoctor
-    time: 18000 #5h
-  weight: 10
+    time: 18000 # 5 hrs
+  weight: 50 # HardLight: 10<50
   startingGear: CMOGear
   icon: "JobIconChiefMedicalOfficer"
   supervisors: job-supervisors-captain
@@ -37,11 +37,10 @@
     - type: SurgerySpeedModifier
       SpeedModifier: 2.5
     - type: CommandStaff
-    - type: PsionicBonusChance #Nyano - Summary: makes it more likely to become psionic.
+    - type: PsionicBonusChance # Nyano: Makes it more likely to become psionic.
       flatBonus: 0.025
   accessGroups: # Frontier
   - GeneralAccess # Frontier
-  # Shitmed Change
 
 - type: startingGear
   id: CMOGear

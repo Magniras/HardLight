@@ -7,14 +7,14 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobCargoTechnician
-      time: 1800 #5 hrs
+      time: 1800 # 5 hrs
     - !type:RoleTimeRequirement
       role: JobSalvageSpecialist
-      time: 9000 #2.5 hrs
+      time: 9000 # 2.5 hrs
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 3600 #10 hours
-  weight: 10
+      time: 3600 # 10 hours
+  weight: 20 # HardLight: 10<20
   startingGear: QuartermasterGear
   icon: "JobIconQuarterMaster"
   supervisors: job-supervisors-captain
@@ -23,13 +23,13 @@
   access:
   - Cargo
   - Salvage
-  - Mail # Nyanotrasen - MailCarrier, see Resources/Prototypes/Nyanotrasen/Roles/Jobs/Cargo/mail-carrier.yml
+  - Mail # Nyanotrasen: MailCarrier, see Resources/Prototypes/Nyanotrasen/Roles/Jobs/Cargo/mail-carrier.yml
   - Quartermaster
   - Maintenance
   - Command
   - Frontier
-#  - Orders # DeltaV - Orders, see Resources/Prototypes/DeltaV/Access/cargo.yml Frontier/ Removed because seems deprecated
-  - External # DeltaV - for promoting salvage specialists
+  # - Orders # DeltaV: Orders, see Resources/Prototypes/DeltaV/Access/cargo.yml Frontier/ Removed because seems deprecated
+  - External # DeltaV: For promoting salvage specialists
   - Cryogenics
   accessGroups: # Frontier
   - GeneralAccess # Frontier

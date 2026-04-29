@@ -29,15 +29,16 @@
     #   - ZengHuPharmaceuticals
     # - !type:CharacterItemGroupRequirement
     #   group: TraitsCasterType
+  weight: 20 # HardLight
   startingGear: ForensicMantisGear
   icon: "JobIconForensicMantis"
   supervisors: job-supervisors-rd
-  canBeAntag: true # DeltaV - Mantis is no longer a Detective
+  canBeAntag: true # Delta V: Mantis is no longer a Detective
   # whitelistRequired: true
   access:
   - Research
   - Maintenance
-  - Mantis # DeltaV - Mantis, see Resources/Prototypes/DeltaV/Access/epistemics.yml
+  - Mantis # Delta V: Mantis, see Resources/Prototypes/DeltaV/Access/epistemics.yml
   special:
   - !type:AddComponentSpecial
     components:
@@ -67,7 +68,7 @@
     head: ClothingHeadHatFezMantis
     id: ForensicMantisPDA
     eyes: ClothingEyesGlassesSunglasses
-    ears: ClothingHeadsetScience # DeltaV - Mantis is part of Epistemics
+    ears: ClothingHeadsetScience # Delta V: Mantis is part of Epistemics
     gloves: ClothingHandsGlovesColorWhite
     outerClothing: ClothingOuterCoatMantis
     belt: ClothingBeltMantis

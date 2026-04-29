@@ -6,17 +6,17 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobWarden
-      time: 3600 #1 hr
+      time: 3600 # 1 hr
     - !type:RoleTimeRequirement
       role: JobDetective
-      time: 3600 #1 hr, knowing how to use the tools is important
+      time: 3600 # 1 hr; knowing how to use the tools is important
     - !type:RoleTimeRequirement
       role: JobSecurityOfficer
-      time: 18000 #5 hrs
+      time: 18000 # 5 hrs
     - !type:DepartmentTimeRequirement
       department: Security
       time: 36000 # 10 hrs
-  weight: 10
+  weight: 60 # HardLight: 10<60
   startingGear: HoSGear
   icon: "JobIconHeadOfSecurity"
   supervisors: job-supervisors-captain
@@ -39,7 +39,7 @@
   - !type:AddComponentSpecial
     components:
     - type: CommandStaff
-    - type: PsionicBonusChance #Nyano - Summary: makes it more likely to become psionic.
+    - type: PsionicBonusChance # Nyano: Makes it more likely to become psionic.
       flatBonus: 0.025
   ## Frontier: commented out stuff above
   setPreference: true
@@ -49,9 +49,9 @@
 - type: startingGear
   id: HoSGear
   equipment:
-#    eyes: ClothingEyesGlassesSecurity # HL - Add departmental NF-style loadouts
+    # eyes: ClothingEyesGlassesSecurity # HardLight: Add departmental NF-style loadouts
     id: HoSPDA
-#    gloves: ClothingHandsGlovesCombat # HL - Add departmental NF-style loadouts
+    # gloves: ClothingHandsGlovesCombat # HardLight: Add departmental NF-style loadouts
     ears: ClothingHeadsetAltSecurity
     pocket1: NFWeaponPistolMk58 # Frontier: use NF version
   storage:

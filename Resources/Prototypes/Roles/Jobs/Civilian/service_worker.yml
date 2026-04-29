@@ -6,7 +6,8 @@
   requirements:
   - !type:DepartmentTimeRequirement
     department: Civilian
-    time: 1800 #0.5 hr
+    time: 1800 # 0.5 hr
+  weight: 20 # HardLight
   startingGear: ServiceWorkerGear
   icon: "JobIconServiceWorker"
   supervisors: job-supervisors-service
@@ -23,9 +24,9 @@
 - type: startingGear
   id: ServiceWorkerGear
   equipment:
-#    shoes: ClothingShoesColorBlack # HL - Add NF-style departmental loadouts
+    # shoes: ClothingShoesColorBlack # HardLight: Add NF-style departmental loadouts
     id: ServiceWorkerPDA
     ears: ClothingHeadsetService
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff

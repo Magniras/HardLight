@@ -1,6 +1,6 @@
 #BSO Hardsuit
 - type: entity
-  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase, BaseC3Contraband ] # HL: C3
   id: ClothingHeadHelmetHardsuitBlueshield
   categories: [ HideSpawnMenu ]
   name: blue shield hardsuit helmet

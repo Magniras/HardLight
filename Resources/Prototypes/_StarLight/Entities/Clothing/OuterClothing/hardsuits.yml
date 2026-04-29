@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ClothingOuterHardsuitBase]
+  parent: [ClothingOuterHardsuitBase, BaseC3Contraband] # HL: C3
   id: ClothingOuterHardsuitBlueshield
   name: blue shield hardsuit
   description: A high-tech hardsuit perfect for diving in front of Mr. Pre- Er, Captain.

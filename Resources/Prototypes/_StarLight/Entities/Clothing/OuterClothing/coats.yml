@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseC3Contraband] # HL: C3
   id: ClothingOuterCoatBlueShield
   name: blueshield overcoat
   description: A coat worn by Blueshield Officers who don't mind a little cold. Heavily reinforced, for when diplomacy won't cut it.

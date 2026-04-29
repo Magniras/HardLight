@@ -168,11 +168,13 @@ public sealed class SharedMacroWindow : DefaultWindow
     public void UpdateMacros(IEnumerable<SharedAdminMacroState> macros)
     {
         var selectedName = SelectedMacro?.Name;
+        var orderedMacros = macros.ToList();
+        orderedMacros.Sort(static (left, right) => string.Compare(left.Name, right.Name, StringComparison.OrdinalIgnoreCase));
 
         _macros.Clear();
         _macroList.Clear();
 
-        foreach (var macro in macros.OrderBy(macro => macro.Name, StringComparer.OrdinalIgnoreCase))
+        foreach (var macro in orderedMacros)
         {
             _macros.Add(macro);
             _macroList.AddItem(macro.Name);

@@ -256,6 +256,32 @@
                                             ToolTip="{Loc admin-tools-triage-reset-tooltip}" />
                 </BoxContainer>
                 <Label Text="{Loc admin-tools-triage-note}" StyleClasses="LabelSubText" />
+
+                <cc:HSeparator Margin="0 8 0 4" />
+
+                <Label Text="{Loc admin-tools-section-panic}" />
+                <Label Text="{Loc admin-tools-section-panic-desc}" StyleClasses="LabelSubText" />
+                <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                    <Button Name="PanicEnableButton" Text="{Loc admin-tools-panic-enable}" StyleClasses="OpenRight" />
+                    <controls:ConfirmButton Name="PanicDisableButton"
+                                            Text="{Loc admin-tools-panic-disable}"
+                                            ConfirmationText="{Loc admin-player-actions-confirm}"
+                                            StyleClasses="OpenLeft" />
+                </BoxContainer>
+                <Label Name="PanicStateLabel" Text="{Loc admin-tools-panic-state-loading}" StyleClasses="LabelSubText" HorizontalExpand="True" />
+                <BoxContainer Orientation="Vertical" SeparationOverride="4">
+                    <Label Text="{Loc admin-tools-panic-template}" />
+                    <PanelContainer MinHeight="96" HorizontalExpand="True">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#14171A" BorderThickness="1" BorderColor="#5A6572" />
+                        </PanelContainer.PanelOverride>
+                        <TextEdit Name="PanicTemplate" MinHeight="72" HorizontalExpand="True" Margin="4" />
+                    </PanelContainer>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                    <Button Name="PanicSaveButton" Text="{Loc admin-tools-panic-save}" />
+                </BoxContainer>
+                <Label Text="{Loc admin-tools-panic-note}" StyleClasses="LabelSubText" />
             </BoxContainer>
         </ScrollContainer>
 
@@ -272,7 +298,12 @@
                         </BoxContainer>
                         <BoxContainer Orientation="Horizontal" SeparationOverride="6">
                             <Label Text="{Loc admin-tools-saved-command}" MinWidth="120" />
-                            <LineEdit Name="SavedCommandText" HorizontalExpand="True" PlaceHolder="{Loc admin-tools-saved-command-placeholder}" />
+                            <PanelContainer MinHeight="96" HorizontalExpand="True">
+                                <PanelContainer.PanelOverride>
+                                    <gfx:StyleBoxFlat BackgroundColor="#14171A" BorderThickness="1" BorderColor="#5A6572" />
+                                </PanelContainer.PanelOverride>
+                                <TextEdit Name="SavedCommandText" MinHeight="72" HorizontalExpand="True" Margin="4" />
+                            </PanelContainer>
                         </BoxContainer>
                         <BoxContainer Orientation="Horizontal" SeparationOverride="6">
                             <Button Name="SavedCommandRunButton"
@@ -281,6 +312,9 @@
                             <Button Name="SavedCommandSaveButton"
                                     Text="{Loc admin-tools-saved-save}"
                                     ToolTip="{Loc admin-tools-saved-save-tooltip}" />
+                            <Button Name="SharedMacrosButton"
+                                Text="{Loc admin-tools-shared-macros-open}"
+                                ToolTip="{Loc admin-tools-shared-macros-open-tooltip}" />
                             <Control HorizontalExpand="True" />
                             <controls:ConfirmButton Name="SavedCommandDeleteButton"
                                                     Text="{Loc admin-tools-saved-delete}"

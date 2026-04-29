@@ -11,8 +11,8 @@
             <RichTextLabel Name="TriageCategoryLabel" Access="Public"
                            VerticalAlignment="Center" />
             <Control HorizontalExpand="True" />
-            <BoxContainer Name="TriageActionContainer" Access="Public"
-                          Orientation="Horizontal" SeparationOverride="4" />
+            <WrapContainer Name="TriageActionContainer" Access="Public"
+                           SeparationOverride="4" CrossSeparationOverride="2" />
         </BoxContainer>
     </PanelContainer>
     <OutputPanel Name="TextOutput" VerticalExpand="true" />

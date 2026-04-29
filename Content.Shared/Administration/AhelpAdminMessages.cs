@@ -19,6 +19,28 @@ public sealed class SetAhelpAutoReplyEnabledMessage : EntityEventArgs
 }
 
 [Serializable, NetSerializable]
+public sealed class SetAhelpPanicAutoReplyEnabledMessage : EntityEventArgs
+{
+    public bool Enabled { get; }
+
+    public SetAhelpPanicAutoReplyEnabledMessage(bool enabled)
+    {
+        Enabled = enabled;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class SetAhelpPanicAutoReplyTemplateMessage : EntityEventArgs
+{
+    public string Template { get; }
+
+    public SetAhelpPanicAutoReplyTemplateMessage(string template)
+    {
+        Template = template;
+    }
+}
+
+[Serializable, NetSerializable]
 public sealed class SetAhelpTriageEnabledMessage : EntityEventArgs
 {
     public bool Enabled { get; }
@@ -177,15 +199,25 @@ public sealed class AhelpAdminCategoryState
 public sealed class AhelpAdminConfigState
 {
     public bool AutoReplyEnabled { get; }
+    public bool PanicAutoReplyEnabled { get; }
     public bool TriageEnabled { get; }
     public string AutoReplyBotName { get; }
+    public string PanicAutoReplyTemplate { get; }
     public AhelpAdminCategoryState[] Categories { get; }
 
-    public AhelpAdminConfigState(bool autoReplyEnabled, bool triageEnabled, string autoReplyBotName, AhelpAdminCategoryState[] categories)
+    public AhelpAdminConfigState(
+        bool autoReplyEnabled,
+        bool panicAutoReplyEnabled,
+        bool triageEnabled,
+        string autoReplyBotName,
+        string panicAutoReplyTemplate,
+        AhelpAdminCategoryState[] categories)
     {
         AutoReplyEnabled = autoReplyEnabled;
+        PanicAutoReplyEnabled = panicAutoReplyEnabled;
         TriageEnabled = triageEnabled;
         AutoReplyBotName = autoReplyBotName;
+        PanicAutoReplyTemplate = panicAutoReplyTemplate;
         Categories = categories;
     }
 }

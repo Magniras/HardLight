@@ -40,6 +40,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
         private readonly List<SavedCommandEntry> _savedCommands = new();
         private readonly List<AhelpAdminCategoryState> _ahelpCategories = new();
         private string _currentAutoReplyBotName = string.Empty;
+        private string _currentPanicTemplate = string.Empty;
         private AdminStatisticsRoleInfo[] _allRoleSlots = Array.Empty<AdminStatisticsRoleInfo>();
 
         // UserData paths should be relative for cross-platform compatibility.
@@ -85,6 +86,9 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
                 AutoReplyRuleDisableButton.OnPressed += _ => SetAutoReplyRuleEnabled(false);
                 AutoReplySaveButton.OnPressed += _ => SaveAutoReplyTemplate();
                 AutoReplyResetButton.OnPressed += _ => ResetAutoReplyTemplate();
+                PanicEnableButton.OnPressed += _ => _bwoinkSystem.SetAhelpPanicAutoReplyEnabled(true);
+                PanicDisableButton.OnPressed += _ => _bwoinkSystem.SetAhelpPanicAutoReplyEnabled(false);
+                PanicSaveButton.OnPressed += _ => SavePanicTemplate();
 
                 TriageEnableButton.OnPressed += _ => _bwoinkSystem.SetAhelpTriageEnabled(true);
                 TriageDisableButton.OnPressed += _ => _bwoinkSystem.SetAhelpTriageEnabled(false);
@@ -99,12 +103,14 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
 
                 SavedCommandRunButton.OnPressed += _ => RunSavedCommand();
                 SavedCommandSaveButton.OnPressed += _ => SaveSavedCommand();
+                SharedMacrosButton.OnPressed += _ => OpenSharedMacroWindow();
                 SavedCommandDeleteButton.OnPressed += _ => DeleteSavedCommand();
                 SavedCommandsList.OnItemSelected += args => OnSavedCommandSelected(args.ItemIndex);
                 AutoReplyCategory.OnItemSelected += args => OnAhelpCategorySelected(args.Id);
                 AutoReplyTemplatesList.OnItemSelected += args => OnAutoReplyCategoryListSelected(args.ItemIndex);
                 TriageRulesList.OnItemSelected += args => OnTriageCategoryListSelected(args.ItemIndex);
                 _bwoinkSystem.AhelpAdminConfigUpdated += UpdateAhelpConfig;
+                _bwoinkSystem.SharedAdminMacrosUpdated += UpdateSharedAdminMacros;
 
                 UpdateSavedCommandButtons();
                 UpdateCustomVoteButton();
@@ -121,6 +127,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
                 AutoReplyBotName.OnTextChanged += _ => UpdateAhelpEditorButtons();
                 AhelpCategoryName.OnTextChanged += _ => UpdateAhelpEditorButtons();
                 AutoReplyTemplate.OnTextChanged += _ => UpdateAhelpEditorButtons();
+                PanicTemplate.OnTextChanged += _ => UpdateAhelpEditorButtons();
                 TriageKeywords.OnTextChanged += _ => UpdateAhelpEditorButtons();
 
                 if (_bwoinkSystem.CurrentAhelpAdminConfig != null)
@@ -144,6 +151,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
             {
                 SubTabs.OnTabChanged -= OnSubTabChanged;
                 _bwoinkSystem.AhelpAdminConfigUpdated -= UpdateAhelpConfig;
+                _bwoinkSystem.SharedAdminMacrosUpdated -= UpdateSharedAdminMacros;
                 _bwoinkSystem.AdminStatisticsReceived -= UpdateStatistics;
                 RolesSearchBox.OnTextChanged -= _ => ApplyRolesFilter();
             }
@@ -252,7 +260,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
         private void UpdateSavedCommandButtons()
         {
             var hasName = SavedCommandName.Text.Trim().Length > 0;
-            var hasCommand = SavedCommandText.Text.Trim().Length > 0;
+            var hasCommand = Rope.Collapse(SavedCommandText.TextRope).Trim().Length > 0;
             SavedCommandSaveButton.Disabled = !(hasName && hasCommand);
             SavedCommandRunButton.Disabled = !hasCommand && GetSelectedSavedIndex() < 0;
             SavedCommandDeleteButton.Disabled = GetSelectedSavedIndex() < 0 && !hasName;
@@ -285,6 +293,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
             var botName = AutoReplyBotName.Text.Trim();
             var hasCategoryName = AhelpCategoryName.Text.Trim().Length > 0;
             var hasTemplate = Rope.Collapse(AutoReplyTemplate.TextRope).Trim().Length > 0;
+            var panicTemplate = Rope.Collapse(PanicTemplate.TextRope).Trim();
             var hasKeywords = Rope.Collapse(TriageKeywords.TextRope).Trim().Length > 0;
 
             SaveAutoReplyBotNameButton.Disabled = botName.Length == 0 || string.Equals(botName, _currentAutoReplyBotName, StringComparison.Ordinal);
@@ -298,6 +307,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
             TriageResetButton.Disabled = !hasSelectedCategory;
             TriageRuleEnableButton.Disabled = selectedCategory is not { HasTriage: true } || selectedCategory.TriageEnabled;
             TriageRuleDisableButton.Disabled = selectedCategory is not { HasTriage: true } || !selectedCategory.TriageEnabled;
+            PanicSaveButton.Disabled = panicTemplate.Length == 0 || string.Equals(panicTemplate, _currentPanicTemplate, StringComparison.Ordinal);
         }
 
         private void UpdateAhelpConfig(AhelpAdminConfigState state)
@@ -307,13 +317,16 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
             _ahelpCategories.Clear();
             _ahelpCategories.AddRange(state.Categories.OrderBy(category => category.Name));
             _currentAutoReplyBotName = state.AutoReplyBotName;
+            _currentPanicTemplate = state.PanicAutoReplyTemplate;
 
             RefreshCategoryOptions(currentCategory);
             RefreshAutoReplyList();
             RefreshTriageList();
             ApplyToggleState(AutoReplyEnableButton, AutoReplyDisableButton, state.AutoReplyEnabled);
             ApplyToggleState(TriageEnableButton, TriageDisableButton, state.TriageEnabled);
+            ApplyToggleState(PanicEnableButton, PanicDisableButton, state.PanicAutoReplyEnabled);
             AutoReplyBotName.Text = state.AutoReplyBotName;
+            PanicTemplate.TextRope = new Rope.Leaf(state.PanicAutoReplyTemplate);
 
             AutoReplyStateLabel.Text = Loc.GetString(
                 state.AutoReplyEnabled
@@ -326,6 +339,12 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
                     ? "admin-tools-triage-state-enabled"
                     : "admin-tools-triage-state-disabled");
             TriageStateLabel.FontColorOverride = state.TriageEnabled ? Color.LimeGreen : Color.Red;
+
+            PanicStateLabel.Text = Loc.GetString(
+                state.PanicAutoReplyEnabled
+                    ? "admin-tools-panic-state-enabled"
+                    : "admin-tools-panic-state-disabled");
+            PanicStateLabel.FontColorOverride = state.PanicAutoReplyEnabled ? Color.LimeGreen : Color.Red;
 
             SyncSelectedCategoryEditors();
             UpdateAhelpEditorButtons();
@@ -358,7 +377,9 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
             foreach (var category in _ahelpCategories.Where(category => category.HasAutoReply))
             {
                 var suffix = category.IsDefault ? string.Empty : Loc.GetString("admin-tools-ahelp-custom-tag");
-                var enabledTag = category.AutoReplyEnabled ? string.Empty : Loc.GetString("admin-tools-ahelp-disabled-tag");
+                var enabledTag = category.AutoReplyEnabled
+                    ? Loc.GetString("admin-tools-ahelp-enabled-tag")
+                    : Loc.GetString("admin-tools-ahelp-disabled-tag");
                 AutoReplyTemplatesList.AddItem($"{category.Name}{suffix}{enabledTag}  -  {TrimPreview(category.Template)}");
             }
         }
@@ -369,7 +390,9 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
             foreach (var category in _ahelpCategories.Where(category => category.HasTriage))
             {
                 var suffix = category.IsDefault ? string.Empty : Loc.GetString("admin-tools-ahelp-custom-tag");
-                var enabledTag = category.TriageEnabled ? string.Empty : Loc.GetString("admin-tools-ahelp-disabled-tag");
+                var enabledTag = category.TriageEnabled
+                    ? Loc.GetString("admin-tools-ahelp-enabled-tag")
+                    : Loc.GetString("admin-tools-ahelp-disabled-tag");
                 TriageRulesList.AddItem($"{category.Name}{suffix}{enabledTag}  -  {TrimPreview(category.Keywords)}");
             }
         }
@@ -418,6 +441,10 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
             if (id < 0 || id >= _categoryList.Count)
                 return;
 
+            // OptionButton.ButtonOnPressed fires OnItemSelected without calling Select(),
+            // so SelectedId is not updated on user interaction. Commit the selection here
+            // so SyncSelectedCategoryEditors reads the correct category.
+            AutoReplyCategory.SelectId(id);
             SyncSelectedCategoryEditors();
         }
 
@@ -468,13 +495,15 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
             TriageKeywords.TextRope = new Rope.Leaf(category.Keywords);
             AutoReplyRuleStateLabel.Text = Loc.GetString(
                 category.AutoReplyEnabled
-                    ? "admin-tools-ahelp-rule-state-enabled"
-                    : "admin-tools-ahelp-rule-state-disabled");
+                    ? "admin-tools-ahelp-rule-state-enabled-category"
+                    : "admin-tools-ahelp-rule-state-disabled-category",
+                ("category", category.Name));
             AutoReplyRuleStateLabel.FontColorOverride = category.AutoReplyEnabled ? Color.LimeGreen : Color.Red;
             TriageRuleStateLabel.Text = Loc.GetString(
                 category.TriageEnabled
-                    ? "admin-tools-triage-rule-state-enabled"
-                    : "admin-tools-triage-rule-state-disabled");
+                    ? "admin-tools-triage-rule-state-enabled-category"
+                    : "admin-tools-triage-rule-state-disabled-category",
+                ("category", category.Name));
             TriageRuleStateLabel.FontColorOverride = category.TriageEnabled ? Color.LimeGreen : Color.Red;
             UpdateAhelpEditorButtons();
         }
@@ -512,7 +541,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
 
         private void OpenVoteAudit()
         {
-            if (_voteAuditWindow == null || _voteAuditWindow.Disposed)
+            if (_voteAuditWindow == null || _voteAuditWindow.Disposed || !_voteAuditWindow.IsOpen)
             {
                 _voteAuditWindow = new Content.Client.Administration.UI.Voting.VoteAuditWindow();
                 _voteAuditWindow.OpenCentered();
@@ -609,6 +638,15 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
             _bwoinkSystem.ResetAhelpTriageKeywords(category);
         }
 
+        private void SavePanicTemplate()
+        {
+            var template = Rope.Collapse(PanicTemplate.TextRope).Trim();
+            if (template.Length == 0)
+                return;
+
+            _bwoinkSystem.SetAhelpPanicAutoReplyTemplate(template);
+        }
+
         private void RemoveCategory()
         {
             if (SelectedCategory() is not { } category)
@@ -623,6 +661,62 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
         {
             public string Name { get; set; } = string.Empty;
             public string Command { get; set; } = string.Empty;
+        }
+
+        private SharedMacroWindow? _sharedMacroWindow;
+
+        private void OpenSharedMacroWindow()
+        {
+            if (_sharedMacroWindow == null || _sharedMacroWindow.Disposed || !_sharedMacroWindow.IsOpen)
+            {
+                _sharedMacroWindow = new SharedMacroWindow();
+                _sharedMacroWindow.OnClose += () => _sharedMacroWindow = null;
+                _sharedMacroWindow.RefreshRequested += () => _bwoinkSystem.RequestSharedAdminMacros();
+                _sharedMacroWindow.CopySelectedToLocalRequested += CopySharedMacroToLocal;
+                _sharedMacroWindow.CopyLocalToSharedRequested += CopyLocalMacroToShared;
+                _sharedMacroWindow.DeleteSharedRequested += DeleteSelectedSharedMacro;
+                _sharedMacroWindow.UpdateMacros(_bwoinkSystem.CurrentSharedAdminMacros);
+                _sharedMacroWindow.OpenCentered();
+            }
+            else
+            {
+                _sharedMacroWindow.MoveToFront();
+            }
+
+            _bwoinkSystem.RequestSharedAdminMacros();
+        }
+
+        private void UpdateSharedAdminMacros(SharedAdminMacroState[] macros)
+        {
+            _sharedMacroWindow?.UpdateMacros(macros);
+        }
+
+        private void CopySharedMacroToLocal()
+        {
+            if (_sharedMacroWindow?.SelectedMacro is not { } macro)
+                return;
+
+            SavedCommandName.Text = macro.Name;
+            SavedCommandText.TextRope = new Rope.Leaf(macro.Command);
+            UpdateSavedCommandButtons();
+        }
+
+        private void CopyLocalMacroToShared()
+        {
+            var name = SavedCommandName.Text.Trim();
+            var command = Rope.Collapse(SavedCommandText.TextRope).Trim();
+            if (name.Length == 0 || command.Length == 0)
+                return;
+
+            _bwoinkSystem.UpsertSharedAdminMacro(name, command);
+        }
+
+        private void DeleteSelectedSharedMacro()
+        {
+            if (_sharedMacroWindow?.SelectedMacro is not { } macro)
+                return;
+
+            _bwoinkSystem.DeleteSharedAdminMacro(macro.Name);
         }
 
         private static string EscapeSavedValue(string value)
@@ -703,17 +797,17 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
                 return;
             }
 
-            var command = SavedCommandText.Text.Trim();
+            var command = Rope.Collapse(SavedCommandText.TextRope).Trim();
             if (command.Length == 0)
                 return;
 
-            _console.ExecuteCommand(command);
+            RunCommandSequence(command);
         }
 
         private void SaveSavedCommand()
         {
             var name = SavedCommandName.Text.Trim();
-            var command = SavedCommandText.Text.Trim();
+            var command = Rope.Collapse(SavedCommandText.TextRope).Trim();
             if (name.Length == 0 || command.Length == 0)
                 return;
 
@@ -772,7 +866,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
 
             var selected = _savedCommands[index];
             SavedCommandName.Text = selected.Name;
-            SavedCommandText.Text = selected.Command;
+            SavedCommandText.TextRope = new Rope.Leaf(selected.Command);
             UpdateSavedCommandButtons();
         }
 
@@ -852,7 +946,19 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
         {
             if (index < 0 || index >= _savedCommands.Count)
                 return;
-            _console.ExecuteCommand(_savedCommands[index].Command);
+
+            RunCommandSequence(_savedCommands[index].Command);
+        }
+
+        private void RunCommandSequence(string commandBlock)
+        {
+            foreach (var command in commandBlock
+                         .Split('\n')
+                         .Select(line => line.Trim())
+                         .Where(line => line.Length > 0))
+            {
+                _console.ExecuteCommand(command);
+            }
         }
     }
 }

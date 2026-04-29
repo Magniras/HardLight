@@ -19,12 +19,18 @@ namespace Content.Client.Administration.Systems
         public event Action<PlayerBankInfoResponseMessage>? PlayerBankInfoReceived;
         public event Action<ModifyPlayerBankResponseMessage>? PlayerBankModified;
         public event Action<TeleportPlayerToStationResponseMessage>? PlayerTeleportedToStation;
+        public event Action<TeleportPlayerToShipResponseMessage>? PlayerTeleportedToShip;
         public event Action<UnstickPlayerShipPreviewResponseMessage>? PlayerShipUnstickPreviewReceived;
         public event Action<UnstickPlayerShipResponseMessage>? PlayerShipUnstuck;
         public event Action<SaveShipPreviewResponseMessage>? PlayerShipSavePreviewReceived;
         public event Action<SaveShipResponseMessage>? PlayerShipSaved;
+        public event Action<SharedAdminMacroState[]>? SharedAdminMacrosUpdated;
+        public event Action<ShipDeedListResponseMessage>? ShipDeedListReceived;
+        public event Action<AssignShipDeedResponseMessage>? ShipDeedAssigned;
+        public event Action<SpawnAhelpItemResponseMessage>? PlayerAhelpItemSpawned;
 
         public AhelpAdminConfigState? CurrentAhelpAdminConfig { get; private set; }
+        public SharedAdminMacroState[] CurrentSharedAdminMacros { get; private set; } = Array.Empty<SharedAdminMacroState>();
         private (TimeSpan Timestamp, bool Typing) _lastTypingUpdateSent;
 
         public override void Initialize()
@@ -37,10 +43,15 @@ namespace Content.Client.Administration.Systems
             SubscribeNetworkEvent<PlayerBankInfoResponseMessage>(OnPlayerBankInfo);
             SubscribeNetworkEvent<ModifyPlayerBankResponseMessage>(OnPlayerBankModified);
             SubscribeNetworkEvent<TeleportPlayerToStationResponseMessage>(OnPlayerTeleportedToStation);
+            SubscribeNetworkEvent<TeleportPlayerToShipResponseMessage>(OnPlayerTeleportedToShip);
             SubscribeNetworkEvent<UnstickPlayerShipPreviewResponseMessage>(OnPlayerShipUnstickPreview);
             SubscribeNetworkEvent<UnstickPlayerShipResponseMessage>(OnPlayerShipUnstuck);
             SubscribeNetworkEvent<SaveShipPreviewResponseMessage>(OnPlayerShipSavePreview);
             SubscribeNetworkEvent<SaveShipResponseMessage>(OnPlayerShipSaved);
+            SubscribeNetworkEvent<SharedAdminMacrosStateMessage>(OnSharedAdminMacrosState);
+            SubscribeNetworkEvent<ShipDeedListResponseMessage>(OnShipDeedList);
+            SubscribeNetworkEvent<AssignShipDeedResponseMessage>(OnShipDeedAssigned);
+            SubscribeNetworkEvent<SpawnAhelpItemResponseMessage>(OnSpawnAhelpItemResponse);
         }
 
         protected override void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
@@ -104,6 +115,17 @@ namespace Content.Client.Administration.Systems
             PlayerTeleportedToStation?.Invoke(message);
         }
 
+        private void OnPlayerTeleportedToShip(TeleportPlayerToShipResponseMessage message, EntitySessionEventArgs eventArgs)
+        {
+            PlayerTeleportedToShip?.Invoke(message);
+        }
+
+        private void OnSharedAdminMacrosState(SharedAdminMacrosStateMessage message, EntitySessionEventArgs eventArgs)
+        {
+            CurrentSharedAdminMacros = message.Macros;
+            SharedAdminMacrosUpdated?.Invoke(message.Macros);
+        }
+
         public void RequestPlayerShipInspection(NetUserId player)
         {
             RaiseNetworkEvent(new RequestPlayerShipInspectionMessage(player.UserId.ToString()));
@@ -154,6 +176,11 @@ namespace Content.Client.Administration.Systems
             RaiseNetworkEvent(new RequestTeleportPlayerToStationMessage(player.UserId.ToString()));
         }
 
+        public void RequestTeleportPlayerToShip(NetUserId player)
+        {
+            RaiseNetworkEvent(new RequestTeleportPlayerToShipMessage(player.UserId.ToString()));
+        }
+
         public void RequestAhelpAdminConfig()
         {
             RaiseNetworkEvent(new RequestAhelpAdminStateMessage());
@@ -162,6 +189,16 @@ namespace Content.Client.Administration.Systems
         public void SetAhelpAutoReplyEnabled(bool enabled)
         {
             RaiseNetworkEvent(new SetAhelpAutoReplyEnabledMessage(enabled));
+        }
+
+        public void SetAhelpPanicAutoReplyEnabled(bool enabled)
+        {
+            RaiseNetworkEvent(new SetAhelpPanicAutoReplyEnabledMessage(enabled));
+        }
+
+        public void SetAhelpPanicAutoReplyTemplate(string template)
+        {
+            RaiseNetworkEvent(new SetAhelpPanicAutoReplyTemplateMessage(template));
         }
 
         public void SetAhelpTriageEnabled(bool enabled)
@@ -212,6 +249,51 @@ namespace Content.Client.Administration.Systems
         public void ResetAhelpTriageKeywords(string category)
         {
             RaiseNetworkEvent(new ResetAhelpTriageKeywordsMessage(category));
+        }
+
+        public void RequestSharedAdminMacros()
+        {
+            RaiseNetworkEvent(new RequestSharedAdminMacrosMessage());
+        }
+
+        public void UpsertSharedAdminMacro(string name, string command)
+        {
+            RaiseNetworkEvent(new UpsertSharedAdminMacroMessage(name, command));
+        }
+
+        public void DeleteSharedAdminMacro(string name)
+        {
+            RaiseNetworkEvent(new DeleteSharedAdminMacroMessage(name));
+        }
+
+        private void OnShipDeedList(ShipDeedListResponseMessage message, EntitySessionEventArgs eventArgs)
+        {
+            ShipDeedListReceived?.Invoke(message);
+        }
+
+        private void OnShipDeedAssigned(AssignShipDeedResponseMessage message, EntitySessionEventArgs eventArgs)
+        {
+            ShipDeedAssigned?.Invoke(message);
+        }
+
+        public void RequestShipDeedList(NetUserId targetPlayer)
+        {
+            RaiseNetworkEvent(new RequestShipDeedListMessage(targetPlayer.UserId.ToString()));
+        }
+
+        public void RequestAssignShipDeed(NetUserId targetPlayer, NetEntity shipNetEntity)
+        {
+            RaiseNetworkEvent(new RequestAssignShipDeedMessage(targetPlayer.UserId.ToString(), shipNetEntity));
+        }
+
+        public void RequestSpawnAhelpItemNearPlayer(NetUserId targetPlayer, string prototypeId)
+        {
+            RaiseNetworkEvent(new RequestSpawnAhelpItemMessage(targetPlayer.UserId.ToString(), prototypeId));
+        }
+
+        private void OnSpawnAhelpItemResponse(SpawnAhelpItemResponseMessage message, EntitySessionEventArgs eventArgs)
+        {
+            PlayerAhelpItemSpawned?.Invoke(message);
         }
 
         public void Send(NetUserId channelId, string text, bool playSound, bool adminOnly)

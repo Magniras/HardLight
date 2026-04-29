@@ -3340,3 +3340,9 @@ Entries:
       message: Added about 45 new foods and 40 new drinks.
   id: 359
   time: '2026-04-29T20:19:46.0000000+00:00'
+- author: re-silvered
+  changes:
+    - type: Fix
+      message: Fixed bluespace syringe draw amount.
+  id: 360
+  time: '2026-04-29T23:43:35.0000000+00:00'

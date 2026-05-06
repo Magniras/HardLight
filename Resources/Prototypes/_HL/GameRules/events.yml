@@ -400,8 +400,6 @@
       HeadOfSecurity: 1
       SecurityOfficer: 1
       Warden: 1
-  - type: SpaceSpawnRule
-    spawnDistance: 0
   - type: AntagSpawner
     prototype: MobXenoQueenNPC
   - type: AntagSelection
@@ -430,8 +428,6 @@
       HeadOfSecurity: 1
       SecurityOfficer: 1
       Warden: 1
-  - type: SpaceSpawnRule
-    spawnDistance: 0
   - type: AntagSpawner
     prototype: Fatkid
   - type: AntagSelection
@@ -898,6 +894,8 @@
     requiredJobs:
       StationCaptain: 1 # Can't have a revolution with no captain to mutinize
       HeadOfSecurity: 1
+      SecurityOfficer: 1
+      Warden: 1
   - type: AlertLevelInterceptionRule
   - type: AntagSelection
     selectionTime: PostPlayerSpawn
@@ -1714,6 +1712,8 @@
     duration: 60
     requiredJobs:
       HeadOfSecurity: 1
+      SecurityOfficer: 1
+      Warden: 1
   - type: VentCrittersRule
     entries:
     - id: MobArgocyteSlurva
@@ -1811,6 +1811,8 @@
     duration: 60
     requiredJobs:
       HeadOfSecurity: 1
+      SecurityOfficer: 1
+      Warden: 1
   - type: VentCrittersRule
     entries:
     - id: MobCarp
@@ -1842,6 +1844,8 @@
     duration: 60
     requiredJobs:
       HeadOfSecurity: 1
+      SecurityOfficer: 1
+      Warden: 1
   - type: VentCrittersRule
     entries:
     - id: MobBearSpace
@@ -1869,6 +1873,7 @@
     duration: 60
     requiredJobs:
       HeadOfSecurity: 1
+      SecurityOfficer: 1
       Warden: 1
   - type: VentCrittersRule
     entries:
@@ -2071,12 +2076,14 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     earliestStart: 30
-    reoccurrenceDelay: 200
+    reoccurrenceDelay: 400
     minimumPlayers: 10
     weight: 6 # Really weak compared to other critters
     duration: 60
     requiredJobs:
       HeadOfSecurity: 1
+      SecurityOfficer: 1
+      Warden: 1
   - type: VentCrittersRule
     entries:
     - id: SpawnMobSyndicateNavalCaptain
@@ -2122,14 +2129,16 @@
     duration: 60
     requiredJobs:
       HeadOfSecurity: 1
+      SecurityOfficer: 1
+      Warden: 1
   - type: VentCrittersRule
     entries:
     - id: SpawnMobDinosaurSmall
-      prob: 0.09
+      prob: 0.04
     - id: SpawnMobDinosaurMedium
-      prob: 0.06
+      prob: 0.02
     - id: SpawnMobDinosaurBig
-      prob: 0.03
+      prob: 0.01
 
 - type: entity
   id: Fleshvents
@@ -2147,12 +2156,14 @@
     duration: 60
     requiredJobs:
       HeadOfSecurity: 1
+      SecurityOfficer: 1
+      Warden: 1
   - type: VentCrittersRule
     entries:
     - id: SpawnMobAberrantFleshExpeditions
-      prob: 0.05
+      prob: 0.02
     - id: SpawnMobAberrantFleshNewbornExpeditions
-      prob: 0.03
+      prob: 0.01
 
 - type: entity
   id: Explorervents
@@ -2170,14 +2181,16 @@
     duration: 60
     requiredJobs:
       HeadOfSecurity: 1
+      SecurityOfficer: 1
+      Warden: 1
   - type: VentCrittersRule
     entries:
     - id: SpawnMobExplorerT1
-      prob: 0.09
+      prob: 0.04
     - id: SpawnMobExplorerT2
-      prob: 0.06
+      prob: 0.02
     - id: SpawnMobExplorerT3
-      prob: 0.03
+      prob: 0.01
 
 - type: entity
   id: Mercvents
@@ -2195,14 +2208,16 @@
     duration: 60
     requiredJobs:
       HeadOfSecurity: 1
+      SecurityOfficer: 1
+      Warden: 1
   - type: VentCrittersRule
     entries:
     - id: SpawnMobMercenaryT1
-      prob: 0.09
+      prob: 0.04
     - id: SpawnMobMercenaryT2
-      prob: 0.06
+      prob: 0.02
     - id: SpawnMobMercenaryT3
-      prob: 0.03
+      prob: 0.01
 
 - type: entity
   id: Zedvents
@@ -2220,6 +2235,8 @@
     duration: 60
     requiredJobs:
       HeadOfSecurity: 1
+      SecurityOfficer: 1
+      Warden: 1
   - type: VentCrittersRule
     entries:
     - id: MobZTaken
@@ -2251,20 +2268,22 @@
     duration: 60
     requiredJobs:
       HeadOfSecurity: 1
+      SecurityOfficer: 1
+      Warden: 1
   - type: VentCrittersRule
     entries:
     - id: SpawnMobPunkT1
-      prob: 0.07
+      prob: 0.03
     - id: SpawnMobPunkT2
-      prob: 0.05
+      prob: 0.03
     - id: SpawnMobPunkT3
       prob: 0.03
     - id: MobPunkGangerSmg
-      prob: 0.04
+      prob: 0.03
     - id: MobPunkGangerShotgun
-      prob: 0.04
+      prob: 0.02
     - id: MobPunkGangerPistol
-      prob: 0.04
+      prob: 0.03
     - id: SpawnMobPunkLeader
       prob: 0.01
 
@@ -2284,24 +2303,26 @@
     duration: 60
     requiredJobs:
       HeadOfSecurity: 1
+      SecurityOfficer: 1
+      Warden: 1
   - type: VentCrittersRule
     entries:
     - id: SpawnMobBloodCultistZealotMelee
-      prob: 0.07
+      prob: 0.03
     - id: SpawnMobBloodCultLeech
-      prob: 0.05
+      prob: 0.03
     - id: SpawnMobBloodCultistZealotRanged
       prob: 0.03
     - id: SpawnMobBloodCultistCaster
-      prob: 0.04
+      prob: 0.03
     - id: BloodCultTurret
-      prob: 0.04
+      prob: 0.02
     - id: SpawnMobBloodCultistAcolyte
-      prob: 0.04
+      prob: 0.03
     - id: SpawnMobBloodCultistPriest
       prob: 0.02
     - id: SpawnMobBloodCultistJanitor
-      prob: 0.05
+      prob: 0.03
     - id: MobBloodCultistAscended
       prob: 0.01
     
@@ -2370,7 +2391,7 @@
   - type: VentCrittersRule
     entries:
     - id: MobEmotionalSupportScurret
-      prob: 0.05
+      prob: 0.02
 
 - type: entity
   id: Beehallucination

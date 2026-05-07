@@ -209,6 +209,10 @@
     maxFillLevels: 3
     fillBaseName: jetinjector_filled
     solutionName: hypospray
+  - type: Tag
+    tags:
+    - JetInjector
+
 
 - type: entity
   parent: JetInjector

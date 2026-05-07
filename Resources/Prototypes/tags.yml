@@ -1584,7 +1584,9 @@
 
 - type: Tag
   id: CartridgeShell
-  
+
 - type: Tag
   id: BoneArmor
 
+- type: Tag
+  id: JetInjector

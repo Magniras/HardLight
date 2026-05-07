@@ -3632,3 +3632,9 @@ Entries:
         others FN Pets.
   id: 392
   time: '2026-05-07T04:50:53.0000000+00:00'
+- author: re-silvered
+  changes:
+    - type: Fix
+      message: Fixed surgery limb application forcing every marking to glow
+  id: 393
+  time: '2026-05-07T04:54:13.0000000+00:00'

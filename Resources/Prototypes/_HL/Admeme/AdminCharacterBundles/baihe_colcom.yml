@@ -16,3 +16,77 @@
     belt: EnergyDomeGeneratorPersonalSyndie
     back: WeaponEnergyHalberd
     id: CentcomPDA
+
+- type: entity
+  parent: [BaseMobKitsune, BaseMobHuman]
+  id: MobKitsunegami
+  name: "Guān Bǎihé"
+  components:
+  - type: PotentialPsionic #HL -Irkalla Edit- Makes Kitsunes Psyker-Capable
+  - type: Fixtures
+    fixtures: # Taken from BaseMobSpecies to bypass parentage.
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 185
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: HumanoidAppearance
+    species: Kitsune
+    initial: BaiheProfile
+  - type: InteractionPopup
+    successChance: 0.75
+    interactSuccessString: petting-success-soft-floofy-kitsune
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Floof/Voice/Vulpkanin/yap.ogg # She noisy.
+  - type: Kitsune
+  - type: PsionicBonusChance
+    flatBonus: 1
+  - type: JumpAbility
+    action: ActionVulpkaninGravityJump
+    canCollide: false
+    jumpDistance: 15
+    jumpSound:
+      path: /Audio/Weapons/punchmiss.ogg
+      params:
+        pitch: 1.33
+        volume: -5
+        variation: 0.05
+
+- type: humanoidProfile
+  id: BaiheProfile
+  profile:
+    name: "Guān Bǎihé"
+    age: 900
+    sex: Female
+    gender: Female
+    species: Kitsune
+    customSpecies: kitsunegami
+    appearance:
+      markings:
+      - markingId: FoxTail
+        visible: True
+        isGlowing: False
+        markingColor:
+        - '#91301AFF'
+        - '#D7D7D7FF'
+      - markingId: VulpEarFox
+        visible: True
+        isGlowing: False
+        markingColor:
+        - '#91301AFF'
+      skinColor: '#EAC4A8FF'
+      eyeGlowing: False
+      eyeColor: '#46720BFF'
+      facialHairGlowing: False
+      facialHairColor: '#FFF900FF'
+      facialHair: FacialHairShaved
+      hairGlowing: False
+      hairColor: '#91301AFF'
+      hair: HumanHairPonytail3

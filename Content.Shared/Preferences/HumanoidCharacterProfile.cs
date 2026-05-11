@@ -776,7 +776,7 @@ namespace Content.Shared.Preferences
 
         public override bool Equals(object? obj)
         {
-            return ReferenceEquals(this, obj) || obj is HumanoidCharacterProfile other && Equals(other);
+            return ReferenceEquals(this, obj) || obj is HumanoidCharacterProfile other && MemberwiseEquals(other);
         }
 
         public override int GetHashCode()

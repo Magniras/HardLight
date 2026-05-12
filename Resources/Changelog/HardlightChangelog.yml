@@ -3776,3 +3776,9 @@ Entries:
       message: DNR mutation is now disabled.
   id: 406
   time: '2026-05-10T11:07:15.0000000+00:00'
+- author: NotLivyathan
+  changes:
+    - type: Add
+      message: All members of Command can now issue command bounties.
+  id: 407
+  time: '2026-05-12T21:56:31.0000000+00:00'

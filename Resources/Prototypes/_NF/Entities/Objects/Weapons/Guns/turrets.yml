@@ -29,10 +29,43 @@
   - type: NpcFactionMember
     factions:
     - ContrabandDetection
+  - type: DisableCdetOnAlertLevel
   - type: Construction
     deconstructionTarget: null
     graph: WeaponTurretContrabandDenyingPackingGraph
     node: WeaponTurretContrabandDenyingPacked
+
+- type: entity # Targets players wearing contra and all hostile to NT factions
+  id: WeaponTurretLethalContrabandDenyingDeployed
+  name: CDET
+  description: |-
+   A Contraband Denying Energy Turret (CDET). A laser turret with built-in microreactor. Use screwdriver to disassemble.
+  parent: WeaponTurretContrabandDenyingDeployed
+  components:
+  - type: HTN
+    rootTask:
+      task: StunTurretCompound
+    blackboard:
+      RotateSpeed: !type:Single
+        3.141
+      SoundTargetInLOS: !type:SoundPathSpecifier
+        path: /Audio/Effects/double_beep.ogg
+  - type: Gun
+    fireRate: 2
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+      params:
+        variation: 0.125
+  - type: ProjectileBatteryAmmoProvider
+    proto: NFBulletLaserHeavy
+    fireCost: 10
+  - type: NpcFactionMember
+    factions:
+    - ContrabandDetection
+  - type: Construction
+    deconstructionTarget: null
+    graph: WeaponTurretLethalContrabandDenyingPackingGraph
+    node: WeaponTurretLethalContrabandDenyingPacked
 
 - type: entity # folded turret
   id: WeaponTurretContrabandDenyingPacked
@@ -58,6 +91,29 @@
     shape:
     - 0,0,3,3
     sprite: _NF/Objects/Weapons/Guns/Turrets/disabler.rsi
+    
+- type: entity # folded turret
+  id: WeaponTurretLethalContrabandDenyingPacked
+  name: packed CDET
+  description: |-
+   A disassembled and packed Contraband Denying Energy Turret (CDET).
+  suffix: NT, Packed
+  parent: WeaponTurretContrabandDenyingPacked
+  components:
+  - type: WeaponCaseInsertable
+  - type: MultiHandedItem
+  - type: SpawnAfterInteract
+    prototype: WeaponTurretContrabandDenyingDeployed
+    doAfter: 5
+    removeOnInteract: true
+  - type: Sprite
+    sprite: _NF/Objects/Weapons/Guns/Turrets/laser.rsi
+    state: packed
+  - type: Item
+    size: Ginormous
+    shape:
+    - 0,0,3,3
+    sprite: _NF/Objects/Weapons/Guns/Turrets/laser.rsi
 
 - type: constructionGraph # deconstruction graph
   id: WeaponTurretContrabandDenyingPackingGraph
@@ -70,6 +126,24 @@
       completed:
       - !type:SpawnPrototype
             prototype: WeaponTurretContrabandDenyingPacked
+            amount: 1
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity {}
+      steps:
+        - tool: Screwing
+          doAfter: 14
+          
+- type: constructionGraph # deconstruction graph
+  id: WeaponTurretLethalContrabandDenyingPackingGraph
+  start: WeaponTurretLethalContrabandDenyingPacked
+  graph:
+  - node: WeaponTurretLethalContrabandDenyingPacked
+    entity: WeaponTurretLethalContrabandDenyingDeployed
+    edges:
+    - to: WeaponTurretLethalContrabandDenyingPacked
+      completed:
+      - !type:SpawnPrototype
+            prototype: WeaponTurretLethalContrabandDenyingPacked
             amount: 1
       - !type:EmptyAllContainers
       - !type:DeleteEntity {}

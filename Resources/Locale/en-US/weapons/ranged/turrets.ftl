@@ -4,6 +4,7 @@ deployable-turret-component-deactivating = Deactivating...
 deployable-turret-component-activate = Activate
 deployable-turret-component-deactivate = Deactivate
 deployable-turret-component-access-denied = Access denied
+deployable-turret-component-disabled-by-alert = The turret is locked down by the current alert level.
 deployable-turret-component-no-ammo = Weapon systems depleted
 deployable-turret-component-is-broken = The turret is heavily damaged and must be repaired
 deployable-turret-component-cannot-access-wires = You can't reach the maintenance panel while the turret is active 

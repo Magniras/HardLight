@@ -91,6 +91,25 @@ public partial class ShipShieldsSystem
         component.Damage += args.Damage;
     }
 
+    private void BreakEmitterFromMeteorImpact(EntityUid uid)
+    {
+        if (!TryComp<ShipShieldEmitterComponent>(uid, out var emitter))
+            return;
+
+        emitter.Damage = Math.Max(emitter.Damage, emitter.DamageLimit);
+        emitter.Recharging = true;
+
+        var removed = emitter.Shielded is { } shielded
+            ? RemoveEmitterShield(uid, emitter, shielded)
+            : RemoveEmitterShield(uid, emitter);
+
+        if (removed)
+            _audio.PlayPvs(emitter.PowerDownSound, uid, emitter.PowerDownSound.Params);
+
+        if (TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
+            AdjustEmitterLoad(uid, emitter, receiver);
+    }
+
     private void OnExamined(EntityUid uid, ShipShieldEmitterComponent component, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)

@@ -92,6 +92,11 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
 
     public bool TrySetState(Entity<DeployableTurretComponent> ent, bool enabled, EntityUid? user = null)
     {
+        var attempt = new DeployableTurretStateAttemptEvent(enabled, user);
+        RaiseLocalEvent(ent, ref attempt);
+        if (attempt.Cancelled)
+            return false;
+
         if (enabled && ent.Comp.CurrentState == DeployableTurretState.Broken)
         {
             if (user != null)
@@ -165,3 +170,6 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
         return ammoCountEv.Count > 0;
     }
 }
+
+[ByRefEvent]
+public record struct DeployableTurretStateAttemptEvent(bool Enabled, EntityUid? User, bool Cancelled = false);

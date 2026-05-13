@@ -5,6 +5,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
+using Content.Server.Mining;
 using Content.Shared._Crescent.ShipShields;
 using Content.Shared.Physics;
 using Robust.Shared.Physics.Systems;
@@ -186,6 +187,20 @@ public sealed partial class ShipShieldsSystem : EntitySystem
 
     private void OnPreventCollide(EntityUid uid, ShipShieldComponent component, ref PreventCollideEvent args)
     {
+        if (HasComp<MeteorComponent>(args.OtherEntity))
+        {
+            var meteorShieldSource = component.Source;
+            if (meteorShieldSource != null)
+                BreakEmitterFromMeteorImpact(meteorShieldSource.Value);
+
+            if (_projectileQuery.TryGetComponent(args.OtherEntity, out var meteorProjectile))
+                meteorProjectile.ProjectileSpent = true;
+
+            QueueDel(args.OtherEntity);
+            args.Cancelled = true;
+            return;
+        }
+
         // only handle ship weapons for now. engine update introduced physics regressions. Let's polish everything else and circle back yeah?
         if (!_shipWeaponProjectileQuery.HasComponent(args.OtherEntity) ||
         !_projectileQuery.TryGetComponent(args.OtherEntity, out var projectile) ||
@@ -233,10 +248,10 @@ public sealed partial class ShipShieldsSystem : EntitySystem
         // why shoot the projectile again when you can just 180 its physics, tho?
         //_gun.ShootProjectile(args.OtherEntity, deflectionVector, _physicsSystem.GetMapLinearVelocity(uid), uid, null, velocity.Length());
 
-        if (component.Source is { } source)
+        if (component.Source is { } emitterSource)
         {
             var ev = new ShieldDeflectedEvent(args.OtherEntity, projectile);
-            RaiseLocalEvent(source, ref ev);
+            RaiseLocalEvent(emitterSource, ref ev);
         }
     }
 
@@ -615,8 +630,7 @@ public sealed partial class ShipShieldsSystem : EntitySystem
 
     private bool NeedsShieldFixtureRefresh(EntityUid shieldUid, Box2 shieldBounds)
     {
-        if (!TryComp<TransformComponent>(shieldUid, out var xform))
-            return true;
+        var xform = Transform(shieldUid);
 
         if ((xform.LocalPosition - shieldBounds.Center).LengthSquared() > 0.01f)
             return true;

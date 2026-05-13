@@ -2,7 +2,6 @@
   id: ClothingOuterCoatCultJanitor
   name: cult janitor robes
   parent:
-  - BaseC3CultContraband
   - ClothingOuterStorageBase
   - ClothingOuterArmorBulletproof
   - ContrabandClothing
@@ -17,7 +16,6 @@
   id: ClothingOuterCoatBloodCultRobes
   name: cult robes
   parent:
-  - BaseC3CultContraband
   - ClothingOuterStorageToggleableBase
   - ClothingOuterArmorBasic
   - ContrabandClothing

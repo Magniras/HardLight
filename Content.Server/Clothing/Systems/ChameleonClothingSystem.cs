@@ -1,4 +1,5 @@
 using Content.Server.IdentityManagement;
+using Content.Shared.Contraband;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IdentityManagement.Components;
@@ -22,7 +23,19 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
     private void OnMapInit(EntityUid uid, ChameleonClothingComponent component, MapInitEvent args)
     {
+        EnsureClass3Contraband(uid);
         SetSelectedPrototype(uid, component.Default, true, component);
+    }
+
+    private void EnsureClass3Contraband(EntityUid uid)
+    {
+        var contraband = EnsureComp<ContrabandComponent>(uid);
+
+        if (contraband.Severity == "Class3General")
+            return;
+
+        contraband.Severity = "Class3General";
+        Dirty(uid, contraband);
     }
 
     private void OnSelected(EntityUid uid, ChameleonClothingComponent component, ChameleonPrototypeSelectedMessage args)

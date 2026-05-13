@@ -676,7 +676,6 @@
 ## Antagonists / Contraband
 - type: entity
   parent:
-  - BaseC3SyndicateContrabandUnredeemable
   - ClothingBackpackMessengerContractor
   - ContrabandClothing
   id: ClothingBackpackMessengerSyndicate
@@ -717,7 +716,6 @@
 
 - type: entity
   parent:
-  - BaseC3CultContrabandUnredeemable
   - ClothingBackpackMessengerContractor
   - ContrabandClothing
   id: ClothingBackpackMessengerBloodCult
@@ -759,7 +757,7 @@
 - type: entity
   id: ClothingBackpackMessengerArcadia
   name: arcadia messenger bag
-  parent: [ ClothingBackpackMessengerContractor, BaseC3ContrabandNoValue, ContrabandClothing ]
+  parent: [ ClothingBackpackMessengerContractor, ContrabandClothing ]
   components:
   - type: Sprite
     sprite: _NF/Clothing/Back/Messenger/color.rsi

@@ -818,21 +818,21 @@
 #       - Brigmedic
 #       - Sheriff
 
-- type: listing
-  id: UplinkSecurityAmbuzol
-  name:  uplink-security-ambuzol-name
-  description: uplink-security-ambuzol-desc
-  productEntity: SyringeAmbuzol
-  icon: { sprite: Objects/Specific/Chemistry/syringe.rsi, state: syringe_base0 }
-  cost:
-    FrontierUplinkCoin: 1
-  categories:
-    - UplinkSecurityUtility
-  conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - SecurityUplink
+# - type: listing
+#  id: UplinkSecurityAmbuzol
+#  name:  uplink-security-ambuzol-name
+#  description: uplink-security-ambuzol-desc
+#  productEntity: SyringeAmbuzol
+#  icon: { sprite: Objects/Specific/Chemistry/syringe.rsi, state: syringe_base0 }
+#  cost:
+#    FrontierUplinkCoin: 1
+#  categories:
+#    - UplinkSecurityUtility
+#  conditions:
+#    - !type:StoreWhitelistCondition
+#      whitelist:
+#        tags:
+#          - SecurityUplink
 #   - !type:BuyerJobCondition Hardlight
 #     whitelist:
 #       - Brigmedic

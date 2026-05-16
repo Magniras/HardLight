@@ -27,6 +27,10 @@ public sealed partial class NanoChatUiFragment : BoxContainer
 {
     [Dependency] private readonly IGameTiming _timing = default!;
 
+    private bool _pendingScrollToBottom;
+    private uint? _lastScrolledChat;
+    private readonly Dictionary<uint, int> _lastMessageCounts = [];
+
     private readonly NewChatPopup _newChatPopup;
     private readonly EditChatPopup _editChatPopup;
     private readonly NanoChatLookupView _lookupPopup;
@@ -554,10 +558,35 @@ public sealed partial class NanoChatUiFragment : BoxContainer
 
         MessageList.InvalidateMeasure();
         MessagesScroll.InvalidateMeasure();
+        InvalidateArrange();
 
-        // Scroll to bottom after messages are added
-        if (MessageList.Parent is ScrollContainer scroll)
-            scroll.SetScrollValue(new Vector2(0, float.MaxValue));
+        
+        var newCount = chatMessages.Count;
+        var prevCount = activeChat.HasValue ? _lastMessageCounts.GetValueOrDefault(activeChat.Value, -1) : -1;
+        if (activeChat != _lastScrolledChat || newCount > prevCount)
+        {
+            _pendingScrollToBottom = true;
+            _lastScrolledChat = activeChat;
+        }
+        if (activeChat.HasValue)
+            _lastMessageCounts[activeChat.Value] = newCount;
+    }
+
+    protected override Vector2 ArrangeOverride(Vector2 finalSize)
+    {
+        var result = base.ArrangeOverride(finalSize);
+
+        if (_pendingScrollToBottom)
+        {
+            _pendingScrollToBottom = false;
+          
+            if (MessageList.DesiredSize.Y > MessagesScroll.Size.Y)
+                MessagesScroll.SetScrollValue(new Vector2(0, float.MaxValue));
+            else
+                MessagesScroll.SetScrollValue(Vector2.Zero);
+        }
+
+        return result;
     }
 
     private void UpdateMuteButton()

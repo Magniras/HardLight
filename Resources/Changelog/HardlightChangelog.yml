@@ -4046,3 +4046,11 @@ Entries:
         proper steps
   id: 435
   time: '2026-05-18T18:23:43.0000000+00:00'
+- author: Illumos
+  changes:
+    - type: Add
+      message: Flat Bonemask marking
+    - type: Add
+      message: Beak Bonemask marking
+  id: 436
+  time: '2026-05-18T18:24:43.0000000+00:00'

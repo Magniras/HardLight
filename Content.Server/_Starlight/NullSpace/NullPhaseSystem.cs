@@ -136,7 +136,7 @@ public sealed class EtherealPhaseSystem : EntitySystem
         {
             if (HasComp<ShadekinComponent>(uid))
             {
-                var lightQuery = _lookup.GetEntitiesInRange(uid, 5, flags: LookupFlags.StaticSundries)
+                var lightQuery = _lookup.GetEntitiesInRange(uid, 3, flags: LookupFlags.StaticSundries)
                     .Where(x => HasComp<PoweredLightComponent>(x));
                 foreach (var light in lightQuery)
                     _ghost.DoGhostBooEvent(light);
@@ -173,7 +173,7 @@ public sealed class EtherealPhaseSystem : EntitySystem
 
             if (HasComp<ShadekinComponent>(uid))
             {
-                var lightQuery = _lookup.GetEntitiesInRange(uid, 5, flags: LookupFlags.StaticSundries)
+                var lightQuery = _lookup.GetEntitiesInRange(uid, 3, flags: LookupFlags.StaticSundries)
                     .Where(x => HasComp<PoweredLightComponent>(x));
                 foreach (var light in lightQuery)
                     _ghost.DoGhostBooEvent(light);

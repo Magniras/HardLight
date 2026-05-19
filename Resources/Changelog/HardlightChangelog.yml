@@ -4106,3 +4106,9 @@ Entries:
       message: Damaged RTGs no longer duplicate with the SRD
   id: 442
   time: '2026-05-18T22:05:52.0000000+00:00'
+- author: fenndragon
+  changes:
+    - type: Add
+      message: Added Kronyx changes from VRS
+  id: 443
+  time: '2026-05-19T02:28:29.0000000+00:00'

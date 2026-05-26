@@ -95,17 +95,3 @@
     Telecrystal: 6
   categories:
   - UplinkCybernetics
-
-#How can you have thieving gloves that just give you away instantly?
-- type: listing
-  id: UplinkgClothingThievingGloves
-  name: uplink-clothing-chameleon-thieving-gloves-name
-  description: uplink-clothing-chameleon-thieving-gloves-desc
-  productEntity: ClothingHandsChameleonThief
-  discountCategory: veryRareDiscounts
-  discountDownTo:
-    Telecrystal: 3
-  cost:
-    Telecrystal: 5
-  categories:
-    - UplinkWearables
